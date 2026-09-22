@@ -90,6 +90,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 10
   jumpHeight: 500
+  groundCheckBoxSize: {x: 0.4, y: 0.1, z: 0.01}
+  groundCollPos: {fileID: 4976538958827232196}
 --- !u!23 &6361358966848558857
 MeshRenderer:
   m_ObjectHideFlags: 0
