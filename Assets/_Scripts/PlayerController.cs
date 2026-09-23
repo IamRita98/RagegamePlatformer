@@ -6,32 +6,48 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float moveSpeed;
-    /// <summary>
-    /// Currently jumpHeight is more just a force added to the players upward velocity. We need to make something more complicated for the number assigned to this variable
-    /// to directly equate to the height of the jump
-    /// </summary>
     [SerializeField] private float jumpHeight;
-    /// <summary>
-    /// This is how far the box extends in each direction from the center, so this value * 2 would be its total size
-    /// </summary>
+
+    // Double jump
+    [SerializeField] private int maxJumps = 2;
+    private int jumpsRemaining;
+
+    // Wall jump
+    [SerializeField] private float wallJumpForce = 8f;
+    [SerializeField] private float wallJumpHorizontalForce = 8f;
+    [SerializeField] private float wallCheckDistance = 0.6f;
+
     [SerializeField] private Vector3 groundCheckBoxSize = new Vector3(.3f, .06f, .01f);
 
     Rigidbody rb;
     float horizontalMovement;
-    public Transform groundCollPos;
-    bool isGrounded;
-    List<Collider> objectsUnderFeet = new List<Collider>();
 
+    public Transform groundCollPos;
+
+    bool isGrounded;
+    bool isTouchingWall;
+    int wallDirection;
+
+    List<Collider> objectsUnderFeet = new List<Collider>();
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        jumpsRemaining = maxJumps;
     }
 
     private void FixedUpdate()
     {
         rb.velocity = new Vector3(horizontalMovement, rb.velocity.y, 0);
-        objectsUnderFeet = Physics.OverlapBox(groundCollPos.position, groundCheckBoxSize, Quaternion.identity, LayerMask.GetMask("Ground")).ToList();
+
+        objectsUnderFeet = Physics.OverlapBox(
+            groundCollPos.position,
+            groundCheckBoxSize,
+            Quaternion.identity,
+            LayerMask.GetMask("Ground")
+        ).ToList();
+
+        CheckForWall();
     }
 
     private void Update()
@@ -43,11 +59,25 @@ public class PlayerController : MonoBehaviour
     void CheckForInputs()
     {
         Movement();
-        // if(Press Shoot)Shoot()
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (!isGrounded) return; //Eventually, double jump/walljump
-            else Jump();
+            // Wall jump takes priority when touching a wall
+            if (!isGrounded && isTouchingWall)
+            {
+                WallJump();
+            }
+            else if (isGrounded)
+            {
+                Jump();
+
+                // Reset the double jump when grounded
+                jumpsRemaining = maxJumps - 1;
+            }
+            else if (jumpsRemaining > 0)
+            {
+                DoubleJump();
+            }
         }
     }
 
@@ -59,12 +89,79 @@ public class PlayerController : MonoBehaviour
 
     void Jump()
     {
-        rb.AddForce(Vector2.up * jumpHeight);
+        // Reset vertical velocity so jumps are consistent
+        rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+
+        rb.AddForce(Vector2.up * jumpHeight, ForceMode.Impulse);
+    }
+
+    void DoubleJump()
+    {
+        // Reset vertical velocity so the double jump feels consistent
+        rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+
+        rb.AddForce(Vector2.up * jumpHeight, ForceMode.Impulse);
+
+        jumpsRemaining--;
+    }
+
+    void WallJump()
+    {
+        // Push the player away from the wall
+        rb.velocity = new Vector3(
+            -wallDirection * wallJumpHorizontalForce,
+            wallJumpForce,
+            0
+        );
     }
 
     void CheckForGround()
     {
-        if (objectsUnderFeet.Count == 0) isGrounded = false;
-        else isGrounded = true;
+        if (objectsUnderFeet.Count == 0)
+        {
+            isGrounded = false;
+        }
+        else
+        {
+            isGrounded = true;
+
+            // Restore jumps when touching the ground
+            jumpsRemaining = maxJumps;
+        }
+    }
+
+    void CheckForWall()
+    {
+        isTouchingWall = false;
+        wallDirection = 0;
+
+        // Check right
+        RaycastHit rightHit;
+
+        if (Physics.Raycast(
+            transform.position,
+            Vector3.right,
+            out rightHit,
+            wallCheckDistance,
+            LayerMask.GetMask("Ground")))
+        {
+            isTouchingWall = true;
+            wallDirection = 1;
+            return;
+        }
+
+        // Check left
+        RaycastHit leftHit;
+
+        if (Physics.Raycast(
+            transform.position,
+            Vector3.left,
+            out leftHit,
+            wallCheckDistance,
+            LayerMask.GetMask("Ground")))
+        {
+            isTouchingWall = true;
+            wallDirection = -1;
+        }
     }
 }
