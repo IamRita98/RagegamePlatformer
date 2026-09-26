@@ -5,11 +5,20 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    [Header("Left/Right Movement")]
     [SerializeField] private float moveSpeed;
+    [Header("Jump & Gravity")]
     [SerializeField] private float jumpHeight;
+    [SerializeField] private float airControl = .2f;
+    [SerializeField] private float risingGravity = 4;
+    [SerializeField] private float fallingGravity = 7;
+    [SerializeField] private float lingerAtApexGravity = .7f;
+    [SerializeField] private float lingeringAirTime; //This is not 1 to 1 of value to seconds, so play around w/ it
+    private float defaultGravity = 1;
+    [SerializeField] float gravityScaling;
 
     // Double jump
-    [SerializeField] private int maxJumps = 2;
+    [SerializeField] private int maxJumps = 1;
     private int jumpsRemaining;
 
     // Wall jump
@@ -17,17 +26,20 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float wallJumpHorizontalForce = 8f;
     [SerializeField] private float wallCheckDistance = 0.6f;
 
-    [SerializeField] private Vector3 groundCheckBoxSize = new Vector3(.3f, .06f, .01f);
+    
 
     Rigidbody rb;
     float horizontalMovement;
 
-    public Transform groundCollPos;
+    
 
     bool isGrounded;
     bool isTouchingWall;
     int wallDirection;
 
+    [Header("Ground Check")]
+    public Transform groundCollPos;
+    [SerializeField] private Vector3 groundCheckBoxSize = new Vector3(.3f, .06f, .01f);
     List<Collider> objectsUnderFeet = new List<Collider>();
 
     private void Awake()
@@ -38,7 +50,8 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rb.velocity = new Vector3(horizontalMovement, rb.velocity.y, 0);
+        Gravity();
+        MovementPhysics();
 
         objectsUnderFeet = Physics.OverlapBox(
             groundCollPos.position,
@@ -56,9 +69,10 @@ public class PlayerController : MonoBehaviour
         CheckForGround();
     }
 
+
     void CheckForInputs()
     {
-        Movement();
+        GetMovementInput();
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -81,7 +95,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void Movement()
+    void GetMovementInput()
     {
         float directionInput = Input.GetAxisRaw("Horizontal");
         horizontalMovement = directionInput * moveSpeed;
@@ -91,8 +105,36 @@ public class PlayerController : MonoBehaviour
     {
         // Reset vertical velocity so jumps are consistent
         rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
-
         rb.AddForce(Vector2.up * jumpHeight, ForceMode.Impulse);
+    }
+
+    void Gravity() //Because our proj is 3d we don't have access to the same rb.gravityScale that rb2D has, so we have to make a custum gravity specifically for our char. Other RB's will prob be fine w/ normal grav
+    {
+        float yVel = rb.velocity.y;
+        
+        if (Mathf.Abs(yVel) < lingeringAirTime) gravityScaling = lingerAtApexGravity;
+        else if (yVel > 0) gravityScaling = risingGravity;
+        else  gravityScaling =  fallingGravity;
+
+        rb.AddForce(Vector3.up * Physics.gravity.y * gravityScaling, ForceMode.Acceleration);
+
+        //Prob want to set a max fall speed here as well
+    }
+
+    void MovementPhysics()
+    {
+        Vector3 vel = Vector3.zero;
+        vel.y = rb.velocity.y;
+        if (isGrounded)
+        {
+            vel.x = horizontalMovement;
+            rb.velocity = new Vector3(vel.x, vel.y, 0);
+        }
+        else
+        {
+            vel.x = Mathf.Lerp(rb.velocity.x, horizontalMovement, airControl);
+            rb.velocity = new Vector3(vel.x, vel.y, 0);
+        }
     }
 
     void DoubleJump()
@@ -124,7 +166,7 @@ public class PlayerController : MonoBehaviour
         else
         {
             isGrounded = true;
-
+            gravityScaling = defaultGravity;
             // Restore jumps when touching the ground
             jumpsRemaining = maxJumps;
         }
