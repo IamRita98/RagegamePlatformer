@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Left/Right Movement")]
     [SerializeField] private float moveSpeed;
+
     [Header("Jump & Gravity")]
     [SerializeField] private float jumpHeight;
     [SerializeField] private float airControl = .2f;
@@ -26,6 +27,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float wallJumpHorizontalForce = 8f;
     [SerializeField] private float wallCheckDistance = 0.6f;
 
+    [Header("Gun")]
+    [SerializeField] float fireRate;
+    [SerializeField] private GameObject gunPos;
+    [SerializeField] GameObject bullet;
+    bool gunOnCD;
+    float gunTimer;
+
     
 
     Rigidbody rb;
@@ -41,6 +49,9 @@ public class PlayerController : MonoBehaviour
     public Transform groundCollPos;
     [SerializeField] private Vector3 groundCheckBoxSize = new Vector3(.3f, .06f, .01f);
     List<Collider> objectsUnderFeet = new List<Collider>();
+
+    float directionInput;
+    bool isFacingRight;
 
     private void Awake()
     {
@@ -67,13 +78,21 @@ public class PlayerController : MonoBehaviour
     {
         CheckForInputs();
         CheckForGround();
+        if (gunOnCD) gunTimer += Time.deltaTime;
+        if (gunTimer >= fireRate) gunOnCD = false;
     }
 
 
     void CheckForInputs()
     {
-        GetMovementInput();
+        #region LEFT/RIGHT
+        directionInput = Input.GetAxisRaw("Horizontal");
+        horizontalMovement = directionInput * moveSpeed;
+        if (directionInput == 1) isFacingRight = true;
+        else if (directionInput == -1) isFacingRight = false;
+        #endregion
 
+        #region JUMP
         if (Input.GetKeyDown(KeyCode.Space))
         {
             // Wall jump takes priority when touching a wall
@@ -93,12 +112,19 @@ public class PlayerController : MonoBehaviour
                 DoubleJump();
             }
         }
-    }
+        #endregion
 
-    void GetMovementInput()
-    {
-        float directionInput = Input.GetAxisRaw("Horizontal");
-        horizontalMovement = directionInput * moveSpeed;
+        #region GUN
+        if (Input.GetKeyDown(KeyCode.Z) && !gunOnCD)
+        {
+            GameObject bulletGO = Instantiate(bullet, gunPos.transform.position, Quaternion.identity);
+            BulletBehaviour bBehaviour = bulletGO.GetComponent<BulletBehaviour>();
+            if (isFacingRight) bBehaviour.dir = 1;
+            else bBehaviour.dir = -1;
+            gunOnCD = true;
+            gunTimer = 0;
+        }
+        #endregion
     }
 
     void Jump()
