@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SubsystemsImplementation;
 
 public class PlayerController : MonoBehaviour
 {
@@ -53,6 +54,8 @@ public class PlayerController : MonoBehaviour
 
     float directionInput;
     bool isFacingRight;
+
+    private bool stomped = false;
 
     private void Awake()
     {
@@ -241,6 +244,17 @@ public class PlayerController : MonoBehaviour
         {
             Destroy(other.gameObject);
             rb.velocity = new Vector3(rb.velocity.x, bounceVel);
+            stomped = true;
         }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy") && !stomped)
+        {
+            Destroy(this.gameObject);
+        }
+        else if (stomped)
+            stomped = false;
     }
 }

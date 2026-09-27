@@ -67,5 +67,4 @@ public class EnemyMovement : MonoBehaviour
             isTouchingWall = true;
         }
     }
-
 }

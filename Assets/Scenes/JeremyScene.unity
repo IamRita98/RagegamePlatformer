@@ -440,8 +440,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.72220165, y: 0.15085137, z: 1}
-  m_Center: {x: 0.033008605, y: -0.5059112, z: 0}
+  m_Size: {x: 0.7056546, y: 0.14585185, z: 1}
+  m_Center: {x: -0.0020195246, y: -0.5075009, z: 0}
 --- !u!4 &1057952668 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3349392148877822561, guid: 3ecb664b90ea4de4a87ae7ad47cfb0c9, type: 3}
@@ -741,6 +741,14 @@ PrefabInstance:
     - target: {fileID: 1946490050320735265, guid: 7a142420bedb4dc46a6318369cccff67, type: 3}
       propertyPath: m_Name
       value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 3023561168447282135, guid: 7a142420bedb4dc46a6318369cccff67, type: 3}
+      propertyPath: isStompable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3162068138321834257, guid: 7a142420bedb4dc46a6318369cccff67, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7009144812500944889, guid: 7a142420bedb4dc46a6318369cccff67, type: 3}
       propertyPath: m_LocalPosition.x
