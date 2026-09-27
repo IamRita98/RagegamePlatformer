@@ -20,4 +20,10 @@ public class BulletBehaviour : MonoBehaviour
         if(timer > lifeTime) Destroy(gameObject);
         transform.Translate(new Vector3(dir, 0, 0) * bulletSpeed * Time.deltaTime);
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Enemy") && other.GetComponent<EnemyMovement>().isShootable)
+            Destroy(other.gameObject);
+    }
 }

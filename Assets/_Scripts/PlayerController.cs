@@ -34,7 +34,8 @@ public class PlayerController : MonoBehaviour
     bool gunOnCD;
     float gunTimer;
 
-    
+    [Header("Enemy")]
+    [SerializeField] float bounceVel = 3f;
 
     Rigidbody rb;
     float horizontalMovement;
@@ -230,6 +231,16 @@ public class PlayerController : MonoBehaviour
         {
             isTouchingWall = true;
             wallDirection = -1;
+        }
+    }
+
+    // Checks if player is jumping on an enemy
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Enemy") && other.GetComponent<EnemyMovement>().isStompable)
+        {
+            Destroy(other.gameObject);
+            rb.velocity = new Vector3(rb.velocity.x, bounceVel);
         }
     }
 }
