@@ -21,9 +21,9 @@ public class BulletBehaviour : MonoBehaviour
         transform.Translate(new Vector3(dir, 0, 0) * bulletSpeed * Time.deltaTime);
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (other.CompareTag("Enemy") && other.GetComponent<EnemyMovement>().isShootable)
-            Destroy(other.gameObject);
+        if (collision.CompareTag("Enemy") && collision.GetComponent<EnemyMovement>().isShootable)
+            Destroy(collision.gameObject);
     }
 }
