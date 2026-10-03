@@ -38,7 +38,7 @@ public class PlayerController : MonoBehaviour
     [Header("Enemy")]
     [SerializeField] float bounceVel = 3f;
 
-    Rigidbody rb;
+    Rigidbody2D rb;
     float horizontalMovement;
 
     
@@ -50,7 +50,7 @@ public class PlayerController : MonoBehaviour
     [Header("Ground Check")]
     public Transform groundCollPos;
     [SerializeField] private Vector3 groundCheckBoxSize = new Vector3(.3f, .06f, .01f);
-    List<Collider> objectsUnderFeet = new List<Collider>();
+    public List<Collider2D> objectsUnderFeet = new List<Collider2D>();
 
     float directionInput;
     bool isFacingRight;
@@ -59,7 +59,7 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        rb = GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody2D>();
         jumpsRemaining = maxJumps;
     }
 
@@ -68,10 +68,10 @@ public class PlayerController : MonoBehaviour
         Gravity();
         MovementPhysics();
 
-        objectsUnderFeet = Physics.OverlapBox(
+        objectsUnderFeet = Physics2D.OverlapBoxAll(
             groundCollPos.position,
             groundCheckBoxSize,
-            Quaternion.identity,
+            0f,
             LayerMask.GetMask("Ground")
         ).ToList();
 
@@ -134,11 +134,11 @@ public class PlayerController : MonoBehaviour
     void Jump()
     {
         // Reset vertical velocity so jumps are consistent
-        rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
-        rb.AddForce(Vector2.up * jumpHeight, ForceMode.Impulse);
+        rb.velocity = new Vector3(rb.velocity.x, 0);
+        rb.AddForce(Vector2.up * jumpHeight, ForceMode2D.Impulse);
     }
 
-    void Gravity() //Because our proj is 3d we don't have access to the same rb.gravityScale that rb2D has, so we have to make a custum gravity specifically for our char. Other RB's will prob be fine w/ normal grav
+    void Gravity()
     {
         float yVel = rb.velocity.y;
         
@@ -146,7 +146,8 @@ public class PlayerController : MonoBehaviour
         else if (yVel > 0) gravityScaling = risingGravity;
         else  gravityScaling =  fallingGravity;
 
-        rb.AddForce(Vector3.up * Physics.gravity.y * gravityScaling, ForceMode.Acceleration);
+        rb.gravityScale = gravityScaling;
+        //rb.AddForce(Vector3.up * Physics.gravity.y * gravityScaling);
 
         //Prob want to set a max fall speed here as well
     }
@@ -170,9 +171,9 @@ public class PlayerController : MonoBehaviour
     void DoubleJump()
     {
         // Reset vertical velocity so the double jump feels consistent
-        rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+        rb.velocity = new Vector3(rb.velocity.x, 0);
 
-        rb.AddForce(Vector2.up * jumpHeight, ForceMode.Impulse);
+        rb.AddForce(Vector2.up * jumpHeight, ForceMode2D.Impulse);
 
         jumpsRemaining--;
     }
@@ -238,17 +239,17 @@ public class PlayerController : MonoBehaviour
     }
 
     // Checks if player is jumping on an enemy
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (other.CompareTag("Enemy") && other.GetComponent<EnemyMovement>().isStompable)
+        if (collision.CompareTag("Enemy") && collision.GetComponent<EnemyMovement>().isStompable)
         {
-            Destroy(other.gameObject);
+            Destroy(collision.gameObject);
             rb.velocity = new Vector3(rb.velocity.x, bounceVel);
             stomped = true;
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Enemy") && !stomped)
         {
