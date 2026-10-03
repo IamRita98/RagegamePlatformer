@@ -5,7 +5,7 @@ using UnityEngine;
 public class ProxTrap : MonoBehaviour
 {
     [Tooltip("The box trigger")]
-    public BoxCollider bc;
+    public BoxCollider2D bc;
 
     [Tooltip("The Game Object that will be moved \nIts important that this object is a child of the ProxTrap object")]
     public GameObject trapGO;
@@ -31,16 +31,13 @@ public class ProxTrap : MonoBehaviour
         startPosition = trapGO.transform.localPosition;
     }
 
-    private void OnTriggerEnter(Collider col)
+    private void OnTriggerEnter2D(Collider2D col)
     {
-        Debug.Log(col.gameObject.name);
-
         if (col.CompareTag("Player") && !activated)
         {
             StartCoroutine(MoveTrap(moveTime, endPosition));
         }
     }
-
 
     private IEnumerator MoveTrap(float tDuration, Vector3 endPos)
     {

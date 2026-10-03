@@ -41,13 +41,15 @@ public class PlayerController : MonoBehaviour
     Rigidbody2D rb;
     float horizontalMovement;
 
-    
 
-    bool isGrounded;
     bool isTouchingWall;
     int wallDirection;
 
     [Header("Ground Check")]
+    public bool isGrounded;
+
+    public float groundCheckWidth;
+    public float groundCheckLength;
     public Transform groundCollPos;
     [SerializeField] private Vector3 groundCheckBoxSize = new Vector3(.3f, .06f, .01f);
     public List<Collider2D> objectsUnderFeet = new List<Collider2D>();
@@ -57,9 +59,11 @@ public class PlayerController : MonoBehaviour
 
     private bool stomped = false;
 
+    private SpriteRenderer sr;
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        sr = GetComponent <SpriteRenderer>();
         jumpsRemaining = maxJumps;
     }
 
@@ -92,8 +96,17 @@ public class PlayerController : MonoBehaviour
         #region LEFT/RIGHT
         directionInput = Input.GetAxisRaw("Horizontal");
         horizontalMovement = directionInput * moveSpeed;
-        if (directionInput == 1) isFacingRight = true;
-        else if (directionInput == -1) isFacingRight = false;
+        if (directionInput == 1)
+        {
+            isFacingRight = true;
+            sr.flipX = false;
+        }
+        else if(directionInput == -1)
+        {
+            isFacingRight = false;
+            sr.flipX = true;
+
+        }
         #endregion
 
         #region JUMP
@@ -190,17 +203,34 @@ public class PlayerController : MonoBehaviour
 
     void CheckForGround()
     {
-        if (objectsUnderFeet.Count == 0)
-        {
-            isGrounded = false;
+        Vector2 rayPosR = transform.position;
+        Vector2 rayPosL = rayPosR;
+        rayPosR.x = groundCheckWidth;
+        rayPosL.x = -groundCheckWidth;
+
+        if (Physics2D.Raycast(transform.position, Vector2.down, groundCheckLength, LayerMask.GetMask("Ground")) ||
+            Physics2D.Raycast(transform.position, Vector2.down, groundCheckLength, LayerMask.GetMask("Ground"))){
+
+            isGrounded = true;
+            gravityScaling = defaultGravity;
+            jumpsRemaining = maxJumps;
         }
         else
         {
-            isGrounded = true;
-            gravityScaling = defaultGravity;
-            // Restore jumps when touching the ground
-            jumpsRemaining = maxJumps;
+            isGrounded = false;
         }
+
+        //if (objectsUnderFeet.Count == 0)
+        //{
+        //    isGrounded = false;
+        //}
+        //else
+        //{
+        //    isGrounded = true;
+        //    gravityScaling = defaultGravity;
+        //    // Restore jumps when touching the ground
+        //    jumpsRemaining = maxJumps;
+        //}
     }
 
     void CheckForWall()
