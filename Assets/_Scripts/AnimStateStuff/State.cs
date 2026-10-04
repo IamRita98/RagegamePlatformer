@@ -1,13 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public abstract class State : MonoBehaviour
 {
-    public AnimationClip animClip;
-    public Animator anim;
+
+    [Header("Defaults (do not edit)")]
+    public StateMachine sm;
     public Rigidbody2D rb;
     public PlayerController pc;
+    public Animator upAnim;
+    public Animator downAnim;
+    public SpriteRenderer downSr;
     public bool isComplete { get; protected set; }
     public bool animActive;
 
@@ -33,11 +38,14 @@ public abstract class State : MonoBehaviour
         isComplete = true;
     }
 
-    public void DeclareState(Animator _anim, Rigidbody2D _rb, PlayerController _pc)
+    public void DeclareState(StateMachine _sm, Rigidbody2D _rb, PlayerController _pc, Animator _upAnim, Animator _downAnim, SpriteRenderer _downSr)
     {
-        anim = _anim;
+        sm = _sm;
         rb = _rb;
         pc = _pc;
+        upAnim = _upAnim;
+        downAnim = _downAnim;
+        downSr = _downSr;
     }
 
     public void InitializeState()

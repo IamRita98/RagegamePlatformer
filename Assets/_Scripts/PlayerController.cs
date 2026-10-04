@@ -38,7 +38,7 @@ public class PlayerController : MonoBehaviour
     [Header("Enemy")]
     [SerializeField] float bounceVel = 3f;
 
-    Rigidbody2D rb;
+    public Rigidbody2D rb;
     float horizontalMovement;
 
 

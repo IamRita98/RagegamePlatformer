@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8235284278690357215}
+  - component: {fileID: 3825330042347909664}
   m_Layer: 0
   m_Name: Behavior
   m_TagString: Untagged
@@ -29,13 +30,39 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 7663030343540652940}
   - {fileID: 540972283705830346}
+  - {fileID: 7663030343540652940}
   - {fileID: 6572318815710294515}
   - {fileID: 299874831702261581}
+  - {fileID: 2250510267775187633}
   - {fileID: 5742158153381080006}
   m_Father: {fileID: 3349392148877822561}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3825330042347909664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1720193888519920256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd8e8735f37315e42af70d9f82b6869e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pc: {fileID: 0}
+  upSR: {fileID: 0}
+  downSR: {fileID: 0}
+  upAnim: {fileID: 0}
+  downAnim: {fileID: 0}
+  currentState: {fileID: 0}
+  lastState: {fileID: 0}
+  idleState: {fileID: 0}
+  runState: {fileID: 0}
+  inAirState: {fileID: 0}
+  landState: {fileID: 0}
+  wallClingState: {fileID: 0}
+  deathState: {fileID: 0}
 --- !u!1 &2197015961580756347
 GameObject:
   m_ObjectHideFlags: 0
@@ -154,7 +181,7 @@ Transform:
   m_GameObject: {fileID: 4016614442932524084}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.065, z: 0}
+  m_LocalPosition: {x: 0, y: -1.565, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -259,8 +286,6 @@ MonoBehaviour:
   bullet: {fileID: 1654296017511337108, guid: 023c667aaca56da459bd86ba7685602d, type: 3}
   bounceVel: 3
   isGrounded: 0
-  groundCheckWidth: 0.3
-  groundCheckLength: 1.52
   groundCollPos: {fileID: 4976538958827232196}
   groundCheckBoxSize: {x: 0.4, y: 0.4, z: 0}
   objectsUnderFeet: []
@@ -390,6 +415,37 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6938830849972579602}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8235284278690357215}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6951669384730341778
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2250510267775187633}
+  m_Layer: 0
+  m_Name: WallClingState
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2250510267775187633
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6951669384730341778}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
