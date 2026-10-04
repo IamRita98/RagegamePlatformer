@@ -59,11 +59,9 @@ public class PlayerController : MonoBehaviour
 
     private bool stomped = false;
 
-    private SpriteRenderer sr;
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        sr = GetComponent <SpriteRenderer>();
         jumpsRemaining = maxJumps;
     }
 
@@ -99,13 +97,10 @@ public class PlayerController : MonoBehaviour
         if (directionInput == 1)
         {
             isFacingRight = true;
-            sr.flipX = false;
         }
         else if(directionInput == -1)
         {
             isFacingRight = false;
-            sr.flipX = true;
-
         }
         #endregion
 
@@ -208,29 +203,29 @@ public class PlayerController : MonoBehaviour
         rayPosR.x = groundCheckWidth;
         rayPosL.x = -groundCheckWidth;
 
-        if (Physics2D.Raycast(transform.position, Vector2.down, groundCheckLength, LayerMask.GetMask("Ground")) ||
-            Physics2D.Raycast(transform.position, Vector2.down, groundCheckLength, LayerMask.GetMask("Ground"))){
+        //if (Physics2D.Raycast(transform.position, Vector2.down, groundCheckLength, LayerMask.GetMask("Ground")) ||
+        //    Physics2D.Raycast(transform.position, Vector2.down, groundCheckLength, LayerMask.GetMask("Ground"))){
 
-            isGrounded = true;
-            gravityScaling = defaultGravity;
-            jumpsRemaining = maxJumps;
-        }
-        else
-        {
-            isGrounded = false;
-        }
-
-        //if (objectsUnderFeet.Count == 0)
-        //{
-        //    isGrounded = false;
+        //    isGrounded = true;
+        //    gravityScaling = defaultGravity;
+        //    jumpsRemaining = maxJumps;
         //}
         //else
         //{
-        //    isGrounded = true;
-        //    gravityScaling = defaultGravity;
-        //    // Restore jumps when touching the ground
-        //    jumpsRemaining = maxJumps;
+        //    isGrounded = false;
         //}
+
+        if (objectsUnderFeet.Count == 0)
+        {
+            isGrounded = false;
+        }
+        else
+        {
+            isGrounded = true;
+            gravityScaling = defaultGravity;
+            // Restore jumps when touching the ground
+            jumpsRemaining = maxJumps;
+        }
     }
 
     void CheckForWall()
