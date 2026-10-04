@@ -53,7 +53,7 @@ public class PlayerController : MonoBehaviour
     public List<Collider2D> objectsUnderFeet = new List<Collider2D>();
 
     float directionInput;
-    bool isFacingRight;
+    public bool isFacingRight;
 
     private bool stomped = false;
 

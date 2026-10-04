@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class StateMachine : MonoBehaviour
@@ -15,10 +16,11 @@ public class StateMachine : MonoBehaviour
     public SpriteRenderer downSr;
     public Animator upAnim;
     public Animator downAnim;
-    
+
 
     [Header("States")]
 
+    public TextMeshPro stateDebugText;
     public State currentState;
     public State lastState;
 
@@ -44,13 +46,16 @@ public class StateMachine : MonoBehaviour
 
     private void Update()
     {
+        FlipSrX(upSr);
+        FlipSrX(downSr);
+
         if (!pc.isGrounded)
         {
             currentState = inAirState;
         }
 
-
         UpdateState();
+        stateDebugText.text = currentState.name;
     }
     void UpdateState()
     {
@@ -61,6 +66,18 @@ public class StateMachine : MonoBehaviour
             lastState.Exit();
             currentState.InitializeState();
             currentState.Enter();
+        }
+    }
+
+    void FlipSrX(SpriteRenderer sr)
+    {
+        if (pc.isFacingRight)
+        {
+            sr.flipX = false;
+        }
+        else
+        {
+            sr.flipX = true;
         }
     }
 
