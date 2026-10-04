@@ -15,12 +15,12 @@ public class EnemyMovement : MonoBehaviour
 
     private bool isTouchingWall;
     private int currentDirection;
-    Rigidbody rb;
+    Rigidbody2D rb;
 
 
     private void Awake()
     {
-        rb = GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody2D>();
         currentDirection = startingDirection;
     }
 
@@ -41,26 +41,25 @@ public class EnemyMovement : MonoBehaviour
         isTouchingWall = false;
 
         // Check right
-        RaycastHit rightHit;
+        //RaycastHit rightHit;
 
-        if (Physics.Raycast(
+        if (Physics2D.Raycast(
             transform.position,
             Vector3.right,
-            out rightHit,
             wallCheckDistance,
             LayerMask.GetMask("Ground")))
         {
+            print("Test");
             isTouchingWall = true;
             return;
         }
 
         // Check left
-        RaycastHit leftHit;
+        //RaycastHit leftHit;
 
-        if (Physics.Raycast(
+        if (Physics2D.Raycast(
             transform.position,
             Vector3.left,
-            out leftHit,
             wallCheckDistance,
             LayerMask.GetMask("Ground")))
         {
