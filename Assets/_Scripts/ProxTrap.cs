@@ -1,9 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class ProxTrap : MonoBehaviour
 {
+    [Tooltip("Input the StateMachine attached to the player, it broadcasts the player death event")]
+    [SerializeField] private StateMachine pDeathBroadcaster;
+
     [Tooltip("The box trigger")]
     public BoxCollider2D bc;
 
@@ -26,9 +30,27 @@ public class ProxTrap : MonoBehaviour
 
     private bool activated = false;
 
+    private bool cancelMovement;
+
     private void Awake()
     {
         startPosition = trapGO.transform.localPosition;
+    }
+
+    private void OnEnable()
+    {
+        pDeathBroadcaster.onPlayerRespawn.AddListener(ResetTrap);
+    }
+
+    private void OnDisable()
+    {
+        pDeathBroadcaster.onPlayerRespawn.RemoveListener(ResetTrap);
+    }
+
+    private void ResetTrap()
+    {
+        cancelMovement = true;
+        trapGO.transform.localPosition = startPosition;
     }
 
     private void OnTriggerEnter2D(Collider2D col)
@@ -42,11 +64,13 @@ public class ProxTrap : MonoBehaviour
     private IEnumerator MoveTrap(float tDuration, Vector3 endPos)
     {
         activated = (activated)? false: true;
+        cancelMovement = false;
+
 
         Vector3 startPos = trapGO.transform.localPosition;
 
         float tElapsed = 0;
-        while(tElapsed < tDuration)
+        while(tElapsed < tDuration && !cancelMovement)
         {
             tElapsed += Time.deltaTime;
             float t = tElapsed / tDuration;
@@ -58,6 +82,7 @@ public class ProxTrap : MonoBehaviour
         }
 
         trapGO.transform.localPosition = endPos;
+        cancelMovement = false;
 
         if(resetTime != 0 && activated)
         {

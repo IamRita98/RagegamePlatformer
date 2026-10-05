@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
+
 
 public class StateMachine : MonoBehaviour
 {
@@ -39,6 +41,8 @@ public class StateMachine : MonoBehaviour
     public DeathState deathState;
 
     public bool shooting;
+
+    public UnityEvent onPlayerRespawn;
     private void Awake()
     {
         State[] states = behaviors.GetComponentsInChildren<State>();
@@ -165,10 +169,14 @@ public class StateMachine : MonoBehaviour
     public IEnumerator Respawn()
     {
         yield return new WaitForSeconds(respawnDelay);
+
         pc.transform.position = respawnPos;
         isDead = false;
         currentState.ForceExit();
         currentState = idleState;
+
+        onPlayerRespawn.Invoke();
+
 
         downSr.enabled = true;
         upSr.enabled = true;
