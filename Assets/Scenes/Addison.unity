@@ -314,6 +314,14 @@ PrefabInstance:
       propertyPath: respawnDelay
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5307985890243477789, guid: 3ecb664b90ea4de4a87ae7ad47cfb0c9, type: 3}
+      propertyPath: wallCheckDistance
+      value: 0.52
+      objectReference: {fileID: 0}
+    - target: {fileID: 5307985890243477789, guid: 3ecb664b90ea4de4a87ae7ad47cfb0c9, type: 3}
+      propertyPath: wallJumpHorizontalForce
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 5893782354447054451, guid: 3ecb664b90ea4de4a87ae7ad47cfb0c9, type: 3}
       propertyPath: m_Name
       value: Player

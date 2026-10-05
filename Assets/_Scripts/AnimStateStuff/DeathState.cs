@@ -40,7 +40,7 @@ public class DeathState : State
     {
         if (diedInAir && pc.isGrounded)
         {
-            wholeAnim.Play(death.name, 0, 0.25f);
+            wholeAnim.Play(death.name, 0, 0.42f);
             diedInAir = false;
         }
     }

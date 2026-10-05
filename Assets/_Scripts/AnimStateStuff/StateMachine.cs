@@ -170,5 +170,8 @@ public class StateMachine : MonoBehaviour
         currentState.ForceExit();
         currentState = idleState;
 
+        downSr.enabled = true;
+        upSr.enabled = true;
+        wholeSr.enabled = false;
     }
 }
