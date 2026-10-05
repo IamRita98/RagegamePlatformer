@@ -125,7 +125,7 @@ public class PlayerController : MonoBehaviour
         #region LEFT/RIGHT
         directionInput = Input.GetAxisRaw("Horizontal");
         horizontalMovement = directionInput * moveSpeed;
-        if (directionInput == 1)
+        if (directionInput > 0)
         {
             if(sm.currentState == sm.wallClingState)
             {
@@ -137,7 +137,7 @@ public class PlayerController : MonoBehaviour
                 FlipSrX();
             }
         }
-        else if(directionInput == -1)
+        else if(directionInput < 0)
         {
             if (sm.currentState == sm.wallClingState)
             {
@@ -181,7 +181,7 @@ public class PlayerController : MonoBehaviour
         #endregion
 
         #region GUN
-        if (sm.currentState != sm.landState && Input.GetKeyDown(KeyCode.Z) && !gunOnCD)
+        if (sm.currentState != sm.landState && Input.GetAxis("Shoot") > 0 && !gunOnCD)
         {
             GameObject bulletGO = Instantiate(bullet, gunPos.transform.position, Quaternion.identity);
             BulletBehaviour bBehaviour = bulletGO.GetComponent<BulletBehaviour>();

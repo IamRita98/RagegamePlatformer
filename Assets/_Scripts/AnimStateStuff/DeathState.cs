@@ -11,6 +11,7 @@ public class DeathState : State
     private bool diedInAir;
     public override void Enter()
     {
+        sm.StopCoroutine("ExitShooting");
         downSr.enabled = false;
         upSr.enabled = false;
         wholeSr.enabled = true;

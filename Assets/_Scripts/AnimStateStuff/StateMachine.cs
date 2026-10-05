@@ -148,17 +148,18 @@ public class StateMachine : MonoBehaviour
         shooting = false;
 
         yield return new WaitForSeconds(0.1f);
-
-        if(currentState == wallClingState)
+        if (!isDead)
         {
-            wholeAnim.Play("WholeWallCling");
+            if (currentState == wallClingState)
+            {
+                wholeAnim.Play("WholeWallCling");
+            }
+            else
+            {
+                upSr.enabled = true;
+                wholeSr.enabled = false;
+            }
         }
-        else
-        {
-            upSr.enabled = true;
-            wholeSr.enabled = false;
-        }
-
     }
 
     public IEnumerator Respawn()
