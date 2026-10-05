@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8235284278690357215}
   - component: {fileID: 3825330042347909664}
   m_Layer: 0
-  m_Name: Behavior
+  m_Name: StateMachine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -51,22 +51,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pc: {fileID: 5307985890243477789}
+  respawnDelay: 2
+  respawnPos: {x: 0, y: 0}
   behaviors: {fileID: 1720193888519920256}
   upSr: {fileID: 794943488005338020}
   downSr: {fileID: 4479677437882771559}
-  overlaySr: {fileID: 0}
+  wholeSr: {fileID: 5296475761448971160}
   upAnim: {fileID: 4566540641057048189}
   downAnim: {fileID: 1727894366649416698}
-  overlayAnim: {fileID: 0}
+  wholeAnim: {fileID: 421115930793151167}
   stateDebugText: {fileID: 5044649638870685459}
   currentState: {fileID: 0}
   lastState: {fileID: 0}
+  isDead: 0
   idleState: {fileID: 1947959026474134708}
   runState: {fileID: 7503989940035920576}
   inAirState: {fileID: 7671510148127246371}
   landState: {fileID: 6990429630440289396}
   wallClingState: {fileID: 1874941225645264559}
   deathState: {fileID: 1716992398386924647}
+  shooting: 0
 --- !u!1 &2185156301414073878
 GameObject:
   m_ObjectHideFlags: 0
@@ -77,7 +81,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7458608189830408638}
   m_Layer: 0
-  m_Name: AnimationHolders
+  m_Name: SpriteRenderers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -150,12 +154,12 @@ MonoBehaviour:
   pc: {fileID: 0}
   upAnim: {fileID: 0}
   downAnim: {fileID: 0}
-  overlayAnim: {fileID: 0}
+  wholeAnim: {fileID: 0}
   upSr: {fileID: 0}
   downSr: {fileID: 0}
-  overlaySr: {fileID: 0}
+  wholeSr: {fileID: 0}
   animActive: 0
-  landing: {fileID: 0}
+  landing: {fileID: 7400000, guid: a8e7ade15560c6d479ed864dd71044cb, type: 2}
 --- !u!1 &2302754570505802422
 GameObject:
   m_ObjectHideFlags: 0
@@ -205,13 +209,14 @@ MonoBehaviour:
   pc: {fileID: 0}
   upAnim: {fileID: 0}
   downAnim: {fileID: 0}
-  overlayAnim: {fileID: 0}
+  wholeAnim: {fileID: 0}
   upSr: {fileID: 0}
   downSr: {fileID: 0}
-  overlaySr: {fileID: 0}
+  wholeSr: {fileID: 0}
   animActive: 0
-  inAirUp: {fileID: 0}
-  inAirDown: {fileID: 0}
+  inAirUp: {fileID: 7400000, guid: c213e7683b6dd4844912248a9a44c15d, type: 2}
+  inAirDown: {fileID: 7400000, guid: 2f6d29ca02973ab4fb37343b6a5a6e42, type: 2}
+  velRange: 20
 --- !u!1 &3051499466230384201
 GameObject:
   m_ObjectHideFlags: 0
@@ -261,13 +266,13 @@ MonoBehaviour:
   pc: {fileID: 0}
   upAnim: {fileID: 0}
   downAnim: {fileID: 0}
-  overlayAnim: {fileID: 0}
+  wholeAnim: {fileID: 0}
   upSr: {fileID: 0}
   downSr: {fileID: 0}
-  overlaySr: {fileID: 0}
+  wholeSr: {fileID: 0}
   animActive: 0
-  runUp: {fileID: 0}
-  runDown: {fileID: 0}
+  runUp: {fileID: 7400000, guid: 8d5a98ad91fc9a14ab54431536234b21, type: 2}
+  runDown: {fileID: 7400000, guid: 4d36590479470cd419d5034555fa4536, type: 2}
 --- !u!1 &4016614442932524084
 GameObject:
   m_ObjectHideFlags: 0
@@ -293,7 +298,7 @@ Transform:
   m_GameObject: {fileID: 4016614442932524084}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.565, z: 0}
+  m_LocalPosition: {x: 0, y: -1.41, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -311,7 +316,7 @@ GameObject:
   m_Layer: 0
   m_Name: GunPos
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 3443629218296621865, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -324,7 +329,7 @@ Transform:
   m_GameObject: {fileID: 5534634232922459522}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.001, z: 0}
+  m_LocalPosition: {x: 0, y: -0.15, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -390,20 +395,30 @@ MonoBehaviour:
   lingeringAirTime: 0.1
   gravityScaling: 0
   maxJumps: 1
-  wallJumpForce: 8
-  wallJumpHorizontalForce: 8
+  jumpPressed: 0
+  wallJumpForce: 10
+  wallJumpHorizontalForce: 25
   wallCheckDistance: 0.6
-  fireRate: 0.6
+  fireRate: 0.5
   gunPos: {fileID: 5534634232922459522}
   bullet: {fileID: 1654296017511337108, guid: 023c667aaca56da459bd86ba7685602d, type: 3}
+  gunOnCD: 0
   bounceVel: 3
-  rb: {fileID: 0}
-  spriteRenderersList: []
+  rb: {fileID: 1865473126571565143}
+  horizontalMovement: 0
+  isTouchingWall: 0
+  wallDirection: 0
+  spriteRenderersList:
+  - {fileID: 5296475761448971160}
+  - {fileID: 794943488005338020}
+  - {fileID: 4479677437882771559}
   isGrounded: 0
   groundCollPos: {fileID: 4976538958827232196}
   groundCheckBoxSize: {x: 0.4, y: 0.4, z: 0}
   objectsUnderFeet: []
+  aimingUp: 0
   isFacingRight: 0
+  sm: {fileID: 3825330042347909664}
 --- !u!50 &1865473126571565143
 Rigidbody2D:
   serializedVersion: 4
@@ -440,7 +455,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 5893782354447054451}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: ae21ebacdc647834381067480a0f82db, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -525,13 +540,13 @@ MonoBehaviour:
   pc: {fileID: 0}
   upAnim: {fileID: 0}
   downAnim: {fileID: 0}
-  overlayAnim: {fileID: 0}
+  wholeAnim: {fileID: 0}
   upSr: {fileID: 0}
   downSr: {fileID: 0}
-  overlaySr: {fileID: 0}
+  wholeSr: {fileID: 0}
   animActive: 0
-  idleUp: {fileID: 0}
-  idleDown: {fileID: 0}
+  idleUp: {fileID: 7400000, guid: c80eb5417a4bf104483fbb89e2321003, type: 2}
+  idleDown: {fileID: 7400000, guid: aa6f2ee6a6e4ab749a1062ebc1ac128a, type: 2}
 --- !u!1 &6938830849972579602
 GameObject:
   m_ObjectHideFlags: 0
@@ -581,12 +596,13 @@ MonoBehaviour:
   pc: {fileID: 0}
   upAnim: {fileID: 0}
   downAnim: {fileID: 0}
-  overlayAnim: {fileID: 0}
+  wholeAnim: {fileID: 0}
   upSr: {fileID: 0}
   downSr: {fileID: 0}
-  overlaySr: {fileID: 0}
+  wholeSr: {fileID: 0}
   animActive: 0
-  death: {fileID: 0}
+  death: {fileID: 7400000, guid: 2d5fd0e4782c9304ba5a61a63449430b, type: 2}
+  deathInAir: {fileID: 7400000, guid: 4b8622d38a1b1b441ac465dcfab5eea2, type: 2}
 --- !u!1 &6951669384730341778
 GameObject:
   m_ObjectHideFlags: 0
@@ -636,13 +652,13 @@ MonoBehaviour:
   pc: {fileID: 0}
   upAnim: {fileID: 0}
   downAnim: {fileID: 0}
-  overlayAnim: {fileID: 0}
+  wholeAnim: {fileID: 0}
   upSr: {fileID: 0}
   downSr: {fileID: 0}
-  overlaySr: {fileID: 0}
+  wholeSr: {fileID: 0}
   animActive: 0
-  wallCling: {fileID: 0}
-  wallClingShoot: {fileID: 0}
+  wallCling: {fileID: 7400000, guid: 4b5df6cb1bf09ef4ebec21675361f01b, type: 2}
+  wallClingShoot: {fileID: 7400000, guid: 2a651e5ee2101964a9b0f468af58b788, type: 2}
 --- !u!1 &7570033539613013240
 GameObject:
   m_ObjectHideFlags: 0
@@ -655,7 +671,7 @@ GameObject:
   - component: {fileID: 5296475761448971160}
   - component: {fileID: 421115930793151167}
   m_Layer: 0
-  m_Name: Overlay
+  m_Name: Whole
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -683,7 +699,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7570033539613013240}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
