@@ -6,11 +6,14 @@ public class KillZone : MonoBehaviour
 {
     [SerializeField] private Transform spawnPoint;
 
+    private PlayerController pc;
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            other.transform.position = spawnPoint.position;
+            pc = other.GetComponent<PlayerController>();
+            pc.sm.isDead = true;
         }
     }
 }
