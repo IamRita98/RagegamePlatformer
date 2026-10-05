@@ -7,19 +7,25 @@ public class EnemyMovement : MonoBehaviour
 
     [SerializeField] private float movementSpeed;
     [SerializeField] private int startingDirection = 1;
-    [SerializeField] private float wallCheckDistance = 0.6f;
+    [SerializeField] private Transform groundCheck;
+    [SerializeField] private LayerMask groundLayer;
 
     // Whether or not this enemy is killed when jumped on, shot at, both, or neither
     public bool isStompable;
     public bool isShootable;
+    public bool walksOff;
 
+    private float wallCheckDistance = 1f;
     private bool isTouchingWall;
+    private bool isGroundAhead;
     private int currentDirection;
     Rigidbody2D rb;
+    SpriteRenderer spriteRenderer;
 
 
     private void Awake()
     {
+        spriteRenderer = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         currentDirection = startingDirection;
     }
@@ -29,40 +35,68 @@ public class EnemyMovement : MonoBehaviour
         CheckForWall();
         if (isTouchingWall)
         {
-            currentDirection *= -1;
+            ChangeDirection();
         }
 
-        rb.velocity = new Vector3(currentDirection * movementSpeed, rb.velocity.y, 0);
+        if (!walksOff)
+        {
+            CheckForFloor();
+            if (!isGroundAhead)
+            {
+                ChangeDirection();
+            }
+        }
+
+        rb.velocity = new Vector2(currentDirection * movementSpeed, rb.velocity.y);
     }
 
     // I stole this from PlayerController script
     void CheckForWall()
     {
-        isTouchingWall = false;
+        Vector2 direction = currentDirection == 1
+            ? Vector2.right
+            : Vector2.left;
 
-        // Check right
-        //RaycastHit rightHit;
-
-        if (Physics2D.Raycast(
+        RaycastHit2D hit = Physics2D.Raycast(
             transform.position,
-            Vector3.right,
+            direction,
             wallCheckDistance,
-            LayerMask.GetMask("Ground")))
-        {
-            isTouchingWall = true;
-            return;
-        }
+            LayerMask.GetMask("Ground")
+        );
 
-        // Check left
-        //RaycastHit leftHit;
+        isTouchingWall = hit.collider != null;
 
-        if (Physics2D.Raycast(
+        Debug.DrawRay(
             transform.position,
-            Vector3.left,
+            direction * wallCheckDistance,
+            Color.red
+        );
+    }
+
+    void CheckForFloor()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(
+            groundCheck.position,
+            Vector2.down,
             wallCheckDistance,
-            LayerMask.GetMask("Ground")))
-        {
-            isTouchingWall = true;
-        }
+            groundLayer
+        );
+
+        isGroundAhead = hit.collider != null;
+
+        Debug.DrawRay(
+            groundCheck.position,
+            Vector2.down * wallCheckDistance,
+            Color.green
+        );
+    }
+
+    void ChangeDirection()
+    {
+        currentDirection *= -1;
+        if (currentDirection == 1)
+            spriteRenderer.flipX = true;
+        else
+            spriteRenderer.flipX = false;
     }
 }

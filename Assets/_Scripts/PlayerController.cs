@@ -60,8 +60,6 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public bool aimingUp;
     [HideInInspector] public bool isFacingRight;
 
-    private bool stomped = false;
-
     [Header("State Machine")]
     public StateMachine sm;
     public bool IsDead => sm.currentState == sm.deathState;
@@ -331,13 +329,6 @@ public class PlayerController : MonoBehaviour
     // Checks if player is jumping on an enemy
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Enemy") && collision.GetComponent<EnemyMovement>().isStompable)
-        {
-            Destroy(collision.gameObject);
-            rb.velocity = new Vector3(rb.velocity.x, bounceVel);
-            stomped = true;
-        }
-
         if (collision.CompareTag("KillPlayer"))
         {
             sm.isDead = true;
@@ -346,13 +337,31 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Enemy") && !stomped)
-        {
-            Destroy(this.gameObject);
-        }
-        else if (stomped)
-            stomped = false;
-    }
+        EnemyMovement enemy =
+            collision.gameObject.GetComponentInParent<EnemyMovement>();
 
+        if (enemy == null)
+            return;
+
+        bool playerIsAboveEnemy =
+            transform.position.y > enemy.transform.position.y;
+
+        bool playerIsFalling =
+            rb.velocity.y <= 0;
+
+        if (playerIsAboveEnemy && playerIsFalling && enemy.isStompable)
+        {
+            Destroy(enemy.gameObject);
+
+            rb.velocity = new Vector2(
+                rb.velocity.x,
+                bounceVel
+            );
+        }
+        else
+        {
+            sm.isDead = true;
+        }
+    }
 
 }
