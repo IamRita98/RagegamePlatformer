@@ -8,11 +8,11 @@ public class KillZone : MonoBehaviour
 
     private PlayerController pc;
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (other.CompareTag("Player"))
+        if (collision.CompareTag("Player"))
         {
-            pc = other.GetComponent<PlayerController>();
+            pc = collision.GetComponent<PlayerController>();
             pc.sm.isDead = true;
         }
     }
