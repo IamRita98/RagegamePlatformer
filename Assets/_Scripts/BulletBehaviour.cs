@@ -8,7 +8,7 @@ public class BulletBehaviour : MonoBehaviour
     [SerializeField] float lifeTime;
     float timer;
     public float dir;
-
+    public Vector2 direction;
     private void Awake()
     {
         timer = 0;
@@ -18,7 +18,7 @@ public class BulletBehaviour : MonoBehaviour
     {
         timer += Time.deltaTime;
         if(timer > lifeTime) Destroy(gameObject);
-        transform.Translate(new Vector3(dir, 0, 0) * bulletSpeed * Time.deltaTime);
+        transform.Translate(direction * bulletSpeed * Time.deltaTime);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

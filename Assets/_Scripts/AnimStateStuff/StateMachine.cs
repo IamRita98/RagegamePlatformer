@@ -8,21 +8,27 @@ public class StateMachine : MonoBehaviour
     [Header("Player Controller")]
     public PlayerController pc;
 
+    [Header("Respawning")]
+    public float respawnDelay;
+    public Vector2 respawnPos;
+
     [Header("States Holder GameObject")]
     public GameObject behaviors;
 
     [Header("Animation")]
     public SpriteRenderer upSr;
     public SpriteRenderer downSr;
+    public SpriteRenderer wholeSr;
     public Animator upAnim;
     public Animator downAnim;
-
+    public Animator wholeAnim;
 
     [Header("States")]
 
     public TextMeshPro stateDebugText;
     public State currentState;
     public State lastState;
+    [HideInInspector]public bool isDead;
 
     [Header("")]
     public IdleState idleState;
@@ -32,56 +38,136 @@ public class StateMachine : MonoBehaviour
     public WallClingState wallClingState;
     public DeathState deathState;
 
+    public bool shooting;
     private void Awake()
     {
         State[] states = behaviors.GetComponentsInChildren<State>();
 
         foreach (State newState in states)
         {
-            newState.DeclareState(this, pc.rb, pc, upAnim, downAnim, downSr);
+            newState.DeclareState(this, pc.rb, pc, upAnim, downAnim, wholeAnim, upSr, downSr, wholeSr);
         }
 
         currentState = idleState;
+        respawnPos = transform.position;
     }
 
     private void Update()
     {
-        FlipSrX(upSr);
-        FlipSrX(downSr);
+        Shoot();
 
-        if (!pc.isGrounded)
-        {
-            currentState = inAirState;
-        }
+        currentState.Do();
 
         UpdateState();
-        stateDebugText.text = currentState.name;
     }
     void UpdateState()
     {
         lastState = currentState;
 
-        if(lastState != currentState || currentState.isComplete)
+        if (isDead)
+        {
+            currentState = deathState;
+        }
+        else if (!pc.isGrounded)
+        {
+            if (pc.isTouchingWall)
+            {
+                currentState = wallClingState;
+            }
+            else
+            {
+                currentState = inAirState;
+            }
+        }
+        else if (currentState != landState && pc.horizontalMovement != 0)
+        {
+            currentState = runState;
+        }
+        else if ((currentState == landState && currentState.isComplete))
+        {
+            if (pc.horizontalMovement != 0)
+            {
+                currentState = runState;
+            }
+            else
+            {
+                currentState = idleState;
+            }
+        }
+
+        if (lastState != currentState || currentState.isComplete)
         {
             lastState.Exit();
             currentState.InitializeState();
             currentState.Enter();
         }
+        stateDebugText.text = currentState.name;
     }
 
-    void FlipSrX(SpriteRenderer sr)
+    void Shoot()
     {
-        if (pc.isFacingRight)
+        if (pc.gunOnCD && !shooting)
         {
-            sr.flipX = false;
+            EnterShooting();
+        }
+
+        if(currentState != landState && shooting && !pc.gunOnCD)
+        {
+            StartCoroutine("ExitShooting");
+        }
+    }
+    
+    void EnterShooting()
+    {
+        StopCoroutine("ExitShooting");
+
+        shooting = true;
+
+        if(currentState == wallClingState)
+        {
+            wholeAnim.Play("WholeWallShoot",0,0f);
         }
         else
         {
-            sr.flipX = true;
+            upSr.enabled = false;
+            wholeSr.enabled = true;
+
+            if (pc.aimingUp)
+            {
+                wholeAnim.Play("WholeShootUp", 0, 0f);
+            }
+            else
+            {
+                wholeAnim.Play("WholeShoot", 0, 0f);
+            }
         }
     }
 
+    public IEnumerator ExitShooting()
+    {
+        shooting = false;
 
+        yield return new WaitForSeconds(0.1f);
 
+        if(currentState == wallClingState)
+        {
+            wholeAnim.Play("WholeWallCling");
+        }
+        else
+        {
+            upSr.enabled = true;
+            wholeSr.enabled = false;
+        }
 
+    }
+
+    public IEnumerator Respawn()
+    {
+        yield return new WaitForSeconds(respawnDelay);
+        pc.transform.position = respawnPos;
+        isDead = false;
+        currentState.ForceExit();
+        currentState = idleState;
+
+    }
 }

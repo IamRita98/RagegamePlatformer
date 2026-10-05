@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour
     // Double jump
     [SerializeField] private int maxJumps = 1;
     private int jumpsRemaining;
+    [HideInInspector] public bool jumpPressed;
 
     // Wall jump
     [SerializeField] private float wallJumpForce = 8f;
@@ -32,18 +33,21 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float fireRate;
     [SerializeField] private GameObject gunPos;
     [SerializeField] GameObject bullet;
-    bool gunOnCD;
+    [HideInInspector] public bool gunOnCD;
     float gunTimer;
 
     [Header("Enemy")]
     [SerializeField] float bounceVel = 3f;
 
     public Rigidbody2D rb;
-    float horizontalMovement;
+    [HideInInspector] public float horizontalMovement;
 
 
-    bool isTouchingWall;
-    int wallDirection;
+    public bool isTouchingWall;
+    [HideInInspector] public int wallDirection;
+
+    [Header("Sprite renderers")]
+    public List<SpriteRenderer> spriteRenderersList;
 
     [Header("Ground Check")]
     public bool isGrounded;
@@ -53,13 +57,17 @@ public class PlayerController : MonoBehaviour
     public List<Collider2D> objectsUnderFeet = new List<Collider2D>();
 
     float directionInput;
-    public bool isFacingRight;
+    [HideInInspector] public bool aimingUp;
+    [HideInInspector] public bool isFacingRight;
 
     private bool stomped = false;
 
+    [Header("State Machine")]
+    public StateMachine sm;
+    public bool IsDead => sm.currentState == sm.deathState;
+
     private void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
         jumpsRemaining = maxJumps;
     }
 
@@ -75,12 +83,12 @@ public class PlayerController : MonoBehaviour
             LayerMask.GetMask("Ground")
         ).ToList();
 
-        CheckForWall();
+        if(!IsDead) CheckForWall();
     }
 
     private void Update()
     {
-        CheckForInputs();
+        if(!IsDead) CheckForInputs();
         CheckForGround();
         if (gunOnCD) gunTimer += Time.deltaTime;
         if (gunTimer >= fireRate) gunOnCD = false;
@@ -89,22 +97,65 @@ public class PlayerController : MonoBehaviour
 
     void CheckForInputs()
     {
+        #region AIM UP
+        Vector2 gunLocPos = gunPos.transform.localPosition;
+        if (Input.GetAxis("Vertical") > 0 && sm.currentState != sm.wallClingState)
+        {
+            aimingUp = true;
+            gunLocPos.y = 0.25f;
+            if (isFacingRight)
+            {
+                gunLocPos.x = -0.2f;
+            }
+            else
+            {
+                gunLocPos.x = 0.2f;
+            }
+        }
+        else
+        {
+            aimingUp = false;
+            gunLocPos.y = 0f;
+            gunLocPos.x = 0f;
+        }
+        gunPos.transform.localPosition = gunLocPos;
+
+        #endregion
+
         #region LEFT/RIGHT
         directionInput = Input.GetAxisRaw("Horizontal");
         horizontalMovement = directionInput * moveSpeed;
         if (directionInput == 1)
         {
-            isFacingRight = true;
+            if(sm.currentState == sm.wallClingState)
+            {
+                isFacingRight = false;
+            }
+            else
+            {
+                isFacingRight = true;
+                FlipSrX();
+            }
         }
         else if(directionInput == -1)
         {
-            isFacingRight = false;
+            if (sm.currentState == sm.wallClingState)
+            {
+                isFacingRight = true;
+            }
+            else
+            {
+                isFacingRight = false;
+                FlipSrX();
+            }
+
         }
         #endregion
 
         #region JUMP
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetAxis("Jump") > 0 && !jumpPressed)
         {
+            jumpPressed = true;
             // Wall jump takes priority when touching a wall
             if (!isGrounded && isTouchingWall)
             {
@@ -122,15 +173,35 @@ public class PlayerController : MonoBehaviour
                 DoubleJump();
             }
         }
+
+        if(Input.GetAxis("Jump") == 0)
+        {
+            jumpPressed = false;
+        }
         #endregion
 
         #region GUN
-        if (Input.GetKeyDown(KeyCode.Z) && !gunOnCD)
+        if (sm.currentState != sm.landState && Input.GetKeyDown(KeyCode.Z) && !gunOnCD)
         {
             GameObject bulletGO = Instantiate(bullet, gunPos.transform.position, Quaternion.identity);
             BulletBehaviour bBehaviour = bulletGO.GetComponent<BulletBehaviour>();
-            if (isFacingRight) bBehaviour.dir = 1;
-            else bBehaviour.dir = -1;
+
+            Vector2 direction = Vector2.zero;
+
+            if (aimingUp && sm.currentState != sm.wallClingState)
+            {
+                direction.y = 1;
+            }
+            else if (isFacingRight)
+            {
+                direction.x = 1;
+            }
+            else if (!isFacingRight)
+            {
+                direction.x = -1;
+            }
+            bBehaviour.direction = direction;
+
             gunOnCD = true;
             gunTimer = 0;
         }
@@ -146,13 +217,16 @@ public class PlayerController : MonoBehaviour
 
     void Gravity()
     {
-        float yVel = rb.velocity.y;
-        
-        if (Mathf.Abs(yVel) < lingeringAirTime) gravityScaling = lingerAtApexGravity;
-        else if (yVel > 0) gravityScaling = risingGravity;
-        else  gravityScaling =  fallingGravity;
+        if(sm.currentState != sm.wallClingState)
+        {
+            float yVel = rb.velocity.y;
 
-        rb.gravityScale = gravityScaling;
+            if (Mathf.Abs(yVel) < lingeringAirTime) gravityScaling = lingerAtApexGravity;
+            else if (yVel > 0) gravityScaling = risingGravity;
+            else gravityScaling = fallingGravity;
+
+            rb.gravityScale = gravityScaling;
+        }
         //rb.AddForce(Vector3.up * Physics.gravity.y * gravityScaling);
 
         //Prob want to set a max fall speed here as well
@@ -192,6 +266,8 @@ public class PlayerController : MonoBehaviour
             wallJumpForce,
             0
         );
+
+
     }
 
     void CheckForGround()
@@ -216,34 +292,42 @@ public class PlayerController : MonoBehaviour
         wallDirection = 0;
 
         // Check right
-        RaycastHit rightHit;
 
-        if (Physics.Raycast(
-            transform.position,
-            Vector3.right,
-            out rightHit,
-            wallCheckDistance,
-            LayerMask.GetMask("Ground")))
+        Vector2 direction = Vector2.zero;
+        direction.x = isFacingRight ? 1 : -1;
+        
+        if (Physics2D.Raycast(transform.position, Vector2.right, wallCheckDistance, LayerMask.GetMask("Vines")))
         {
             isTouchingWall = true;
             wallDirection = 1;
             return;
         }
 
-        // Check left
-        RaycastHit leftHit;
-
-        if (Physics.Raycast(
-            transform.position,
-            Vector3.left,
-            out leftHit,
-            wallCheckDistance,
-            LayerMask.GetMask("Ground")))
+        //Check left
+        if (Physics2D.Raycast(transform.position, Vector2.left, wallCheckDistance, LayerMask.GetMask("Vines")))
         {
             isTouchingWall = true;
             wallDirection = -1;
+            return;
         }
     }
+
+    public void FlipSrX()
+    {
+        foreach (SpriteRenderer sr in spriteRenderersList)
+        {
+            if (isFacingRight)
+            {
+                sr.flipX = false;
+            }
+            else
+            {
+                sr.flipX = true;
+            }
+        }
+    }
+
+
 
     // Checks if player is jumping on an enemy
     private void OnTriggerEnter2D(Collider2D collision)
@@ -253,6 +337,11 @@ public class PlayerController : MonoBehaviour
             Destroy(collision.gameObject);
             rb.velocity = new Vector3(rb.velocity.x, bounceVel);
             stomped = true;
+        }
+
+        if (collision.CompareTag("KillPlayer"))
+        {
+            sm.isDead = true;
         }
     }
 
@@ -265,4 +354,6 @@ public class PlayerController : MonoBehaviour
         else if (stomped)
             stomped = false;
     }
+
+
 }

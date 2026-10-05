@@ -11,7 +11,9 @@ public class IdleState : State
 
     public override void Enter()
     {
-
+        Debug.Log("entered idle");
+        upAnim.Play(idleUp.name);
+        downAnim.Play(idleDown.name);
     }
     public override void Do()
     {
