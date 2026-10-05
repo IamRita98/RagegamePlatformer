@@ -220,7 +220,6 @@ public class PlayerController : MonoBehaviour
         if(sm.currentState != sm.wallClingState)
         {
             float yVel = rb.velocity.y;
-
             if (Mathf.Abs(yVel) < lingeringAirTime) gravityScaling = lingerAtApexGravity;
             else if (yVel > 0) gravityScaling = risingGravity;
             else gravityScaling = fallingGravity;
