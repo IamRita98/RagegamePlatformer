@@ -49,8 +49,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletSpeed: 50
   lifeTime: 0.6
-  trailTail: {fileID: 8266418173587509419}
   dir: 0
+  direction: {x: 0, y: 0}
 --- !u!61 &8817572139346665322
 BoxCollider2D:
   m_ObjectHideFlags: 0
