@@ -49,7 +49,6 @@ public class EnemyMovement : MonoBehaviour
             wallCheckDistance,
             LayerMask.GetMask("Ground")))
         {
-            print("Test");
             isTouchingWall = true;
             return;
         }
