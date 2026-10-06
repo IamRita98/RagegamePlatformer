@@ -7,7 +7,7 @@ public class BulletBehaviour : MonoBehaviour
     [SerializeField] float bulletSpeed;
     [SerializeField] float lifeTime;
     float timer;
-    public float dir;
+    //public float dir;
     public Vector2 direction;
     private void Awake()
     {
@@ -23,6 +23,10 @@ public class BulletBehaviour : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Ground")) Destroy(gameObject);
+        {
+            print("Check");
+        }
         if (collision.CompareTag("Enemy") && collision.GetComponent<EnemyMovement>().isShootable)
             collision.gameObject.SetActive(false);
     }
