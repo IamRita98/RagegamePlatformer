@@ -27,27 +27,33 @@ public class EnemyMovement : MonoBehaviour
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
+
         currentDirection = startingDirection;
+
+        groundCheck.localPosition = new Vector2(
+            Mathf.Abs(groundCheck.localPosition.x) * currentDirection,
+            groundCheck.localPosition.y
+        );
+
+        spriteRenderer.flipX = currentDirection == 1;
     }
 
     private void FixedUpdate()
     {
         CheckForWall();
-        if (isTouchingWall)
+        CheckForFloor();
+
+        bool lavaAhead = CheckForLava();
+
+        if (isTouchingWall || lavaAhead || (!walksOff && !isGroundAhead))
         {
             ChangeDirection();
         }
 
-        if (!walksOff)
-        {
-            CheckForFloor();
-            if (!isGroundAhead)
-            {
-                ChangeDirection();
-            }
-        }
-
-        rb.velocity = new Vector2(currentDirection * movementSpeed, rb.velocity.y);
+        rb.velocity = new Vector2(
+            currentDirection * movementSpeed,
+            rb.velocity.y
+        );
     }
 
     // I stole this from PlayerController script
@@ -91,12 +97,40 @@ public class EnemyMovement : MonoBehaviour
         );
     }
 
+    bool CheckForLava()
+    {
+        RaycastHit2D[] hits = Physics2D.RaycastAll(
+            groundCheck.position,
+            Vector2.down,
+            wallCheckDistance
+        );
+
+        foreach (RaycastHit2D hit in hits)
+        {
+            if (hit.collider.CompareTag("Lava"))
+                return true;
+        }
+
+        return false;
+    }
+
     void ChangeDirection()
     {
         currentDirection *= -1;
-        if (currentDirection == 1)
-            spriteRenderer.flipX = true;
-        else
-            spriteRenderer.flipX = false;
+
+        spriteRenderer.flipX = currentDirection == 1;
+
+        groundCheck.localPosition = new Vector2(
+            Mathf.Abs(groundCheck.localPosition.x) * currentDirection,
+            groundCheck.localPosition.y
+        );
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            ChangeDirection();
+        }
     }
 }
