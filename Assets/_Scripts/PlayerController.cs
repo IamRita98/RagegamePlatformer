@@ -351,7 +351,7 @@ public class PlayerController : MonoBehaviour
 
         if (playerIsAboveEnemy && playerIsFalling && enemy.isStompable)
         {
-            Destroy(enemy.gameObject);
+            enemy.gameObject.SetActive(false);
 
             rb.velocity = new Vector2(
                 rb.velocity.x,

@@ -138,7 +138,7 @@ GameObject:
   - component: {fileID: 447715978}
   m_Layer: 3
   m_Name: Lava
-  m_TagString: Untagged
+  m_TagString: Lava
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7621,6 +7621,10 @@ PrefabInstance:
     - target: {fileID: 1946490050320735265, guid: 7a142420bedb4dc46a6318369cccff67, type: 3}
       propertyPath: m_Name
       value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 3023561168447282135, guid: 7a142420bedb4dc46a6318369cccff67, type: 3}
+      propertyPath: walksOff
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7009144812500944889, guid: 7a142420bedb4dc46a6318369cccff67, type: 3}
       propertyPath: m_LocalPosition.x
