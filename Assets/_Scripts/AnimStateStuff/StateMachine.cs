@@ -177,6 +177,7 @@ public class StateMachine : MonoBehaviour
 
         onPlayerRespawn.Invoke();
 
+        pc.rb.velocity = Vector2.zero;
 
         downSr.enabled = true;
         upSr.enabled = true;
