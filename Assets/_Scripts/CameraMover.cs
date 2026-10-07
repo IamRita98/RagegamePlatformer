@@ -20,29 +20,21 @@ public class CameraMover : MonoBehaviour
     public void NextCameraPosition()
     {
         idx++;
-        StartCoroutine(MoveTrap(new Vector3(
+        StartCoroutine(MoveCamera(new Vector3(
             cameraPositions[idx].position.x,
             cameraPositions[idx].position.y,
             -10)));
-        /*Camera.main.transform.position = new Vector3(
-            cameraPositions[idx].position.x,
-            cameraPositions[idx].position.y,
-            -10);*/
     }
 
     public void PrevCameraPosition()
     {
         idx--;
-        StartCoroutine(MoveTrap(new Vector3(
+        StartCoroutine(MoveCamera(new Vector3(
             cameraPositions[idx].position.x,
             cameraPositions[idx].position.y,
             -10)));
-        /*Camera.main.transform.position = new Vector3(
-            cameraPositions[idx].position.x,
-            cameraPositions[idx].position.y,
-            -10);*/
     }
-    private IEnumerator MoveTrap(Vector3 endPos)
+    private IEnumerator MoveCamera(Vector3 endPos)
     {
         Vector3 startPos = transform.localPosition;
 
