@@ -346,10 +346,7 @@ public class PlayerController : MonoBehaviour
         bool playerIsAboveEnemy =
             transform.position.y > enemy.transform.position.y;
 
-        bool playerIsFalling =
-            rb.velocity.y <= 0;
-
-        if (playerIsAboveEnemy && playerIsFalling && enemy.isStompable)
+        if (playerIsAboveEnemy && sm.currentState == sm.inAirState && enemy.isStompable)
         {
             enemy.gameObject.SetActive(false);
 
