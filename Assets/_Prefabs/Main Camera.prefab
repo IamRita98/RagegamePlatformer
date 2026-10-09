@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5352103389418840576}
   - component: {fileID: 6029357713210616811}
+  - component: {fileID: -2656594889720057788}
   - component: {fileID: 6268043824339190043}
   - component: {fileID: 2732897762063589933}
   m_Layer: 0
@@ -50,7 +51,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  camSpeed: 0.5
+  camSpeed: 0.3
   movementCurve:
     serializedVersion: 2
     m_Curve:
@@ -75,6 +76,20 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &-2656594889720057788
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3386248375218690848}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c5024e77dfc69547ba2628ff588b86a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nextCheckpointKeybind: 46
+  previousCheckpointKeybind: 44
 --- !u!20 &6268043824339190043
 Camera:
   m_ObjectHideFlags: 0
