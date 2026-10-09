@@ -7,6 +7,7 @@ using UnityEngine.Events;
 
 public class StateMachine : MonoBehaviour
 {
+    public static StateMachine Instance;
     [Header("Player Controller")]
     public PlayerController pc;
 
@@ -45,6 +46,8 @@ public class StateMachine : MonoBehaviour
     public UnityEvent onPlayerRespawn;
     private void Awake()
     {
+        if (Instance == null) Instance = this;
+        else Destroy(this);
         State[] states = behaviors.GetComponentsInChildren<State>();
 
         foreach (State newState in states)
