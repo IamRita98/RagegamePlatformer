@@ -6,6 +6,7 @@ using UnityEngine.SubsystemsImplementation;
 
 public class PlayerController : MonoBehaviour
 {
+    public static PlayerController Instance;
     [Header("Left/Right Movement")]
     [SerializeField] private float moveSpeed;
 
@@ -18,6 +19,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float lingeringAirTime; //This is not 1 to 1 of value to seconds, so play around w/ it
     private float defaultGravity = 1;
     [SerializeField] float gravityScaling;
+    
 
     // Double jump
     [SerializeField] private int maxJumps = 1;
@@ -28,6 +30,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float wallJumpForce = 8f;
     [SerializeField] private float wallJumpHorizontalForce = 8f;
     [SerializeField] private float wallCheckDistance = 0.6f;
+
+    public float deathVelocity;
 
     [Header("Gun")]
     [SerializeField] float fireRate;
@@ -66,6 +70,12 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
+        if (Instance == null) Instance = this;
+        else Destroy(this);
+    }
+
+    private void Start()
+    {
         jumpsRemaining = maxJumps;
     }
 
@@ -86,6 +96,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        Debug.Log(rb.velocity.magnitude);
         if(!IsDead) CheckForInputs();
         CheckForGround();
         if (gunOnCD) gunTimer += Time.deltaTime;
