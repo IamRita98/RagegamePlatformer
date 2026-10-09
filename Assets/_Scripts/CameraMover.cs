@@ -7,9 +7,9 @@ public class CameraMover : MonoBehaviour
 {
     static CameraMover Instance;
     public List<Transform> cameraPositions = new List<Transform>();
-    int idx = 0;
     public float camSpeed;
     public AnimationCurve movementCurve;
+    public int currentCamCheckpoint = 0;
 
     private void Awake()
     {
@@ -19,19 +19,19 @@ public class CameraMover : MonoBehaviour
 
     public void NextCameraPosition()
     {
-        idx++;
+        currentCamCheckpoint++;
         StartCoroutine(MoveCamera(new Vector3(
-            cameraPositions[idx].position.x,
-            cameraPositions[idx].position.y,
+            cameraPositions[currentCamCheckpoint].position.x,
+            cameraPositions[currentCamCheckpoint].position.y,
             -10)));
     }
 
     public void PrevCameraPosition()
     {
-        idx--;
+        currentCamCheckpoint--;
         StartCoroutine(MoveCamera(new Vector3(
-            cameraPositions[idx].position.x,
-            cameraPositions[idx].position.y,
+            cameraPositions[currentCamCheckpoint].position.x,
+            cameraPositions[currentCamCheckpoint].position.y,
             -10)));
     }
     private IEnumerator MoveCamera(Vector3 endPos)

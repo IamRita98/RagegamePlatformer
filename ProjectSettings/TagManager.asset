@@ -8,6 +8,7 @@ TagManager:
   - KillPlayer
   - Lava
   - Bullet
+  - Checkpoint
   layers:
   - Default
   - TransparentFX

@@ -96,7 +96,6 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(rb.velocity.magnitude);
         if(!IsDead) CheckForInputs();
         CheckForGround();
         if (gunOnCD) gunTimer += Time.deltaTime;
