@@ -22,6 +22,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float lingeringAirTime; //This is not 1 to 1 of value to seconds, so play around w/ it
     private float defaultGravity = 1;
     [SerializeField] float gravityScaling;
+    public bool launched = false;
+    float launchTimer;
+    [SerializeField]float jumpPadLockoutTimer;
     
 
     // Double jump
@@ -104,6 +107,10 @@ public class PlayerController : MonoBehaviour
         CheckForGround();
         if (gunOnCD) gunTimer += Time.deltaTime;
         if (gunTimer >= fireRate) gunOnCD = false;
+
+        print(launchTimer);
+        if (launched) launchTimer -= Time.deltaTime;
+        if (launchTimer <= 0) launched = false;
     }
 
 
@@ -245,15 +252,17 @@ public class PlayerController : MonoBehaviour
 
     void MovementPhysics()
     {
-        Vector3 vel = Vector3.zero;
+        Vector3 vel;
         vel.y = rb.velocity.y;
         if (isGrounded)
         {
+            if (launched) return;
             vel.x = Mathf.Lerp(rb.velocity.x, horizontalMovement, acceleration);
             rb.velocity = new Vector3(vel.x, vel.y, 0);
         }
         else
         {
+            if (launched) return;
             vel.x = Mathf.Lerp(rb.velocity.x, horizontalMovement, airControl);
             rb.velocity = new Vector3(vel.x, vel.y, 0);
         }
@@ -340,7 +349,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-
+    public void Launched()
+    {
+        launched = true;
+        launchTimer = jumpPadLockoutTimer;
+    }
 
     // Checks if player is jumping on an enemy
     private void OnTriggerEnter2D(Collider2D collision)
