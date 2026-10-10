@@ -108,7 +108,6 @@ public class PlayerController : MonoBehaviour
         if (gunOnCD) gunTimer += Time.deltaTime;
         if (gunTimer >= fireRate) gunOnCD = false;
 
-        print(launchTimer);
         if (launched) launchTimer -= Time.deltaTime;
         if (launchTimer <= 0) launched = false;
     }
