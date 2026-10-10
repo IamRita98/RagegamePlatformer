@@ -9,6 +9,9 @@ public class PlayerController : MonoBehaviour
     public static PlayerController Instance;
     [Header("Left/Right Movement")]
     [SerializeField] private float moveSpeed;
+    private float acceleration;
+    [SerializeField]private float defaultAcceleration;
+    [SerializeField]private float iceAcceleration = .01f;
 
     [Header("Jump & Gravity")]
     [SerializeField] private float jumpHeight;
@@ -77,6 +80,7 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         jumpsRemaining = maxJumps;
+        acceleration = defaultAcceleration;
     }
 
     private void FixedUpdate()
@@ -245,7 +249,7 @@ public class PlayerController : MonoBehaviour
         vel.y = rb.velocity.y;
         if (isGrounded)
         {
-            vel.x = horizontalMovement;
+            vel.x = Mathf.Lerp(rb.velocity.x, horizontalMovement, acceleration);
             rb.velocity = new Vector3(vel.x, vel.y, 0);
         }
         else
@@ -286,6 +290,8 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
+            if (objectsUnderFeet[0].gameObject.CompareTag("Ice")) acceleration = iceAcceleration;
+            else acceleration = defaultAcceleration;
             isGrounded = true;
             gravityScaling = defaultGravity;
             // Restore jumps when touching the ground
