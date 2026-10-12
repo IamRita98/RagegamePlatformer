@@ -29,15 +29,18 @@ public class PlayerController : MonoBehaviour
     float coyoteTimer = 0f;
     
 
-    // Double jump
+    [Header("Double Jump")]
     [SerializeField] private int maxJumps = 1;
     private int jumpsRemaining;
     [HideInInspector] public bool jumpPressed;
 
-    // Wall jump
+    [Header("Wall Jump")]
     [SerializeField] private float wallJumpForce = 8f;
     [SerializeField] private float wallJumpHorizontalForce = 8f;
     [SerializeField] private float wallCheckDistance = 0.6f;
+    [SerializeField] private float wallClingCoyoteTime = 0.15f;
+    public float wallClingCoyoteTimer = 0;
+    public bool startWallClingTimer = false;
 
     public float deathVelocity;
 
@@ -86,7 +89,6 @@ public class PlayerController : MonoBehaviour
     {
         jumpsRemaining = maxJumps;
         acceleration = defaultAcceleration;
-        coyoteTimer = coyoteTime;
     }
 
     private void FixedUpdate()
@@ -115,6 +117,8 @@ public class PlayerController : MonoBehaviour
         if (launchTimer <= 0) launched = false;
 
         if(!isGrounded) coyoteTimer -= Time.deltaTime;
+        if(startWallClingTimer && !isTouchingWall) wallClingCoyoteTimer -= Time.deltaTime;
+        if (wallClingCoyoteTimer <= 0) startWallClingTimer = false;
     }
 
 
@@ -180,7 +184,7 @@ public class PlayerController : MonoBehaviour
         {
             jumpPressed = true;
             // Wall jump takes priority when touching a wall
-            if (!isGrounded && isTouchingWall)
+            if (!isGrounded && wallClingCoyoteTimer > 0 )
             {
                 WallJump();
             }
@@ -290,6 +294,7 @@ public class PlayerController : MonoBehaviour
             wallJumpForce,
             0
         );
+        wallDirection = 0;
 
 
     }
@@ -316,7 +321,7 @@ public class PlayerController : MonoBehaviour
     void CheckForWall()
     {
         isTouchingWall = false;
-        wallDirection = 0;
+        //wallDirection = 0;
 
         // Check right
 
@@ -327,6 +332,8 @@ public class PlayerController : MonoBehaviour
         {
             isTouchingWall = true;
             wallDirection = 1;
+            wallClingCoyoteTimer = wallClingCoyoteTime;
+            startWallClingTimer = true;
             return;
         }
 
@@ -335,6 +342,8 @@ public class PlayerController : MonoBehaviour
         {
             isTouchingWall = true;
             wallDirection = -1;
+            wallClingCoyoteTimer = wallClingCoyoteTime;
+            startWallClingTimer = true;
             return;
         }
     }
