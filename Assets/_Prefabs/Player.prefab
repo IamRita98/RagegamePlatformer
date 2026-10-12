@@ -463,9 +463,12 @@ MonoBehaviour:
   jumpPadLockoutTimer: 0
   maxJumps: 1
   jumpPressed: 0
-  wallJumpForce: 10
-  wallJumpHorizontalForce: 25
+  wallJumpForce: 15
+  wallJumpHorizontalForce: 20
   wallCheckDistance: 0.6
+  wallClingCoyoteTime: 0.1
+  wallClingCoyoteTimer: 0
+  startWallClingTimer: 0
   deathVelocity: 40
   fireRate: 0.5
   gunPos: {fileID: 5534634232922459522}
