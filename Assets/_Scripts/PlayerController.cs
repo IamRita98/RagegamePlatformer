@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Jump & Gravity")]
     [SerializeField] private float jumpHeight;
+    [SerializeField] private float coyoteTime;
     [SerializeField] private float airControl = .2f;
     [SerializeField] private float risingGravity = 4;
     [SerializeField] private float fallingGravity = 7;
@@ -25,6 +26,7 @@ public class PlayerController : MonoBehaviour
     public bool launched = false;
     float launchTimer;
     [SerializeField]float jumpPadLockoutTimer;
+    float coyoteTimer = 0f;
     
 
     // Double jump
@@ -84,6 +86,7 @@ public class PlayerController : MonoBehaviour
     {
         jumpsRemaining = maxJumps;
         acceleration = defaultAcceleration;
+        coyoteTimer = coyoteTime;
     }
 
     private void FixedUpdate()
@@ -110,6 +113,8 @@ public class PlayerController : MonoBehaviour
 
         if (launched) launchTimer -= Time.deltaTime;
         if (launchTimer <= 0) launched = false;
+
+        if(!isGrounded) coyoteTimer -= Time.deltaTime;
     }
 
 
@@ -179,7 +184,7 @@ public class PlayerController : MonoBehaviour
             {
                 WallJump();
             }
-            else if (isGrounded)
+            else if (coyoteTimer >= 0)
             {
                 Jump();
 
@@ -301,6 +306,7 @@ public class PlayerController : MonoBehaviour
             if (objectsUnderFeet[0].gameObject.CompareTag("Ice")) acceleration = iceAcceleration;
             else acceleration = defaultAcceleration;
             isGrounded = true;
+            coyoteTimer = coyoteTime;
             gravityScaling = defaultGravity;
             // Restore jumps when touching the ground
             jumpsRemaining = maxJumps;

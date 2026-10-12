@@ -452,12 +452,15 @@ MonoBehaviour:
   defaultAcceleration: 0.3
   iceAcceleration: 0.02
   jumpHeight: 18
+  coyoteTime: 0.15
   airControl: 0.15
   risingGravity: 4
   fallingGravity: 5.5
   lingerAtApexGravity: 0.6
   lingeringAirTime: 0.1
   gravityScaling: 0
+  launched: 0
+  jumpPadLockoutTimer: 0
   maxJumps: 1
   jumpPressed: 0
   wallJumpForce: 10
