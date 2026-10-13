@@ -217,7 +217,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5352103389418840576, guid: 13f7dd0488c0aa44293408243d7e1797, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -10
+      value: -15
       objectReference: {fileID: 0}
     - target: {fileID: 5352103389418840576, guid: 13f7dd0488c0aa44293408243d7e1797, type: 3}
       propertyPath: m_LocalRotation.w
@@ -637,22 +637,6 @@ PrefabInstance:
     - target: {fileID: 3349392148877822561, guid: 3ecb664b90ea4de4a87ae7ad47cfb0c9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5307985890243477789, guid: 3ecb664b90ea4de4a87ae7ad47cfb0c9, type: 3}
-      propertyPath: maxJumps
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5307985890243477789, guid: 3ecb664b90ea4de4a87ae7ad47cfb0c9, type: 3}
-      propertyPath: moveSpeed
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 5307985890243477789, guid: 3ecb664b90ea4de4a87ae7ad47cfb0c9, type: 3}
-      propertyPath: wallJumpForce
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 5307985890243477789, guid: 3ecb664b90ea4de4a87ae7ad47cfb0c9, type: 3}
-      propertyPath: wallJumpHorizontalForce
-      value: 34
       objectReference: {fileID: 0}
     - target: {fileID: 5893782354447054451, guid: 3ecb664b90ea4de4a87ae7ad47cfb0c9, type: 3}
       propertyPath: m_Name
@@ -25764,9 +25748,9 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1924655471}
+  - {fileID: 109666389}
   - {fileID: 2054018968}
   - {fileID: 530742757}
-  - {fileID: 109666389}
   - {fileID: 1307482872}
   - {fileID: 1827059812}
   - {fileID: 1061793564}

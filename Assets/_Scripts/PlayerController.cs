@@ -47,6 +47,7 @@ public class PlayerController : MonoBehaviour
     [Header("Gun")]
     [SerializeField] float fireRate;
     [SerializeField] private GameObject gunPos;
+    private Vector3 startGunPos;
     [SerializeField] GameObject bullet;
     [HideInInspector] public bool gunOnCD;
     float gunTimer;
@@ -81,6 +82,7 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
+        startGunPos = gunPos.transform.localPosition;
         if (Instance == null) Instance = this;
         else Destroy(this);
     }
@@ -129,7 +131,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetAxis("Vertical") > 0 && sm.currentState != sm.wallClingState)
         {
             aimingUp = true;
-            gunLocPos.y = 0.25f;
+            gunLocPos.y = startGunPos.y + 0.25f;
             if (isFacingRight)
             {
                 gunLocPos.x = -0.2f;
@@ -142,8 +144,7 @@ public class PlayerController : MonoBehaviour
         else
         {
             aimingUp = false;
-            gunLocPos.y = 0f;
-            gunLocPos.x = 0f;
+            gunLocPos = startGunPos;
         }
         gunPos.transform.localPosition = gunLocPos;
 

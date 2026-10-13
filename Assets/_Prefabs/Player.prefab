@@ -99,7 +99,7 @@ Transform:
   m_GameObject: {fileID: 2185156301414073878}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.45500004, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -353,7 +353,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.12847137, y: 0.8675245}
+  m_Offset: {x: 0, y: -0.03}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -364,7 +364,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.35121918, y: 2.2784941}
+  m_Size: {x: 0.8, y: 0.3}
   m_EdgeRadius: 0
 --- !u!1 &5534634232922459522
 GameObject:
@@ -391,7 +391,7 @@ Transform:
   m_GameObject: {fileID: 5534634232922459522}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.2, z: 0}
+  m_LocalPosition: {x: 0, y: 0.25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -448,7 +448,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1958598558bc6e04d81c40912c1736f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 10
+  moveSpeed: 8
   defaultAcceleration: 0.3
   iceAcceleration: 0.02
   jumpHeight: 18
@@ -461,10 +461,10 @@ MonoBehaviour:
   gravityScaling: 0
   launched: 0
   jumpPadLockoutTimer: 0
-  maxJumps: 1
+  maxJumps: 0
   jumpPressed: 0
-  wallJumpForce: 15
-  wallJumpHorizontalForce: 20
+  wallJumpForce: 9
+  wallJumpHorizontalForce: 34
   wallCheckDistance: 0.6
   wallClingCoyoteTime: 0.1
   wallClingCoyoteTimer: 0
@@ -549,7 +549,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.51791596}
+  m_Offset: {x: 0, y: -0.25350147}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -560,7 +560,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1.9641681}
+  m_Size: {x: 1, y: 2.575057}
   m_EdgeRadius: 0
 --- !u!1 &6568759499012483156
 GameObject:
