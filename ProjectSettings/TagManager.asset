@@ -9,6 +9,7 @@ TagManager:
   - Lava
   - Bullet
   - Checkpoint
+  - Ice
   layers:
   - Default
   - TransparentFX
