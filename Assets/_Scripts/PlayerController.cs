@@ -378,30 +378,22 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    public bool IsInAir()
     {
-        EnemyMovement enemy =
-            collision.gameObject.GetComponentInParent<EnemyMovement>();
+        return sm.currentState == sm.inAirState;
+    }
 
-        if (enemy == null)
-            return;
+    public void Bounce()
+    {
+        rb.velocity = new Vector2(
+            rb.velocity.x,
+            bounceVel
+        );
+    }
 
-        bool playerIsAboveEnemy =
-            transform.position.y > enemy.transform.position.y;
-
-        if (playerIsAboveEnemy && sm.currentState == sm.inAirState && enemy.isStompable)
-        {
-            enemy.gameObject.SetActive(false);
-
-            rb.velocity = new Vector2(
-                rb.velocity.x,
-                bounceVel
-            );
-        }
-        else
-        {
-            sm.isDead = true;
-        }
+    public void Die()
+    {
+        sm.isDead = true;
     }
 
 }
