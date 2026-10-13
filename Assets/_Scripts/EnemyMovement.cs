@@ -128,9 +128,32 @@ public class EnemyMovement : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        // Enemy touches another enemy
         if (collision.gameObject.CompareTag("Enemy"))
         {
             ChangeDirection();
+            return;
         }
+
+        // Player touches enemy body
+        PlayerController player =
+            collision.gameObject.GetComponentInParent<PlayerController>();
+
+        if (player != null)
+        {
+            player.Die();
+        }
+    }
+
+    public void Stomp(PlayerController player)
+    {
+        if (!isStompable)
+        {
+            player.Die();
+            return;
+        }
+
+        gameObject.SetActive(false);
+        player.Bounce();
     }
 }

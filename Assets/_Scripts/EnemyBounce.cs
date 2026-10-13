@@ -4,15 +4,24 @@ using UnityEngine;
 
 public class EnemyBounce : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private EnemyMovement enemy;
+
+    private void Awake()
     {
-        
+        enemy = GetComponentInParent<EnemyMovement>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        
+        PlayerController player =
+            collision.GetComponentInParent<PlayerController>();
+
+        if (player == null)
+            return;
+
+        if (player.IsInAir())
+        {
+            enemy.Stomp(player);
+        }
     }
 }
