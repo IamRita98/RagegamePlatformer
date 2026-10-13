@@ -37,7 +37,7 @@ public class CameraMover : MonoBehaviour
     private IEnumerator MoveCamera(Vector3 endPos)
     {
         Vector3 startPos = transform.localPosition;
-
+        endPos.z = transform.position.z;
         float tElapsed = 0;
         while (tElapsed < camSpeed)
         {
