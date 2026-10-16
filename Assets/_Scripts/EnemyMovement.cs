@@ -15,6 +15,22 @@ public class EnemyMovement : MonoBehaviour
     public bool isShootable;
     public bool walksOff;
 
+    [Header("Proximity Spike Trap")]
+    public bool hasProximitySpike;
+
+    [SerializeField] private GameObject spikeGO;
+    [SerializeField] private Transform spikeCheck;
+
+    [SerializeField] private Vector2 spikeCheckSize = new Vector2(1.5f, 2f);
+
+    [SerializeField] private Vector3 spikeEndPosition;
+    [SerializeField] private float spikeMoveTime = 0.2f;
+
+    [SerializeField] private AnimationCurve spikeMovementCurve;
+
+    private Vector3 spikeStartPosition;
+    private bool spikeActivated;
+
     private float wallCheckDistance = 1f;
     private bool isTouchingWall;
     private bool isGroundAhead;
@@ -36,6 +52,11 @@ public class EnemyMovement : MonoBehaviour
         );
 
         spriteRenderer.flipX = currentDirection == 1;
+
+        if (hasProximitySpike && spikeGO != null)
+        {
+            spikeStartPosition = spikeGO.transform.localPosition;
+        }
     }
 
     private void FixedUpdate()
@@ -50,10 +71,61 @@ public class EnemyMovement : MonoBehaviour
             ChangeDirection();
         }
 
+
+        if (hasProximitySpike && !spikeActivated)
+        {
+            CheckForPlayerAbove();
+        }
+
         rb.velocity = new Vector2(
             currentDirection * movementSpeed,
             rb.velocity.y
         );
+    }
+
+    IEnumerator RaiseSpike()
+    {
+        spikeActivated = true;
+
+        Vector3 startPos = spikeGO.transform.localPosition;
+
+        float elapsed = 0f;
+
+        while (elapsed < spikeMoveTime)
+        {
+            elapsed += Time.deltaTime;
+
+            float t = elapsed / spikeMoveTime;
+            float curve = spikeMovementCurve.Evaluate(t);
+
+            spikeGO.transform.localPosition = Vector3.Lerp(
+                startPos,
+                spikeEndPosition,
+                curve
+            );
+
+            yield return null;
+        }
+
+        spikeGO.transform.localPosition = spikeEndPosition;
+    }
+
+    void CheckForPlayerAbove()
+    {
+        Collider2D[] hits = Physics2D.OverlapBoxAll(
+            spikeCheck.position,
+            spikeCheckSize,
+            0f
+        );
+
+        foreach (Collider2D hit in hits)
+        {
+            if (hit.CompareTag("Player"))
+            {
+                StartCoroutine(RaiseSpike());
+                return;
+            }
+        }
     }
 
     // I stole this from PlayerController script
@@ -155,5 +227,21 @@ public class EnemyMovement : MonoBehaviour
 
         gameObject.SetActive(false);
         player.Bounce();
+    }
+
+    public void ActivateSpike()
+    {
+        if (hasProximitySpike && !spikeActivated)
+        {
+            StartCoroutine(RaiseSpike());
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (hasProximitySpike && !spikeActivated && collision.CompareTag("Player"))
+        {
+            StartCoroutine(RaiseSpike());
+        }
     }
 }
