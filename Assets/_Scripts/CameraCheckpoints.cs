@@ -9,7 +9,7 @@ public class RoomCheckpoints : MonoBehaviour
 
     private void Start()
     {
-        camMover = Camera.main.GetComponent<CameraMover>();
+        camMover = Object.FindAnyObjectByType<CameraMover>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
