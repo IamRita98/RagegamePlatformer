@@ -19,9 +19,11 @@ public class EnemyBounce : MonoBehaviour
         if (player == null)
             return;
 
-        if (player.IsInAir())
+        if (player.IsInAir() && !enemy.isDead)
         {
+            Debug.Log("stomped");
             enemy.Stomp(player);
+
         }
     }
 }

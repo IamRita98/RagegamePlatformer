@@ -50,7 +50,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletSpeed: 50
   lifeTime: 0.6
-  dir: 0
   direction: {x: 0, y: 0}
 --- !u!61 &8817572139346665322
 BoxCollider2D:
@@ -236,7 +235,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!1 &8266418173587509419
 GameObject:
   m_ObjectHideFlags: 0

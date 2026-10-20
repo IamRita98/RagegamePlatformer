@@ -9,6 +9,7 @@ public class EnemyMovement : MonoBehaviour
     [SerializeField] private int startingDirection = 1;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
+    public GameObject deathEffect;
 
     // Whether or not this enemy is killed when jumped on, shot at, both, or neither
     public bool isStompable;
@@ -38,7 +39,7 @@ public class EnemyMovement : MonoBehaviour
     Rigidbody2D rb;
     public SpriteRenderer spriteRenderer;
 
-
+    [HideInInspector] public bool isDead;
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -222,9 +223,11 @@ public class EnemyMovement : MonoBehaviour
             player.Die();
             return;
         }
-
-        Die();
-        player.Bounce();
+        else
+        {
+            player.Bounce();
+            Die();
+        }
     }
 
     public void ActivateSpike()
@@ -245,6 +248,11 @@ public class EnemyMovement : MonoBehaviour
 
     public void Die()
     {
+        isDead = true;
+        if(deathEffect != null)
+        {
+            Instantiate(deathEffect, transform.position, Quaternion.identity);
+        }
         gameObject.SetActive(false);
     }
 }

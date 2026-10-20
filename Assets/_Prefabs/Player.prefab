@@ -451,7 +451,7 @@ MonoBehaviour:
   moveSpeed: 9
   defaultAcceleration: 0.3
   iceAcceleration: 0.02
-  jumpHeight: 22
+  jumpHeight: 20
   coyoteTime: 0.15
   airControl: 0.15
   risingGravity: 4
@@ -463,7 +463,7 @@ MonoBehaviour:
   jumpPadLockoutTimer: 0
   maxJumps: 0
   jumpPressed: 0
-  wallJumpForce: 9
+  wallJumpForce: 12
   wallJumpHorizontalForce: 35
   wallCheckDistance: 0.6
   wallClingCoyoteTime: 0.1
@@ -474,7 +474,7 @@ MonoBehaviour:
   gunPos: {fileID: 5534634232922459522}
   bullet: {fileID: 1654296017511337108, guid: 023c667aaca56da459bd86ba7685602d, type: 3}
   gunOnCD: 0
-  bounceVel: 3
+  bounceVel: 12
   rb: {fileID: 1865473126571565143}
   horizontalMovement: 0
   isTouchingWall: 0
