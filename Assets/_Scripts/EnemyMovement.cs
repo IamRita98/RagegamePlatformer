@@ -248,6 +248,7 @@ public class EnemyMovement : MonoBehaviour
 
     public void Die()
     {
+        CameraShake.Instance.StartCoroutine(CameraShake.Instance.Shake(0.25f, 0.8f));
         isDead = true;
         if(deathEffect != null)
         {
