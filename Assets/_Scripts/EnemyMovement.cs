@@ -36,12 +36,11 @@ public class EnemyMovement : MonoBehaviour
     private bool isGroundAhead;
     private int currentDirection;
     Rigidbody2D rb;
-    SpriteRenderer spriteRenderer;
+    public SpriteRenderer spriteRenderer;
 
 
     private void Awake()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
 
         currentDirection = startingDirection;
@@ -208,8 +207,7 @@ public class EnemyMovement : MonoBehaviour
         }
 
         // Player touches enemy body
-        PlayerController player =
-            collision.gameObject.GetComponentInParent<PlayerController>();
+        PlayerController player = collision.gameObject.GetComponentInParent<PlayerController>();
 
         if (player != null)
         {
@@ -225,7 +223,7 @@ public class EnemyMovement : MonoBehaviour
             return;
         }
 
-        gameObject.SetActive(false);
+        Die();
         player.Bounce();
     }
 
@@ -243,5 +241,10 @@ public class EnemyMovement : MonoBehaviour
         {
             StartCoroutine(RaiseSpike());
         }
+    }
+
+    public void Die()
+    {
+        gameObject.SetActive(false);
     }
 }

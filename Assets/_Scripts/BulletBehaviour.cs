@@ -24,7 +24,14 @@ public class BulletBehaviour : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Ground")) Destroy(gameObject);
-        if (collision.CompareTag("Enemy") && collision.GetComponent<EnemyMovement>().isShootable)
-            collision.gameObject.SetActive(false);
+        if (collision.CompareTag("Enemy"))
+        {
+            EnemyMovement em = collision.gameObject.GetComponent<EnemyMovement>();
+            if (em.isShootable)
+            {
+                em.Die();
+                Destroy(gameObject);
+            }
+        }
     }
 }
