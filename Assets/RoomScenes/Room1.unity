@@ -589,6 +589,38 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6029357713210616811, guid: 13f7dd0488c0aa44293408243d7e1797, type: 3}
+      propertyPath: cameraPositions.Array.data[0]
+      value: 
+      objectReference: {fileID: 215283287}
+    - target: {fileID: 6029357713210616811, guid: 13f7dd0488c0aa44293408243d7e1797, type: 3}
+      propertyPath: cameraPositions.Array.data[1]
+      value: 
+      objectReference: {fileID: 1307482872}
+    - target: {fileID: 6029357713210616811, guid: 13f7dd0488c0aa44293408243d7e1797, type: 3}
+      propertyPath: cameraPositions.Array.data[2]
+      value: 
+      objectReference: {fileID: 1827059812}
+    - target: {fileID: 6029357713210616811, guid: 13f7dd0488c0aa44293408243d7e1797, type: 3}
+      propertyPath: cameraPositions.Array.data[3]
+      value: 
+      objectReference: {fileID: 1061793564}
+    - target: {fileID: 6029357713210616811, guid: 13f7dd0488c0aa44293408243d7e1797, type: 3}
+      propertyPath: cameraPositions.Array.data[4]
+      value: 
+      objectReference: {fileID: 876591069}
+    - target: {fileID: 6029357713210616811, guid: 13f7dd0488c0aa44293408243d7e1797, type: 3}
+      propertyPath: cameraPositions.Array.data[5]
+      value: 
+      objectReference: {fileID: 164181730}
+    - target: {fileID: 6029357713210616811, guid: 13f7dd0488c0aa44293408243d7e1797, type: 3}
+      propertyPath: cameraPositions.Array.data[6]
+      value: 
+      objectReference: {fileID: 1401637886}
+    - target: {fileID: 6029357713210616811, guid: 13f7dd0488c0aa44293408243d7e1797, type: 3}
+      propertyPath: cameraPositions.Array.data[7]
+      value: 
+      objectReference: {fileID: 1715431453}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
