@@ -138,6 +138,7 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
+  deathEffect: {fileID: 4462208794893412182, guid: 208dd76e4221a4a4693ea10224c14781, type: 3}
   isStompable: 1
   isShootable: 0
   walksOff: 0
