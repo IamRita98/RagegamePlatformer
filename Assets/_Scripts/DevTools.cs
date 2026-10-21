@@ -18,8 +18,7 @@ public class DevTools : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         camMover = GetComponent<CameraMover>();
         listOfCheckpoints = GameObject.FindGameObjectsWithTag("Checkpoint").ToList();
-        listOfCheckpoints.OrderByDescending(x => x.name);
-        listOfCheckpoints.Reverse(); //Ok this is rly jank, as of my own test scene it does work but I'm not sure it will if people rename or put it in a diff order
+        listOfCheckpoints.Sort((a, b) => a.GetComponent<Checkpoint>().checkPointIndx.CompareTo(b.GetComponent<Checkpoint>().checkPointIndx));
     }
 
     private void Update()
@@ -31,8 +30,8 @@ public class DevTools : MonoBehaviour
 
     void NextCheckpoint()
     {
+        player.transform.position = listOfCheckpoints[camMover.currentCamCheckpoint].transform.position;
         camMover.NextCameraPosition();
-        player.transform.position = listOfCheckpoints[camMover.currentCamCheckpoint -1].transform.position;
     }
 
     void PreviousCheckpoint()
