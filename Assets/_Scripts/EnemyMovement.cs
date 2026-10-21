@@ -252,7 +252,9 @@ public class EnemyMovement : MonoBehaviour
         isDead = true;
         if(deathEffect != null)
         {
-            Instantiate(deathEffect, transform.position, Quaternion.identity);
+            GameObject newDE = Instantiate(deathEffect, transform.position, Quaternion.identity);
+            SpriteRenderer desr = newDE.GetComponent<SpriteRenderer>();
+            desr.flipX = spriteRenderer.flipX ? true : false;
         }
         gameObject.SetActive(false);
     }
