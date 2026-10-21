@@ -67,7 +67,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.35
+  m_Radius: 3
 --- !u!114 &7173749791993377247
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -146,7 +146,7 @@ MonoBehaviour:
   spikeGO: {fileID: 6452691782047914297}
   spikeCheck: {fileID: 2953514673436993779}
   spikeCheckSize: {x: 1.5, y: 2}
-  spikeEndPosition: {x: 0, y: 0.125, z: 0}
+  spikeEndPosition: {x: 0, y: 0.5, z: 0}
   spikeMoveTime: 0.2
   spikeMovementCurve:
     serializedVersion: 2
@@ -173,6 +173,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   spriteRenderer: {fileID: 3079636997818222193}
+  isDead: 0
 --- !u!212 &3079636997818222193
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -213,7 +214,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 667864041, guid: eb5ec299d2d62cf40a19619cc17395c5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -449,19 +450,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1596899218523738580, guid: 6b57ac9c8cd8fe041876d9cb71441b4b, type: 3}
       propertyPath: m_SortingOrder
-      value: -1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3698020050006906668, guid: 6b57ac9c8cd8fe041876d9cb71441b4b, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.11111112
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3698020050006906668, guid: 6b57ac9c8cd8fe041876d9cb71441b4b, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.11111112
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3698020050006906668, guid: 6b57ac9c8cd8fe041876d9cb71441b4b, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.11111112
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3698020050006906668, guid: 6b57ac9c8cd8fe041876d9cb71441b4b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -509,7 +510,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7246810454188727692, guid: 6b57ac9c8cd8fe041876d9cb71441b4b, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
