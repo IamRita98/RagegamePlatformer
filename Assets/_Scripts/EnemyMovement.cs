@@ -36,6 +36,8 @@ public class EnemyMovement : MonoBehaviour
     private bool isTouchingWall;
     private bool isGroundAhead;
     private int currentDirection;
+    private Vector3 spawnPosition;
+    private Collider2D[] enemyColliders;
     Rigidbody2D rb;
     public SpriteRenderer spriteRenderer;
 
@@ -57,10 +59,20 @@ public class EnemyMovement : MonoBehaviour
         {
             spikeStartPosition = spikeGO.transform.localPosition;
         }
+        else
+        {
+            spikeGO.gameObject.SetActive(false);
+        }
+
+        spawnPosition = transform.position;
+        enemyColliders = GetComponentsInChildren<Collider2D>();
     }
 
     private void FixedUpdate()
     {
+        if (isDead)
+            return;
+
         CheckForWall();
         CheckForFloor();
 
@@ -71,7 +83,6 @@ public class EnemyMovement : MonoBehaviour
             ChangeDirection();
         }
 
-
         if (hasProximitySpike && !spikeActivated)
         {
             CheckForPlayerAbove();
@@ -81,6 +92,19 @@ public class EnemyMovement : MonoBehaviour
             currentDirection * movementSpeed,
             rb.velocity.y
         );
+    }
+
+    private void Start()
+    {
+        StateMachine.Instance.onPlayerRespawn.AddListener(Respawn);
+    }
+
+    private void OnDestroy()
+    {
+        if (StateMachine.Instance != null)
+        {
+            StateMachine.Instance.onPlayerRespawn.RemoveListener(Respawn);
+        }
     }
 
     IEnumerator RaiseSpike()
@@ -248,14 +272,65 @@ public class EnemyMovement : MonoBehaviour
 
     public void Die()
     {
-        CameraShake.Instance.StartCoroutine(CameraShake.Instance.Shake(0.25f, 0.8f));
+        CameraShake.Instance.StartCoroutine(
+            CameraShake.Instance.Shake(0.25f, 0.8f)
+        );
+
         isDead = true;
-        if(deathEffect != null)
+
+        if (deathEffect != null)
         {
-            GameObject newDE = Instantiate(deathEffect, transform.position, Quaternion.identity);
-            SpriteRenderer desr = newDE.GetComponent<SpriteRenderer>();
-            desr.flipX = spriteRenderer.flipX ? true : false;
+            Instantiate(
+                deathEffect,
+                transform.position,
+                Quaternion.identity
+            );
+            spikeGO.gameObject.SetActive(false);
         }
-        gameObject.SetActive(false);
+
+        rb.velocity = Vector2.zero;
+        rb.simulated = false;
+
+        spriteRenderer.enabled = false;
+
+        foreach (Collider2D col in enemyColliders)
+        {
+            col.enabled = false;
+        }
+    }
+
+    private void Respawn()
+    {
+        isDead = false;
+
+        transform.position = spawnPosition;
+
+        currentDirection = startingDirection;
+
+        spriteRenderer.flipX = currentDirection == 1;
+        spriteRenderer.enabled = true;
+
+        rb.simulated = true;
+        rb.velocity = Vector2.zero;
+
+        foreach (Collider2D col in enemyColliders)
+        {
+            col.enabled = true;
+        }
+
+        groundCheck.localPosition = new Vector2(
+            Mathf.Abs(groundCheck.localPosition.x) * currentDirection,
+            groundCheck.localPosition.y
+        );
+
+        // Reset spike
+        if (hasProximitySpike && spikeGO != null)
+        {
+            StopAllCoroutines();
+
+            spikeActivated = false;
+            spikeGO.transform.localPosition = spikeStartPosition;
+            spikeGO.gameObject.SetActive(true);
+        }
     }
 }

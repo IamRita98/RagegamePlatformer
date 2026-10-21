@@ -2082,7 +2082,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3023561168447282135, guid: 7a142420bedb4dc46a6318369cccff67, type: 3}
       propertyPath: hasProximitySpike
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7009144812500944889, guid: 7a142420bedb4dc46a6318369cccff67, type: 3}
       propertyPath: m_LocalPosition.x
