@@ -12,7 +12,7 @@ public class RoomCheckpoints : MonoBehaviour
         camMover = Object.FindAnyObjectByType<CameraMover>();
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerExit2D(Collider2D collision)
     {
         if (!collision.CompareTag("Player")) return;
         if (checkpointPassed == false)
