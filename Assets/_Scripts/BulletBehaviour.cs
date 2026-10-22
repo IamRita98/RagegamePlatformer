@@ -14,7 +14,7 @@ public class BulletBehaviour : MonoBehaviour
     float timer;
     //public float dir;
     public Vector2 direction;
-
+    public bool canHitPlayer = false;
     Vector2 lastPos;
     private void Awake()
     {
@@ -45,6 +45,7 @@ public class BulletBehaviour : MonoBehaviour
                 BulletHit();
             }
         }
+        if (canHitPlayer && collision.CompareTag("Player")) StateMachine.Instance.isDead = true;
     }
 
 
