@@ -51,6 +51,15 @@ public class BulletBehaviour : MonoBehaviour
                 BulletHit();
             }
         }
+        if (collision.CompareTag("FlyingEnemy"))
+        {
+            FlyingEnemy fe = collision.gameObject.GetComponent<FlyingEnemy>();
+            if (fe.isShootable)
+            {
+                fe.Die();
+                BulletHit();
+            }
+        }
         if (canHitPlayer && collision.CompareTag("Player"))
         {
             BulletHit();
