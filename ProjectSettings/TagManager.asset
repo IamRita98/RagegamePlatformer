@@ -10,6 +10,7 @@ TagManager:
   - Bullet
   - Checkpoint
   - Ice
+  - FlyingEnemy
   layers:
   - Default
   - TransparentFX
