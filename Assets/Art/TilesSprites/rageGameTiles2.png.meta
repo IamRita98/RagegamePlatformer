@@ -119,20 +119,715 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: rageGameTiles2_0
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 82
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5bc1acf49c00cb64c904649526e476ae
+      internalID: 321023190
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rageGameTiles2_1
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 82
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a93ee0b37c7569341969555b87ba441a
+      internalID: 819394424
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rageGameTiles2_2
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 82
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9d538a645a9c78b41895bd58c2f75ff8
+      internalID: -2005677055
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rageGameTiles2_3
+      rect:
+        serializedVersion: 2
+        x: 78
+        y: 82
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d271ce68ca7787948b091c1de03595c4
+      internalID: 1951511243
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rageGameTiles2_4
+      rect:
+        serializedVersion: 2
+        x: 102
+        y: 82
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5161ea3e3a6a10643b91952225b82b6b
+      internalID: -2073997513
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rageGameTiles2_5
+      rect:
+        serializedVersion: 2
+        x: 126
+        y: 82
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 60610153f731787449ec8e3d325c64db
+      internalID: 713951990
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rageGameTiles2_6
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 82
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0653c561439f0e64d845eeceee27019f
+      internalID: 579994587
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rageGameTiles2_7
+      rect:
+        serializedVersion: 2
+        x: 174
+        y: 82
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c1581621bbaaafc48bacc9b4d0e01859
+      internalID: 1717185082
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rageGameTiles2_8
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 82
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7794b57cf401745419bf257cf80a2dac
+      internalID: -1728949458
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rageGameTiles2_9
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 58
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1188c9b6bb1f8594482bd33acdbba3a5
+      internalID: -175763970
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rageGameTiles2_10
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 58
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8bdafce2344d18d4b87384966c74870c
+      internalID: -40636030
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rageGameTiles2_11
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 58
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d180bf7825c9aa8489ad91ee344ea1a5
+      internalID: -1190416760
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rageGameTiles2_12
+      rect:
+        serializedVersion: 2
+        x: 78
+        y: 58
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4cb0208e25cfdb449aa411f911eeb4fd
+      internalID: -1014300790
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rageGameTiles2_13
+      rect:
+        serializedVersion: 2
+        x: 126
+        y: 58
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cf438a231eca58746800e5e197fc139f
+      internalID: 1439121146
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rageGameTiles2_14
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 58
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f449ca01f56b8744db0bf55371352fcd
+      internalID: 988289738
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rageGameTiles2_15
+      rect:
+        serializedVersion: 2
+        x: 174
+        y: 58
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 027f9ecffaa2b944eafd316669831bd3
+      internalID: -400856801
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rageGameTiles2_16
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 58
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 00cbbaf21e255a6439fcbec1ffb99b16
+      internalID: 349525913
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rageGameTiles2_17
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 34
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d18c161f6dfc5c846a4bc6f41c1bd91d
+      internalID: -176532544
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rageGameTiles2_18
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 34
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1a7e6fce8f0601d48878acc093f37efc
+      internalID: 565179708
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rageGameTiles2_19
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 34
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 88c9f519429207647af19fe63155ffe0
+      internalID: -1658599380
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rageGameTiles2_20
+      rect:
+        serializedVersion: 2
+        x: 78
+        y: 34
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: affd41752a30f184ab5df99ccbd2765e
+      internalID: 1399758302
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rageGameTiles2_21
+      rect:
+        serializedVersion: 2
+        x: 102
+        y: 34
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 91a8bdbd5b8b335448583f0586fa8f03
+      internalID: 70830028
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rageGameTiles2_22
+      rect:
+        serializedVersion: 2
+        x: 126
+        y: 34
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c6eb9775b1796c547b4d70bc1a407ef0
+      internalID: 456439613
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rageGameTiles2_23
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 34
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 104b6a6d3fae0a64598ca8b87979b699
+      internalID: 477411648
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rageGameTiles2_24
+      rect:
+        serializedVersion: 2
+        x: 174
+        y: 34
+        width: 5
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 3, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e600f1d08f1d16a4eacd7c2d3431c7b6
+      internalID: 1198724251
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rageGameTiles2_25
+      rect:
+        serializedVersion: 2
+        x: 179
+        y: 4
+        width: 43
+        height: 54
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 465be9e7b4b31a848ae2f5aadb12c128
+      internalID: -1890069374
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rageGameTiles2_26
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 10
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7b1fbafeada29c1409c75fb827c0e41d
+      internalID: 1027242395
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rageGameTiles2_27
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 10
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e5f1e425d0be0a049ae166a60b3ac2fe
+      internalID: -1915959650
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rageGameTiles2_28
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 10
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f08ba7d7cb1e1e2478ede702f70bf6d2
+      internalID: 477445403
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rageGameTiles2_29
+      rect:
+        serializedVersion: 2
+        x: 174
+        y: 10
+        width: 5
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 3, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 82b433bf68387324fb88ca4b16592972
+      internalID: -1018318060
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rageGameTiles2_30
+      rect:
+        serializedVersion: 2
+        x: 222
+        y: 10
+        width: 6
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c44860d95fed0234b8e703a584c4cf89
+      internalID: 1429905102
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: f91d170fe9a5a154b84dde0821b25c1e
     internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      rageGameTiles2_0: 321023190
+      rageGameTiles2_1: 819394424
+      rageGameTiles2_10: -40636030
+      rageGameTiles2_11: -1190416760
+      rageGameTiles2_12: -1014300790
+      rageGameTiles2_13: 1439121146
+      rageGameTiles2_14: 988289738
+      rageGameTiles2_15: -400856801
+      rageGameTiles2_16: 349525913
+      rageGameTiles2_17: -176532544
+      rageGameTiles2_18: 565179708
+      rageGameTiles2_19: -1658599380
+      rageGameTiles2_2: -2005677055
+      rageGameTiles2_20: 1399758302
+      rageGameTiles2_21: 70830028
+      rageGameTiles2_22: 456439613
+      rageGameTiles2_23: 477411648
+      rageGameTiles2_24: 1198724251
+      rageGameTiles2_25: -1890069374
+      rageGameTiles2_26: 1027242395
+      rageGameTiles2_27: -1915959650
+      rageGameTiles2_28: 477445403
+      rageGameTiles2_29: -1018318060
+      rageGameTiles2_3: 1951511243
+      rageGameTiles2_30: 1429905102
+      rageGameTiles2_4: -2073997513
+      rageGameTiles2_5: 713951990
+      rageGameTiles2_6: 579994587
+      rageGameTiles2_7: 1717185082
+      rageGameTiles2_8: -1728949458
+      rageGameTiles2_9: -175763970
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
