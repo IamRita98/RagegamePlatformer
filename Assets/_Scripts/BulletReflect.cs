@@ -6,6 +6,7 @@ public class BulletReflect : MonoBehaviour
 {
     public bool reflectIsActive = false;
     EnemyMovement enemyMovement;
+    [SerializeField] float addedReflectedBulletSpeed;
 
     private void Start()
     {
@@ -17,7 +18,9 @@ public class BulletReflect : MonoBehaviour
         if (!reflectIsActive) return;
         if (!collision.gameObject.CompareTag("Bullet")) return;
         BulletBehaviour bullet = collision.gameObject.GetComponent<BulletBehaviour>();
-        bullet.direction = new Vector2(bullet.direction.x * -1, bullet.direction.y);
+        Rigidbody2D bulletRB = collision.gameObject.GetComponent<Rigidbody2D>();
+        Vector2 bulletDir = new Vector2(bullet.direction.x * -1, bullet.direction.y);
+        bulletRB.velocity = bulletDir * (bullet.bulletSpeed + addedReflectedBulletSpeed);
         bullet.canHitPlayer = true;
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BulletBehaviour : MonoBehaviour
 {
-    [SerializeField] float bulletSpeed;
+    public float bulletSpeed;
     [SerializeField] float lifeTime;
     public Rigidbody2D rb;
     public TrailRenderer tr;
@@ -19,6 +19,12 @@ public class BulletBehaviour : MonoBehaviour
     private void Awake()
     {
         timer = 0;
+        rb = GetComponent<Rigidbody2D>();
+    }
+
+    private void Start()
+    {
+        rb.velocity = direction * bulletSpeed;
     }
 
     private void Update()
@@ -30,7 +36,7 @@ public class BulletBehaviour : MonoBehaviour
     private void FixedUpdate()
     {
         lastPos = transform.position;
-        transform.Translate(direction * bulletSpeed * Time.fixedDeltaTime);
+        //transform.Translate(direction * bulletSpeed * Time.fixedDeltaTime);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -45,7 +51,11 @@ public class BulletBehaviour : MonoBehaviour
                 BulletHit();
             }
         }
-        if (canHitPlayer && collision.CompareTag("Player")) StateMachine.Instance.isDead = true;
+        if (canHitPlayer && collision.CompareTag("Player"))
+        {
+            BulletHit();
+            StateMachine.Instance.isDead = true;
+        }
     }
 
 
