@@ -17,8 +17,8 @@ public class DevTools : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player");
         camMover = GetComponent<CameraMover>();
-        listOfCheckpoints = GameObject.FindGameObjectsWithTag("Checkpoint").ToList();
-        listOfCheckpoints.Sort((a, b) => a.GetComponent<Checkpoint>().checkPointIndx.CompareTo(b.GetComponent<Checkpoint>().checkPointIndx));
+        //listOfCheckpoints = GameObject.FindGameObjectsWithTag("Checkpoint").ToList();
+        //listOfCheckpoints.Sort((a, b) => a.GetComponent<Checkpoint>().checkPointIndx.CompareTo(b.GetComponent<Checkpoint>().checkPointIndx));
     }
 
     private void Update()
