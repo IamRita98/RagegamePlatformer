@@ -7,7 +7,7 @@ using UnityEngine.Events;
 public class ProxTrap : MonoBehaviour
 {
     [Tooltip("Input the StateMachine attached to the player, it broadcasts the player death event")]
-    [SerializeField] private StateMachine pDeathBroadcaster;
+    private StateMachine pDeathBroadcaster;
 
     [Tooltip("The box trigger")]
     public BoxCollider2D bc;
@@ -31,11 +31,11 @@ public class ProxTrap : MonoBehaviour
 
     private bool activated = false;
 
-    public bool moving;
+    bool moving;
 
-    public bool inTrigger;
+    bool inTrigger;
 
-    public bool cancelMovement;
+    bool cancelMovement;
 
     public string activateTag;
 
@@ -43,6 +43,8 @@ public class ProxTrap : MonoBehaviour
     private void Awake()
     {
         startPosition = trapGO.transform.localPosition;
+        PlayerController pc = Object.FindAnyObjectByType<PlayerController>();
+        pDeathBroadcaster = pc.gameObject.GetComponentInChildren<StateMachine>();
     }
 
     private void OnEnable()
