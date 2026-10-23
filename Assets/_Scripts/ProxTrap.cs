@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -30,7 +31,14 @@ public class ProxTrap : MonoBehaviour
 
     private bool activated = false;
 
-    private bool cancelMovement;
+    public bool moving;
+
+    public bool inTrigger;
+
+    public bool cancelMovement;
+
+    public string activateTag;
+
 
     private void Awake()
     {
@@ -49,15 +57,27 @@ public class ProxTrap : MonoBehaviour
 
     private void ResetTrap()
     {
-        cancelMovement = true;
+        if(moving) cancelMovement = true;
         trapGO.transform.localPosition = startPosition;
     }
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.CompareTag("Player") && !activated)
+        if (col.CompareTag(activateTag))
         {
-            StartCoroutine(MoveTrap(moveTime, endPosition));
+            inTrigger = true;
+            if (!activated && !moving)
+            {
+                StartCoroutine(MoveTrap(moveTime, endPosition));
+            }
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D col)
+    {
+        if (col.CompareTag(activateTag))
+        {
+            inTrigger = false;
         }
     }
 
@@ -65,7 +85,7 @@ public class ProxTrap : MonoBehaviour
     {
         activated = (activated)? false: true;
         cancelMovement = false;
-
+        moving = true;
 
         Vector3 startPos = trapGO.transform.localPosition;
 
@@ -80,7 +100,6 @@ public class ProxTrap : MonoBehaviour
 
             yield return null;
         }
-
         trapGO.transform.localPosition = endPos;
         cancelMovement = false;
 
@@ -88,7 +107,16 @@ public class ProxTrap : MonoBehaviour
         {
             yield return new WaitForSeconds(resetTime);
             StartCoroutine(MoveTrap(resetMoveTime, startPosition));
+            yield break;
         }
+
+        if (!activated && inTrigger)
+        {
+            StartCoroutine(MoveTrap(moveTime, endPosition));
+            yield break;
+        }
+
+        moving = false;
 
     }
 }
