@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ButtonBehaviour : MonoBehaviour
 {
-    [SerializeField]GameObject objectToInteractWithOnButtonPress;
+    [SerializeField] GameObject objectToInteractWithOnButtonPress;
     [SerializeField] bool canBeShot;
     [SerializeField] bool canBePlayerInteracted;
 
@@ -13,8 +13,11 @@ public class ButtonBehaviour : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (!collision.CompareTag("Player") && !collision.CompareTag("Bullet")) return;
+
         if (!canBeShot && collision.CompareTag("Bullet")) return;
+
         if (!canBePlayerInteracted && collision.CompareTag("Player")) return;
+
         objectToInteractWithOnButtonPress.GetComponent<IButtonable>().OnButtonInteraction();
     }
 }
