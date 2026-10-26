@@ -16,6 +16,15 @@ public class EnemyMovement : MonoBehaviour
     public bool isShootable;
     public bool walksOff;
 
+    public enum FloorDirection
+    {
+        down,
+        up,
+        left,
+        right
+    }
+    public FloorDirection floorDirection;
+
     [Header("Proximity Spike Trap")]
     public bool hasProximitySpike;
 
@@ -40,18 +49,27 @@ public class EnemyMovement : MonoBehaviour
     private Collider2D[] enemyColliders;
     Rigidbody2D rb;
     public SpriteRenderer spriteRenderer;
+    Vector2 moveAxis;
+    Vector2 groundCheckBase;
+
+
+    Vector2 floorDir = Vector2.down;
 
     [HideInInspector] public bool isDead;
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-
         currentDirection = startingDirection;
+        groundCheckBase = groundCheck.localPosition;
+        switch (floorDirection)
+        {
+            case FloorDirection.down: floorDir = Vector2.down; break;
+            case FloorDirection.up: floorDir = Vector2.up; break;
+            case FloorDirection.left: floorDir = Vector2.left; break;
+            case FloorDirection.right: floorDir = Vector2.right; break;
+        }
 
-        groundCheck.localPosition = new Vector2(
-            Mathf.Abs(groundCheck.localPosition.x) * currentDirection,
-            groundCheck.localPosition.y
-        );
+        GroundCheckPosUpdate();
 
         spriteRenderer.flipX = currentDirection == 1;
 
@@ -88,15 +106,22 @@ public class EnemyMovement : MonoBehaviour
             CheckForPlayerAbove();
         }
 
-        rb.velocity = new Vector2(
-            currentDirection * movementSpeed,
-            rb.velocity.y
-        );
+        if (floorDir == Vector2.down)
+        {
+            rb.velocity = new Vector2(
+                currentDirection * movementSpeed,
+                rb.velocity.y);
+        }
+        else rb.velocity = moveAxis * (currentDirection * movementSpeed);
     }
 
     private void Start()
     {
         StateMachine.Instance.onPlayerRespawn.AddListener(Respawn);
+        
+        if (floorDirection != FloorDirection.down) rb.gravityScale = 0f;
+        moveAxis = new Vector2(-floorDir.y, floorDir.x);
+        
     }
 
     private void OnDestroy()
@@ -105,6 +130,14 @@ public class EnemyMovement : MonoBehaviour
         {
             StateMachine.Instance.onPlayerRespawn.RemoveListener(Respawn);
         }
+    }
+
+    void GroundCheckPosUpdate()
+    {
+        Vector2 pos = groundCheckBase;
+        if (Mathf.Abs(moveAxis.x) > .5f) pos.x = Mathf.Abs(groundCheckBase.x) * currentDirection * Mathf.Sign(moveAxis.x);
+        else pos.y = Mathf.Abs(groundCheckBase.y) * currentDirection * Mathf.Sign(moveAxis.y);
+        groundCheck.localPosition = pos;
     }
 
     IEnumerator RaiseSpike()
@@ -155,9 +188,7 @@ public class EnemyMovement : MonoBehaviour
     // I stole this from PlayerController script
     void CheckForWall()
     {
-        Vector2 direction = currentDirection == 1
-            ? Vector2.right
-            : Vector2.left;
+        Vector2 direction = currentDirection * moveAxis;
 
         RaycastHit2D hit = Physics2D.Raycast(
             transform.position,
@@ -179,7 +210,7 @@ public class EnemyMovement : MonoBehaviour
     {
         RaycastHit2D hit = Physics2D.Raycast(
             groundCheck.position,
-            Vector2.down,
+            floorDir,
             wallCheckDistance,
             groundLayer
         );
@@ -188,7 +219,7 @@ public class EnemyMovement : MonoBehaviour
 
         Debug.DrawRay(
             groundCheck.position,
-            Vector2.down * wallCheckDistance,
+            floorDir * wallCheckDistance,
             Color.green
         );
     }
@@ -197,7 +228,7 @@ public class EnemyMovement : MonoBehaviour
     {
         RaycastHit2D[] hits = Physics2D.RaycastAll(
             groundCheck.position,
-            Vector2.down,
+            floorDir,
             wallCheckDistance
         );
 
@@ -216,10 +247,7 @@ public class EnemyMovement : MonoBehaviour
 
         spriteRenderer.flipX = currentDirection == 1;
 
-        groundCheck.localPosition = new Vector2(
-            Mathf.Abs(groundCheck.localPosition.x) * currentDirection,
-            groundCheck.localPosition.y
-        );
+        GroundCheckPosUpdate();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -318,10 +346,7 @@ public class EnemyMovement : MonoBehaviour
             col.enabled = true;
         }
 
-        groundCheck.localPosition = new Vector2(
-            Mathf.Abs(groundCheck.localPosition.x) * currentDirection,
-            groundCheck.localPosition.y
-        );
+        GroundCheckPosUpdate();
 
         // Reset spike
         if (hasProximitySpike && spikeGO != null)
