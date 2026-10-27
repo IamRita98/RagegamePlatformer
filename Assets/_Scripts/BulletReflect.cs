@@ -10,6 +10,7 @@ public class BulletReflect : MonoBehaviour
 
     private void Start()
     {
+        enemyMovement = GetComponent<EnemyMovement>();
         if (reflectIsActive == true) enemyMovement.isShootable = false;
     }
 
