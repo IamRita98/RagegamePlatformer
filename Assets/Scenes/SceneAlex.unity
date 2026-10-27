@@ -468,7 +468,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 184932901697569688, guid: a7cfdeefdc08989488c1f1d524ed8e37, type: 3}
       propertyPath: reflectIsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1946490050320735265, guid: a7cfdeefdc08989488c1f1d524ed8e37, type: 3}
       propertyPath: m_Name
@@ -477,6 +477,10 @@ PrefabInstance:
     - target: {fileID: 3023561168447282135, guid: a7cfdeefdc08989488c1f1d524ed8e37, type: 3}
       propertyPath: isShootable
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3023561168447282135, guid: a7cfdeefdc08989488c1f1d524ed8e37, type: 3}
+      propertyPath: isStompable
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7009144812500944889, guid: a7cfdeefdc08989488c1f1d524ed8e37, type: 3}
       propertyPath: m_LocalPosition.x

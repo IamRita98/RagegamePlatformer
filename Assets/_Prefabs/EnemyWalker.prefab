@@ -133,7 +133,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4ba9c4b0094288469d906ef9f9402e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  reflectIsActive: 0
+  reflectIsActive: 1
   addedReflectedBulletSpeed: 15
 --- !u!114 &3023561168447282135
 MonoBehaviour:
@@ -157,6 +157,7 @@ MonoBehaviour:
   isStompable: 0
   isShootable: 1
   walksOff: 0
+  floorDirection: 0
   hasProximitySpike: 0
   spikeGO: {fileID: 6452691782047914297}
   spikeCheck: {fileID: 2953514673436993779}
@@ -399,7 +400,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -1.4}
+  m_Offset: {x: 0, y: 0.48}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
