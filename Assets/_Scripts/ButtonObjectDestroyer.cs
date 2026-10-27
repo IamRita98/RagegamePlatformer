@@ -32,4 +32,9 @@ public class ButtonObjectDestroyer : MonoBehaviour, IButtonable
             isActive = true;
         }
     }
+
+    public void OnButtonReleased()
+    {
+        throw new System.NotImplementedException();
+    }
 }
