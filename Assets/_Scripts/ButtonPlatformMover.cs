@@ -22,6 +22,7 @@ public class ButtonPlatformMover : MonoBehaviour, IButtonable
     private bool activated = false;
 
     public bool moving;
+    bool buttonIsHeld;
 
     //this is so the this script can see if the button is being stepped on after coroutine finishes so it can activate again, its assigned automatically in the button script.
     [HideInInspector] public ButtonBehaviour buttonRef;
@@ -33,6 +34,12 @@ public class ButtonPlatformMover : MonoBehaviour, IButtonable
     public void OnButtonInteraction()
     {
         if(!moving) StartCoroutine(MoveTrap(moveTime, endPosition));
+        buttonIsHeld = true;
+    }
+
+    public void OnButtonReleased()
+    {
+        buttonIsHeld = false;
     }
 
     private IEnumerator MoveTrap(float tDuration, Vector3 endPos)
@@ -57,6 +64,7 @@ public class ButtonPlatformMover : MonoBehaviour, IButtonable
 
         if (resetTime != 0 && activated)
         {
+            while (buttonIsHeld) yield return null;
             yield return new WaitForSeconds(resetTime);
             StartCoroutine(MoveTrap(resetMoveTime, startPosition));
             yield break;
@@ -65,6 +73,8 @@ public class ButtonPlatformMover : MonoBehaviour, IButtonable
         moving = false;
 
     }
+
+    
 
     //private IEnumerator MoveTrap(float tDuration, Vector3 endPos)
     //{
