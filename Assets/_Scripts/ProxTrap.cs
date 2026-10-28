@@ -39,6 +39,8 @@ public class ProxTrap : MonoBehaviour
 
     public string activateTag;
 
+    [SerializeField] float startDelay;
+
 
     private void Awake()
     {
@@ -70,7 +72,7 @@ public class ProxTrap : MonoBehaviour
             inTrigger = true;
             if (!activated && !moving)
             {
-                StartCoroutine(MoveTrap(moveTime, endPosition));
+                StartCoroutine(MoveTrap(moveTime, endPosition, startDelay));
             }
         }
     }
@@ -83,11 +85,23 @@ public class ProxTrap : MonoBehaviour
         }
     }
 
-    private IEnumerator MoveTrap(float tDuration, Vector3 endPos)
+    private IEnumerator MoveTrap(float tDuration, Vector3 endPos, float delay)
     {
         activated = (activated)? false: true;
         cancelMovement = false;
         moving = true;
+        print("Check");
+        if (delay > 0f)
+        {
+            
+            float timer = 0f;
+            while (timer < startDelay)
+            {
+                timer += Time.deltaTime;
+                print(timer);
+                yield return null;
+            }
+        }
 
         Vector3 startPos = trapGO.transform.localPosition;
 
@@ -108,13 +122,13 @@ public class ProxTrap : MonoBehaviour
         if(resetTime != 0 && activated)
         {
             yield return new WaitForSeconds(resetTime);
-            StartCoroutine(MoveTrap(resetMoveTime, startPosition));
+            StartCoroutine(MoveTrap(resetMoveTime, startPosition, startDelay));
             yield break;
         }
 
         if (!activated && inTrigger)
         {
-            StartCoroutine(MoveTrap(moveTime, endPosition));
+            StartCoroutine(MoveTrap(moveTime, endPosition, startDelay));
             yield break;
         }
 
