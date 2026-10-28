@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 757459089928690007}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.41666508, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -67,7 +67,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 3
+  m_Radius: 0.6
 --- !u!114 &7173749791993377247
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -142,6 +142,7 @@ MonoBehaviour:
   isStompable: 1
   isShootable: 0
   walksOff: 0
+  floorDirection: 0
   hasProximitySpike: 0
   spikeGO: {fileID: 6452691782047914297}
   spikeCheck: {fileID: 2953514673436993779}
@@ -470,7 +471,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3698020050006906668, guid: 6b57ac9c8cd8fe041876d9cb71441b4b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.03
+      value: 0.16666603
       objectReference: {fileID: 0}
     - target: {fileID: 3698020050006906668, guid: 6b57ac9c8cd8fe041876d9cb71441b4b, type: 3}
       propertyPath: m_LocalPosition.z
