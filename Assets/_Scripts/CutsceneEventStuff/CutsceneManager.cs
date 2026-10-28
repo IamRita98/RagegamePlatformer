@@ -8,11 +8,13 @@ public class CutsceneManager : MonoBehaviour
     int eventPos = 0;
     CutsceneEvent currentEvent;
     CutsceneEvent lastEvent;
+    float startEventTime;
 
     private void Awake()
     {
         currentEvent = events[0];
         currentEvent.Enter();
+        startEventTime = Time.time;
     }
     private void Update()
     {
@@ -23,11 +25,12 @@ public class CutsceneManager : MonoBehaviour
 
     void UpdateEvent()
     {
-        if(Time.time >= currentEvent.duration && eventPos < events.Count - 1)
+        if(Time.time >= currentEvent.duration + startEventTime && eventPos < events.Count - 1)
         {
             eventPos++;
             currentEvent = events[eventPos];
             currentEvent.Enter();
+            startEventTime = Time.time;
             lastEvent.Exit();
         }
     }
