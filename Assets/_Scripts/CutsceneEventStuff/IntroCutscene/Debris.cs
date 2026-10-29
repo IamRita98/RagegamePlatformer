@@ -5,12 +5,17 @@ using UnityEngine;
 public class Debris : MonoBehaviour
 {
 
-    public float duration;
+    public float durationMax;
+    public float durationMin;
+    float duration;
     float elapsed;
     float elapsedScale;
     Vector3 startScale = new Vector3(1, 1, 1);
 
-
+    private void Awake()
+    {
+        duration = Random.Range(durationMin, durationMax);
+    }
     private void Update()
     {
         elapsed += Time.deltaTime;

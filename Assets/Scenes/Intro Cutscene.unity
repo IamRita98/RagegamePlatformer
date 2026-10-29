@@ -15741,7 +15741,7 @@ MonoBehaviour:
   crashSmoke: {fileID: 384142150876797422, guid: af622971439f13c42a35b22cd13c859c, type: 3}
   shipSr: {fileID: 1915336929}
   brokenShipSprite: {fileID: 820716304, guid: ff3cd8dbdd5e65c4087aa9230b79a9f3, type: 3}
-  debrisAmount: 40
+  debrisAmount: 45
   debrisVelMin: 20
   debrisVelMax: 40
   debrisAngleMin: 0
