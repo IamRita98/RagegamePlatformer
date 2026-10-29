@@ -206,6 +206,55 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &135361877
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 135361878}
+  - component: {fileID: 135361879}
+  m_Layer: 0
+  m_Name: Ground Break
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &135361878
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 135361877}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 486123530}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &135361879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 135361877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a80535a66b7c40044bea5fb12b906644, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  duration: 0
+  shakeDur: 0.5
+  shakeMag: 0.5
+  groundToDestroy: {fileID: 1057634665}
+  groundDustEffect: {fileID: 297438339163515101, guid: 927df1cdcf94e1c4db8511402baa0d11, type: 3}
 --- !u!1 &279921847
 GameObject:
   m_ObjectHideFlags: 0
@@ -5577,6 +5626,9 @@ MonoBehaviour:
   - {fileID: 1994558041}
   - {fileID: 1561441167}
   - {fileID: 1389578451}
+  - {fileID: 135361879}
+  - {fileID: 1698576666}
+  - {fileID: 1196693361}
 --- !u!4 &486123530
 Transform:
   m_ObjectHideFlags: 0
@@ -5593,6 +5645,9 @@ Transform:
   - {fileID: 1994558040}
   - {fileID: 1561441166}
   - {fileID: 1389578452}
+  - {fileID: 135361878}
+  - {fileID: 1698576665}
+  - {fileID: 1196693360}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &504119973
@@ -15121,6 +15176,79 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1196693359
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1196693360}
+  - component: {fileID: 1196693361}
+  m_Layer: 0
+  m_Name: Camera Pan Down
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1196693360
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1196693359}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 486123530}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1196693361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1196693359}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a3ac0436f95cc24fb70dc95a856d03f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  duration: 8
+  initialPos: {x: -39.5, y: 50.666466, z: -15}
+  endPos: {x: -39.5, y: 2.2, z: -15}
+  moveGO: {fileID: 1360017564}
+  easing:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  movementDuration: 8
 --- !u!1 &1245581624
 GameObject:
   m_ObjectHideFlags: 0
@@ -15734,7 +15862,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03a70d27fddf1b6489215371a8d40f84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  duration: 0
+  duration: 4
   shakeMag: 2
   shakeDur: 2
   effectsPos: {fileID: 1595934760}
@@ -16174,7 +16302,7 @@ GameObject:
   - component: {fileID: 1595934762}
   - component: {fileID: 1595934761}
   m_Layer: 8
-  m_Name: effectsPos
+  m_Name: crashEffectsPos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -23886,6 +24014,79 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &1698576664
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1698576665}
+  - component: {fileID: 1698576666}
+  m_Layer: 0
+  m_Name: Ship Fall
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1698576665
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1698576664}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 486123530}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1698576666
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1698576664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a3ac0436f95cc24fb70dc95a856d03f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  duration: 2
+  initialPos: {x: -40.58317, y: 41.6665, z: 0}
+  endPos: {x: -40.58317, y: -1.749993, z: 0}
+  moveGO: {fileID: 1915336928}
+  easing:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  movementDuration: 0.5
 --- !u!1 &1732486174
 GameObject:
   m_ObjectHideFlags: 0
@@ -57584,7 +57785,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a3ac0436f95cc24fb70dc95a856d03f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  duration: 2
+  duration: 0
   initialPos: {x: -39.5, y: 50.166466, z: -13.499946}
   endPos: {x: -39.5, y: 50.666466, z: -15}
   moveGO: {fileID: 1360017564}
@@ -57612,7 +57813,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  movementDuration: 2
+  movementDuration: 6
 --- !u!1 &2054018966
 GameObject:
   m_ObjectHideFlags: 0

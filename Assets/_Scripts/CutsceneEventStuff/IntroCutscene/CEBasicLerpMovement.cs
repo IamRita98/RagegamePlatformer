@@ -12,23 +12,34 @@ public class CEBasicLerpMovement : CutsceneEvent
 
     public float movementDuration;
 
-    float elapsedTime;
-
     public override void Enter()
     {
-
+        StartCoroutine(Move());
     }
     public override void Do()
     {
-        elapsedTime += Time.deltaTime;
-        float t = elapsedTime / movementDuration;
-        t = easing.Evaluate(t);
-        Vector3 pos = moveGO.transform.position;
-        pos = Vector3.Lerp(initialPos, endPos, t);
-        moveGO.transform.position = pos;
+
     }
     public override void Exit()
     {
 
+    }
+
+    private IEnumerator Move()
+    {
+        float elapsedTime = 0;
+
+
+        while (elapsedTime < movementDuration)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = elapsedTime / movementDuration;
+            t = easing.Evaluate(t);
+            Vector3 pos = moveGO.transform.position;
+            pos = Vector3.Lerp(initialPos, endPos, t);
+            moveGO.transform.position = pos;
+            yield return null;
+        }
+        moveGO.transform.position = endPos;
     }
 }
