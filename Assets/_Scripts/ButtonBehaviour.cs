@@ -9,11 +9,12 @@ public class ButtonBehaviour : MonoBehaviour
     [SerializeField] bool pressurePlate;
     int objectsOnButton = 0;
 
+    public string additionalTagCheck;
 
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!collision.CompareTag("Player") && !collision.CompareTag("Bullet") && !collision.CompareTag("Block")) return;
+        if (!collision.CompareTag("Player") && !collision.CompareTag("Bullet") && !collision.CompareTag("Block") && (additionalTagCheck != null && !collision.CompareTag(additionalTagCheck))) return;
 
         if (!canBeShot && collision.CompareTag("Bullet")) return;
 
@@ -24,7 +25,7 @@ public class ButtonBehaviour : MonoBehaviour
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (!collision.CompareTag("Player") && !collision.CompareTag("Bullet") && !collision.CompareTag("Block")) return;
+        if (!collision.CompareTag("Player") && !collision.CompareTag("Bullet") && !collision.CompareTag("Block") && (additionalTagCheck != null && !collision.CompareTag(additionalTagCheck))) return;
 
         if (!canBeShot && collision.CompareTag("Bullet")) return;
 
