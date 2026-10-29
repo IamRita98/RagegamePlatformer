@@ -10,6 +10,8 @@ public class CEBasicLerpMovement : CutsceneEvent
     public GameObject moveGO;
     public AnimationCurve easing;
 
+    public float movementDuration;
+
     float elapsedTime;
 
     public override void Enter()
@@ -19,7 +21,7 @@ public class CEBasicLerpMovement : CutsceneEvent
     public override void Do()
     {
         elapsedTime += Time.deltaTime;
-        float t = elapsedTime / duration;
+        float t = elapsedTime / movementDuration;
         t = easing.Evaluate(t);
         Vector3 pos = moveGO.transform.position;
         pos = Vector3.Lerp(initialPos, endPos, t);

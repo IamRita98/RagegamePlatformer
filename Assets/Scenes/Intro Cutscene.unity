@@ -16078,6 +16078,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  movementDuration: 5
 --- !u!1 &1564185955
 GameObject:
   m_ObjectHideFlags: 0
@@ -57611,6 +57612,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  movementDuration: 2
 --- !u!1 &2054018966
 GameObject:
   m_ObjectHideFlags: 0
