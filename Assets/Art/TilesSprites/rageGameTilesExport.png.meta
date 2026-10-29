@@ -2533,7 +2533,7 @@ TextureImporter:
         width: 12
         height: 12
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -2541,6 +2541,90 @@ TextureImporter:
       bones: []
       spriteID: d79aff1a359ac2e49bddd20180baef7b
       internalID: -2099147017
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThornyDebris1
+      rect:
+        serializedVersion: 2
+        x: 290
+        y: 156
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0f0648442216d034fa52fa5c4b2ef0eb
+      internalID: 678601397
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThornyDebris3
+      rect:
+        serializedVersion: 2
+        x: 290
+        y: 146
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 86b55d351f668b943bb8c0ea3153e0cc
+      internalID: 2115589453
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThornyDebris4
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 146
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e80253b953a583f478b940043f2e8979
+      internalID: 809821267
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThornyDebris2
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 156
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5bc885bdc975f284bae160ceeb94603b
+      internalID: 405538884
       vertices: []
       indices: 
       edges: []
@@ -2664,6 +2748,10 @@ TextureImporter:
       Thorny7: -528080384
       Thorny8: 1333918378
       Thorny9: -654510837
+      ThornyDebris1: 678601397
+      ThornyDebris2: 405538884
+      ThornyDebris3: 2115589453
+      ThornyDebris4: 809821267
       VinesLeftBottom: -1549307541
       VinesLeftMiddle: -1858191638
       VinesLeftTop: 515736403
