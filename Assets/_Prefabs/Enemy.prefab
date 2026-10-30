@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2953514673436993779}
   - component: {fileID: 7441174078222908536}
   - component: {fileID: 7173749791993377247}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: SpikeCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 3675318113635901129}
   - component: {fileID: 5718670614302381843}
   - component: {fileID: 302943771295813586}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -331,7 +331,7 @@ GameObject:
   - component: {fileID: 3534186566389281478}
   - component: {fileID: 6978191029464199639}
   - component: {fileID: 35223652564607090}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: HeadCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -419,7 +419,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4304998994596652488}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -508,6 +508,10 @@ PrefabInstance:
     - target: {fileID: 7246810454188727692, guid: 6b57ac9c8cd8fe041876d9cb71441b4b, type: 3}
       propertyPath: m_Name
       value: PlaceholderSpike
+      objectReference: {fileID: 0}
+    - target: {fileID: 7246810454188727692, guid: 6b57ac9c8cd8fe041876d9cb71441b4b, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7246810454188727692, guid: 6b57ac9c8cd8fe041876d9cb71441b4b, type: 3}
       propertyPath: m_IsActive
