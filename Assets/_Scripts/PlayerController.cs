@@ -4,14 +4,18 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.SubsystemsImplementation;
 
+
 public class PlayerController : MonoBehaviour
 {
     public static PlayerController Instance;
+
+
     [Header("Left/Right Movement")]
     [SerializeField] private float moveSpeed;
     private float acceleration;
-    [SerializeField]private float defaultAcceleration;
-    [SerializeField]private float iceAcceleration = .01f;
+    [SerializeField] private float defaultAcceleration;
+    [SerializeField] private float iceAcceleration = .01f;
+
 
     [Header("Jump & Gravity")]
     [SerializeField] private float jumpHeight;
@@ -20,19 +24,20 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float risingGravity = 4;
     [SerializeField] private float fallingGravity = 7;
     [SerializeField] private float lingerAtApexGravity = .7f;
-    [SerializeField] private float lingeringAirTime; //This is not 1 to 1 of value to seconds, so play around w/ it
+    [SerializeField] private float lingeringAirTime;
     private float defaultGravity = 1;
     [SerializeField] float gravityScaling;
     public bool launched = false;
     float launchTimer;
-    [SerializeField]float jumpPadLockoutTimer;
+    [SerializeField] float jumpPadLockoutTimer;
     float coyoteTimer = 0f;
-    
+
 
     [Header("Double Jump")]
     [SerializeField] private int maxJumps = 1;
     private int jumpsRemaining;
     [HideInInspector] public bool jumpPressed;
+
 
     [Header("Wall Jump")]
     [SerializeField] private float wallJumpForce = 8f;
@@ -42,7 +47,9 @@ public class PlayerController : MonoBehaviour
     public float wallClingCoyoteTimer = 0;
     public bool startWallClingTimer = false;
 
+
     public float deathVelocity;
+
 
     [Header("Gun")]
     [SerializeField] float fireRate;
@@ -52,8 +59,24 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public bool gunOnCD;
     float gunTimer;
 
+
     [Header("Enemy")]
     [SerializeField] float bounceVel = 3f;
+
+
+    [Header("Footstep Audio")]
+    [SerializeField] private AudioSource footstepAudio;
+
+
+    [Header("Jump Audio")]
+    [SerializeField] private AudioSource jumpAudio;
+
+
+    [Header("Death Audio")]
+    [SerializeField] private AudioSource deathAudio;
+    private bool deathSoundPlayed = false;
+    private bool wasDead = false;
+
 
     public Rigidbody2D rb;
     [HideInInspector] public float horizontalMovement;
@@ -62,30 +85,42 @@ public class PlayerController : MonoBehaviour
     public bool isTouchingWall;
     [HideInInspector] public int wallDirection;
 
+
     [Header("Sprite renderers")]
     public List<SpriteRenderer> spriteRenderersList;
 
+
     [Header("Ground Check")]
     public bool isGrounded;
-
     public Transform groundCollPos;
-    [SerializeField] private Vector3 groundCheckBoxSize = new Vector3(.3f, .06f, .01f);
-    public List<Collider2D> objectsUnderFeet = new List<Collider2D>();
+    [SerializeField]
+    private Vector3 groundCheckBoxSize =
+        new Vector3(.3f, .06f, .01f);
+    public List<Collider2D> objectsUnderFeet =
+        new List<Collider2D>();
+
 
     float directionInput;
     [HideInInspector] public bool aimingUp;
     [HideInInspector] public bool isFacingRight;
 
+
     [Header("State Machine")]
     public StateMachine sm;
     public bool IsDead => sm.currentState == sm.deathState;
 
+
     private void Awake()
     {
         startGunPos = gunPos.transform.localPosition;
-        if (Instance == null) Instance = this;
-        else Destroy(this);
+
+
+        if (Instance == null)
+            Instance = this;
+        else
+            Destroy(this);
     }
+
 
     private void Start()
     {
@@ -93,10 +128,12 @@ public class PlayerController : MonoBehaviour
         acceleration = defaultAcceleration;
     }
 
+
     private void FixedUpdate()
     {
         Gravity();
         MovementPhysics();
+
 
         objectsUnderFeet = Physics2D.OverlapBoxAll(
             groundCollPos.position,
@@ -105,57 +142,170 @@ public class PlayerController : MonoBehaviour
             LayerMask.GetMask("Ground")
         ).ToList();
 
-        if(!IsDead) CheckForWall();
+
+        if (!IsDead)
+            CheckForWall();
     }
+
 
     private void Update()
     {
-        if(!IsDead) CheckForInputs();
+        // Reset the death sound when the player respawns.
+        if (IsDead)
+        {
+            if (!wasDead)
+                PlayDeathSound();
+
+
+            wasDead = true;
+        }
+        else
+        {
+            if (wasDead)
+                deathSoundPlayed = false;
+
+
+            wasDead = false;
+        }
+
+
+        if (!IsDead)
+            CheckForInputs();
+
+
         CheckForGround();
-        if (gunOnCD) gunTimer += Time.deltaTime;
-        if (gunTimer >= fireRate) gunOnCD = false;
+        HandleFootstepAudio();
 
-        if (launched) launchTimer -= Time.deltaTime;
-        if (launchTimer <= 0) launched = false;
 
-        if(!isGrounded) coyoteTimer -= Time.deltaTime;
-        if(startWallClingTimer && !isTouchingWall) wallClingCoyoteTimer -= Time.deltaTime;
-        if (wallClingCoyoteTimer <= 0) startWallClingTimer = false;
+        if (gunOnCD)
+            gunTimer += Time.deltaTime;
+
+
+        if (gunTimer >= fireRate)
+            gunOnCD = false;
+
+
+        if (launched)
+            launchTimer -= Time.deltaTime;
+
+
+        if (launchTimer <= 0)
+            launched = false;
+
+
+        if (!isGrounded)
+            coyoteTimer -= Time.deltaTime;
+
+
+        if (startWallClingTimer && !isTouchingWall)
+            wallClingCoyoteTimer -= Time.deltaTime;
+
+
+        if (wallClingCoyoteTimer <= 0)
+            startWallClingTimer = false;
+    }
+
+
+    private void HandleFootstepAudio()
+    {
+        if (footstepAudio == null)
+            return;
+
+
+        bool shouldPlay =
+            isGrounded &&
+            Mathf.Abs(horizontalMovement) > 0.01f &&
+            !IsDead;
+
+
+        if (shouldPlay)
+        {
+            if (!footstepAudio.isPlaying)
+                footstepAudio.Play();
+        }
+        else if (footstepAudio.isPlaying)
+        {
+            footstepAudio.Stop();
+        }
+    }
+
+
+    private void PlayJumpSound()
+    {
+        if (jumpAudio != null && !IsDead)
+            jumpAudio.Play();
+    }
+
+
+    private void PlayDeathSound()
+    {
+        if (deathSoundPlayed)
+            return;
+
+
+        deathSoundPlayed = true;
+
+
+        if (footstepAudio != null)
+            footstepAudio.Stop();
+
+
+        if (deathAudio != null)
+            deathAudio.Play();
+    }
+
+
+    // Can also be called directly from your respawn script.
+    public void ResetDeathAudio()
+    {
+        deathSoundPlayed = false;
+        wasDead = false;
     }
 
 
     void CheckForInputs()
     {
         #region AIM UP
+
+
         Vector2 gunLocPos = gunPos.transform.localPosition;
-        if (Input.GetAxis("Vertical") > 0 && sm.currentState != sm.wallClingState)
+
+
+        if (Input.GetAxis("Vertical") > 0 &&
+            sm.currentState != sm.wallClingState)
         {
             aimingUp = true;
             gunLocPos.y = startGunPos.y + 0.25f;
+
+
             if (isFacingRight)
-            {
                 gunLocPos.x = -0.2f;
-            }
             else
-            {
                 gunLocPos.x = 0.2f;
-            }
         }
         else
         {
             aimingUp = false;
             gunLocPos = startGunPos;
         }
+
+
         gunPos.transform.localPosition = gunLocPos;
+
 
         #endregion
 
+
         #region LEFT/RIGHT
+
+
         directionInput = Input.GetAxisRaw("Horizontal");
         horizontalMovement = directionInput * moveSpeed;
+
+
         if (directionInput > 0)
         {
-            if(sm.currentState == sm.wallClingState)
+            if (sm.currentState == sm.wallClingState)
             {
                 isFacingRight = false;
             }
@@ -165,7 +315,7 @@ public class PlayerController : MonoBehaviour
                 FlipSrX();
             }
         }
-        else if(directionInput < 0)
+        else if (directionInput < 0)
         {
             if (sm.currentState == sm.wallClingState)
             {
@@ -176,24 +326,27 @@ public class PlayerController : MonoBehaviour
                 isFacingRight = false;
                 FlipSrX();
             }
-
         }
+
+
         #endregion
 
+
         #region JUMP
+
+
         if (Input.GetAxis("Jump") > 0 && !jumpPressed)
         {
             jumpPressed = true;
-            // Wall jump takes priority when touching a wall
-            if (!isGrounded && wallClingCoyoteTimer > 0 )
+
+
+            if (!isGrounded && wallClingCoyoteTimer > 0)
             {
                 WallJump();
             }
             else if (coyoteTimer >= 0)
             {
                 Jump();
-
-                // Reset the double jump when grounded
                 jumpsRemaining = maxJumps - 1;
             }
             else if (jumpsRemaining > 0)
@@ -202,134 +355,185 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if(Input.GetAxis("Jump") == 0)
-        {
+
+        if (Input.GetAxis("Jump") == 0)
             jumpPressed = false;
-        }
+
+
         #endregion
 
+
         #region GUN
-        if (sm.currentState != sm.landState && Input.GetAxis("Shoot") > 0 && !gunOnCD)
+
+
+        if (sm.currentState != sm.landState &&
+            Input.GetAxis("Shoot") > 0 &&
+            !gunOnCD)
         {
-            GameObject bulletGO = Instantiate(bullet, gunPos.transform.position, Quaternion.identity);
-            BulletBehaviour bBehaviour = bulletGO.GetComponent<BulletBehaviour>();
+            GameObject bulletGO = Instantiate(
+                bullet,
+                gunPos.transform.position,
+                Quaternion.identity
+            );
+
+
+            BulletBehaviour bBehaviour =
+                bulletGO.GetComponent<BulletBehaviour>();
+
 
             Vector2 direction = Vector2.zero;
 
+
             if (aimingUp && sm.currentState != sm.wallClingState)
-            {
                 direction.y = 1;
-            }
             else if (isFacingRight)
-            {
                 direction.x = 1;
-            }
-            else if (!isFacingRight)
-            {
+            else
                 direction.x = -1;
-            }
+
+
             bBehaviour.direction = direction;
+
 
             gunOnCD = true;
             gunTimer = 0;
         }
+
+
         #endregion
     }
 
+
     void Jump()
     {
-        // Reset vertical velocity so jumps are consistent
+        PlayJumpSound();
+
+
         rb.velocity = new Vector3(rb.velocity.x, 0);
         rb.AddForce(Vector2.up * jumpHeight, ForceMode2D.Impulse);
     }
 
+
     void Gravity()
     {
-        if(sm.currentState != sm.wallClingState)
+        if (sm.currentState != sm.wallClingState)
         {
             float yVel = rb.velocity.y;
-            if (Mathf.Abs(yVel) < lingeringAirTime) gravityScaling = lingerAtApexGravity;
-            else if (yVel > 0) gravityScaling = risingGravity;
-            else gravityScaling = fallingGravity;
+
+
+            if (Mathf.Abs(yVel) < lingeringAirTime)
+                gravityScaling = lingerAtApexGravity;
+            else if (yVel > 0)
+                gravityScaling = risingGravity;
+            else
+                gravityScaling = fallingGravity;
+
 
             rb.gravityScale = gravityScaling;
         }
-        //rb.AddForce(Vector3.up * Physics.gravity.y * gravityScaling);
-
-        //Prob want to set a max fall speed here as well
     }
+
 
     void MovementPhysics()
     {
         Vector3 vel;
         vel.y = rb.velocity.y;
+
+
         if (isGrounded)
         {
-            if (launched) return;
-            vel.x = Mathf.Lerp(rb.velocity.x, horizontalMovement, acceleration);
+            if (launched)
+                return;
+
+
+            vel.x = Mathf.Lerp(
+                rb.velocity.x,
+                horizontalMovement,
+                acceleration
+            );
+
+
             rb.velocity = new Vector3(vel.x, vel.y, 0);
         }
         else
         {
-            if (launched) return;
-            vel.x = Mathf.Lerp(rb.velocity.x, horizontalMovement, airControl);
+            if (launched)
+                return;
+
+
+            vel.x = Mathf.Lerp(
+                rb.velocity.x,
+                horizontalMovement,
+                airControl
+            );
+
+
             rb.velocity = new Vector3(vel.x, vel.y, 0);
         }
     }
 
+
     void DoubleJump()
     {
-        // Reset vertical velocity so the double jump feels consistent
-        rb.velocity = new Vector3(rb.velocity.x, 0);
+        PlayJumpSound();
 
+
+        rb.velocity = new Vector3(rb.velocity.x, 0);
         rb.AddForce(Vector2.up * jumpHeight, ForceMode2D.Impulse);
+
 
         jumpsRemaining--;
     }
 
+
     void WallJump()
     {
-        // Push the player away from the wall
+        PlayJumpSound();
+
+
         rb.velocity = new Vector3(
             -wallDirection * wallJumpHorizontalForce,
             wallJumpForce,
             0
         );
+
+
         wallDirection = 0;
-
-
     }
+
 
     void CheckForGround()
     {
-
         if (objectsUnderFeet.Count == 0)
         {
             isGrounded = false;
         }
         else
         {
-            if (objectsUnderFeet[0].gameObject.CompareTag("Ice")) acceleration = iceAcceleration;
-            else acceleration = defaultAcceleration;
+            if (objectsUnderFeet[0].gameObject.CompareTag("Ice"))
+                acceleration = iceAcceleration;
+            else
+                acceleration = defaultAcceleration;
+
+
             isGrounded = true;
             coyoteTimer = coyoteTime;
             gravityScaling = defaultGravity;
-            // Restore jumps when touching the ground
             jumpsRemaining = maxJumps;
         }
     }
 
+
     void CheckForWall()
     {
         isTouchingWall = false;
-        //wallDirection = 0;
 
-        // Check right
 
-        Vector2 direction = Vector2.zero;
-        direction.x = isFacingRight ? 1 : -1;
-        
-        if (Physics2D.Raycast(transform.position, Vector2.right, wallCheckDistance, LayerMask.GetMask("Vines")))
+        if (Physics2D.Raycast(
+            transform.position,
+            Vector2.right,
+            wallCheckDistance,
+            LayerMask.GetMask("Vines")))
         {
             isTouchingWall = true;
             wallDirection = 1;
@@ -338,8 +542,12 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        //Check left
-        if (Physics2D.Raycast(transform.position, Vector2.left, wallCheckDistance, LayerMask.GetMask("Vines")))
+
+        if (Physics2D.Raycast(
+            transform.position,
+            Vector2.left,
+            wallCheckDistance,
+            LayerMask.GetMask("Vines")))
         {
             isTouchingWall = true;
             wallDirection = -1;
@@ -349,20 +557,15 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+
     public void FlipSrX()
     {
         foreach (SpriteRenderer sr in spriteRenderersList)
         {
-            if (isFacingRight)
-            {
-                sr.flipX = false;
-            }
-            else
-            {
-                sr.flipX = true;
-            }
+            sr.flipX = !isFacingRight;
         }
     }
+
 
     public void Launched()
     {
@@ -370,31 +573,32 @@ public class PlayerController : MonoBehaviour
         launchTimer = jumpPadLockoutTimer;
     }
 
-    // Checks if player is jumping on an enemy
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("KillPlayer"))
         {
+            PlayDeathSound();
             sm.isDead = true;
         }
     }
+
 
     public bool IsInAir()
     {
         return sm.currentState == sm.inAirState;
     }
 
+
     public void Bounce()
     {
-        rb.velocity = new Vector2(
-            rb.velocity.x,
-            bounceVel
-        );
+        rb.velocity = new Vector2(rb.velocity.x, bounceVel);
     }
+
 
     public void Die()
     {
+        PlayDeathSound();
         sm.isDead = true;
     }
-
 }
