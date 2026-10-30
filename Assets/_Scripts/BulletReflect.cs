@@ -23,5 +23,6 @@ public class BulletReflect : MonoBehaviour
         Vector2 bulletDir = new Vector2(bullet.direction.x * -1, bullet.direction.y);
         bulletRB.velocity = bulletDir * (bullet.bulletSpeed + addedReflectedBulletSpeed);
         bullet.canHitPlayer = true;
+        bullet.timer = 0;
     }
 }
