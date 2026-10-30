@@ -9,8 +9,16 @@ public class ButtonBehaviour : MonoBehaviour
     [SerializeField] bool pressurePlate;
     int objectsOnButton = 0;
 
+    public Sprite idleSprite;
+    public Sprite pressedSprite;
+    bool pressedAnim;
     public string additionalTagCheck;
+    SpriteRenderer sr;
 
+    private void Awake()
+    {
+        sr = GetComponentInChildren<SpriteRenderer>();
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -20,8 +28,17 @@ public class ButtonBehaviour : MonoBehaviour
 
         if (!pressurePlate && (collision.CompareTag("Player") || collision.CompareTag("Block"))) return;
 
-        objectsOnButton++;
+        if (pressurePlate)
+        {
+            sr.sprite = pressedSprite;
+        }
+        else
+        {
+            StartCoroutine(ButtonPressAnim());
+        }
+            objectsOnButton++;
         objectToInteractWithOnButtonPress.GetComponent<IButtonable>().OnButtonInteraction();
+
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
@@ -33,5 +50,24 @@ public class ButtonBehaviour : MonoBehaviour
         objectsOnButton--;
         if (objectsOnButton > 0) return;
         objectToInteractWithOnButtonPress.GetComponent<IButtonable>().OnButtonReleased();
+
+
+        if (pressurePlate)
+        {
+            sr.sprite = idleSprite;
+        }
+    }
+
+    private IEnumerator ButtonPressAnim()
+    {
+        if (pressedAnim)
+        {
+            yield break;
+        }
+        pressedAnim = true;
+        sr.sprite = pressedSprite;
+        yield return new WaitForSeconds(0.5f);
+        sr.sprite = idleSprite;
+        pressedAnim = false;
     }
 }

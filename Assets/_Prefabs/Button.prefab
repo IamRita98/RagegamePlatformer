@@ -133,6 +133,8 @@ MonoBehaviour:
   objectToInteractWithOnButtonPress: {fileID: 0}
   canBeShot: 1
   pressurePlate: 0
+  idleSprite: {fileID: 1572794258, guid: 5c4eb2724cef4264fb8d96d1f3bfc395, type: 3}
+  pressedSprite: {fileID: 774601264, guid: 5c4eb2724cef4264fb8d96d1f3bfc395, type: 3}
   additionalTagCheck: 
 --- !u!61 &2241877703164760277
 BoxCollider2D:
