@@ -11,7 +11,7 @@ public class BulletBehaviour : MonoBehaviour
     public GameObject sparksEffectGO;
     public int maxSparks;
     public int minSparks;
-    float timer;
+    public float timer;
     //public float dir;
     public Vector2 direction;
     public bool canHitPlayer = false;
