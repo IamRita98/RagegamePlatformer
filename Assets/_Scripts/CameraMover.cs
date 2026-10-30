@@ -52,4 +52,20 @@ public class CameraMover : MonoBehaviour
 
         transform.localPosition = endPos;
     }
+
+    public void LoadCameraPosition(int index)
+    {
+        if (index < 0 || index >= cameraPositions.Count)
+            return;
+
+        StopAllCoroutines();
+
+        currentCamCheckpoint = index;
+
+        Vector3 newPos = cameraPositions[index].position;
+        newPos.z = transform.position.z;
+
+        transform.position = newPos;
+    }
 }
+

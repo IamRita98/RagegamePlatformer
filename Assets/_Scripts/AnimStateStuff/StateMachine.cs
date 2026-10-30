@@ -59,6 +59,17 @@ public class StateMachine : MonoBehaviour
         respawnPos = transform.position;
     }
 
+    private void Start()
+    {
+        if (PlayerPrefs.GetInt("ContinueGame", 0) == 1)
+        {
+            LoadCheckpoint();
+
+            PlayerPrefs.DeleteKey("ContinueGame");
+            PlayerPrefs.Save();
+        }
+    }
+
     private void Update()
     {
         Shoot();
@@ -185,5 +196,27 @@ public class StateMachine : MonoBehaviour
         downSr.enabled = true;
         upSr.enabled = true;
         wholeSr.enabled = false;
+    }
+
+    public void LoadCheckpoint()
+    {
+        if (PlayerPrefs.GetInt("HasCheckpoint", 0) == 1)
+        {
+            float x = PlayerPrefs.GetFloat("CheckpointXPos");
+            float y = PlayerPrefs.GetFloat("CheckpointYPos");
+
+            respawnPos = new Vector2(x, y);
+
+            pc.rb.velocity = Vector2.zero;
+            pc.rb.position = respawnPos;
+
+            CameraMover camMover = FindAnyObjectByType<CameraMover>();
+
+            if (camMover != null)
+            {
+                int savedCameraIndex = PlayerPrefs.GetInt("SavedCameraIndex", 0);
+                camMover.LoadCameraPosition(savedCameraIndex);
+            }
+        }
     }
 }
