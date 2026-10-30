@@ -19,11 +19,21 @@ public class JumpPad : MonoBehaviour
     [SerializeField] DirectionToLaunch directionToLaunch;
     [SerializeField] bool bulletCanChangeDirection;
 
+    Animator anim;
+
+    private void Awake()
+    {
+        anim = GetComponentInChildren<Animator>();
+        anim.speed = 0;
+    }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (!collision.gameObject.CompareTag("Player")) return;
         Rigidbody2D playerRB = collision.gameObject.GetComponent<Rigidbody2D>();
-        
+
+        anim.speed = 1;
+        anim.Play("BouncPad");
+
         playerRB.velocity = new Vector3(playerRB.velocity.x, 0);
         switch (directionToLaunch)
         {
