@@ -12,15 +12,16 @@ public class CutsceneManager : MonoBehaviour
 
     private void Awake()
     {
-        currentEvent = events[0];
-        currentEvent.Enter();
-        startEventTime = Time.time;
+        //StartCutscene();
     }
     private void Update()
     {
-        lastEvent = events[eventPos];
-        currentEvent.Do();
-        UpdateEvent();
+        if(currentEvent != null)
+        {
+            lastEvent = events[eventPos];
+            currentEvent.Do();
+            UpdateEvent();
+        }
     }
 
     void UpdateEvent()
@@ -33,5 +34,12 @@ public class CutsceneManager : MonoBehaviour
             startEventTime = Time.time;
             lastEvent.Exit();
         }
+    }
+
+    public void StartCutscene()
+    {
+        currentEvent = events[0];
+        currentEvent.Enter();
+        startEventTime = Time.time;
     }
 }
