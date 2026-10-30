@@ -11,6 +11,7 @@ public class DeathState : State
     private bool diedInAir;
     public override void Enter()
     {
+        CameraShake.Instance.StartCoroutine(CameraShake.Instance.Shake(0.25f, 0.6f));
         sm.StopCoroutine("ExitShooting");
         downSr.enabled = false;
         upSr.enabled = false;
