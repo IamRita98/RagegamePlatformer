@@ -25,6 +25,7 @@ public class JumpPad : MonoBehaviour
     {
         anim = GetComponentInChildren<Animator>();
         anim.speed = 0;
+        anim.Play("BouncePad", 0, 1);
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -32,7 +33,7 @@ public class JumpPad : MonoBehaviour
         Rigidbody2D playerRB = collision.gameObject.GetComponent<Rigidbody2D>();
 
         anim.speed = 1;
-        anim.Play("BouncPad");
+        anim.Play("BouncePad",0,0);
 
         playerRB.velocity = new Vector3(playerRB.velocity.x, 0);
         switch (directionToLaunch)
