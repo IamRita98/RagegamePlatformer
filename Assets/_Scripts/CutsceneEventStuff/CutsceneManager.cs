@@ -12,7 +12,7 @@ public class CutsceneManager : MonoBehaviour
 
     private void Awake()
     {
-        StartCutscene();
+        //StartCutscene();
     }
     private void Update()
     {
