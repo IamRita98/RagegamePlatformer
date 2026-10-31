@@ -2,19 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class EnemyMovement : MonoBehaviour
 {
-
     [SerializeField] private float movementSpeed;
     [SerializeField] private int startingDirection = 1;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
+
+
     public GameObject deathEffect;
 
-    // Whether or not this enemy is killed when jumped on, shot at, both, or neither
+
+    [Header("Death Audio")]
+    [SerializeField] private AudioSource deathAudio;
+
+
+    // Whether the enemy can be killed by stomping or shooting
     public bool isStompable;
     public bool isShootable;
     public bool walksOff;
+
 
     public enum FloorDirection
     {
@@ -23,106 +31,116 @@ public class EnemyMovement : MonoBehaviour
         left,
         right
     }
+
+
     public FloorDirection floorDirection;
+
 
     [Header("Proximity Spike Trap")]
     public bool hasProximitySpike;
 
+
     [SerializeField] private GameObject spikeGO;
     [SerializeField] private Transform spikeCheck;
-
     [SerializeField] private Vector2 spikeCheckSize = new Vector2(1.5f, 2f);
-
     [SerializeField] private Vector3 spikeEndPosition;
     [SerializeField] private float spikeMoveTime = 0.2f;
-
     [SerializeField] private AnimationCurve spikeMovementCurve;
+
 
     private Vector3 spikeStartPosition;
     private bool spikeActivated;
+
 
     private float wallCheckDistance = 1f;
     private bool isTouchingWall;
     private bool isGroundAhead;
     private int currentDirection;
     private Vector3 spawnPosition;
+
+
     private Collider2D[] enemyColliders;
-    Rigidbody2D rb;
+    private Rigidbody2D rb;
+
+
     public SpriteRenderer spriteRenderer;
-    Vector2 moveAxis;
-    Vector2 groundCheckBase;
 
 
-    Vector2 floorDir = Vector2.down;
+    private Vector2 moveAxis;
+    private Vector2 groundCheckBase;
+    private Vector2 floorDir = Vector2.down;
+
 
     [HideInInspector] public bool isDead;
+
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+
+
         currentDirection = startingDirection;
         groundCheckBase = groundCheck.localPosition;
+
+
         switch (floorDirection)
         {
-            case FloorDirection.down: floorDir = Vector2.down; break;
-            case FloorDirection.up: floorDir = Vector2.up; break;
-            case FloorDirection.left: floorDir = Vector2.left; break;
-            case FloorDirection.right: floorDir = Vector2.right; break;
+            case FloorDirection.down:
+                floorDir = Vector2.down;
+                break;
+
+
+            case FloorDirection.up:
+                floorDir = Vector2.up;
+                break;
+
+
+            case FloorDirection.left:
+                floorDir = Vector2.left;
+                break;
+
+
+            case FloorDirection.right:
+                floorDir = Vector2.right;
+                break;
         }
+
 
         GroundCheckPosUpdate();
 
+
         spriteRenderer.flipX = currentDirection == 1;
+
 
         if (hasProximitySpike && spikeGO != null)
         {
             spikeStartPosition = spikeGO.transform.localPosition;
         }
-        else
+        else if (spikeGO != null)
         {
-            spikeGO.gameObject.SetActive(false);
+            spikeGO.SetActive(false);
         }
+
 
         spawnPosition = transform.position;
         enemyColliders = GetComponentsInChildren<Collider2D>();
     }
 
-    private void FixedUpdate()
-    {
-        if (isDead)
-            return;
-
-        CheckForWall();
-        CheckForFloor();
-
-        bool lavaAhead = CheckForLava();
-
-        if (isTouchingWall || lavaAhead || (!walksOff && !isGroundAhead))
-        {
-            ChangeDirection();
-        }
-
-        if (hasProximitySpike && !spikeActivated)
-        {
-            CheckForPlayerAbove();
-        }
-
-        if (floorDir == Vector2.down)
-        {
-            rb.velocity = new Vector2(
-                currentDirection * movementSpeed,
-                rb.velocity.y);
-        }
-        else rb.velocity = moveAxis * (currentDirection * movementSpeed);
-    }
 
     private void Start()
     {
         StateMachine.Instance.onPlayerRespawn.AddListener(Respawn);
-        
-        if (floorDirection != FloorDirection.down) rb.gravityScale = 0f;
+
+
+        if (floorDirection != FloorDirection.down)
+        {
+            rb.gravityScale = 0f;
+        }
+
+
         moveAxis = new Vector2(-floorDir.y, floorDir.x);
-        
     }
+
 
     private void OnDestroy()
     {
@@ -132,28 +150,86 @@ public class EnemyMovement : MonoBehaviour
         }
     }
 
-    void GroundCheckPosUpdate()
+
+    private void FixedUpdate()
+    {
+        if (isDead)
+            return;
+
+
+        CheckForWall();
+        CheckForFloor();
+
+
+        bool lavaAhead = CheckForLava();
+
+
+        if (isTouchingWall || lavaAhead || (!walksOff && !isGroundAhead))
+        {
+            ChangeDirection();
+        }
+
+
+        if (hasProximitySpike && !spikeActivated)
+        {
+            CheckForPlayerAbove();
+        }
+
+
+        if (floorDir == Vector2.down)
+        {
+            rb.velocity = new Vector2(
+                currentDirection * movementSpeed,
+                rb.velocity.y
+            );
+        }
+        else
+        {
+            rb.velocity = moveAxis * (currentDirection * movementSpeed);
+        }
+    }
+
+
+    private void GroundCheckPosUpdate()
     {
         Vector2 pos = groundCheckBase;
-        if (Mathf.Abs(moveAxis.x) > .5f) pos.x = Mathf.Abs(groundCheckBase.x) * currentDirection * Mathf.Sign(moveAxis.x);
-        else pos.y = Mathf.Abs(groundCheckBase.y) * currentDirection * Mathf.Sign(moveAxis.y);
+
+
+        if (Mathf.Abs(moveAxis.x) > 0.5f)
+        {
+            pos.x = Mathf.Abs(groundCheckBase.x)
+                    * currentDirection
+                    * Mathf.Sign(moveAxis.x);
+        }
+        else
+        {
+            pos.y = Mathf.Abs(groundCheckBase.y)
+                    * currentDirection
+                    * Mathf.Sign(moveAxis.y);
+        }
+
+
         groundCheck.localPosition = pos;
     }
 
-    IEnumerator RaiseSpike()
+
+    private IEnumerator RaiseSpike()
     {
         spikeActivated = true;
 
-        Vector3 startPos = spikeGO.transform.localPosition;
 
+        Vector3 startPos = spikeGO.transform.localPosition;
         float elapsed = 0f;
+
 
         while (elapsed < spikeMoveTime)
         {
             elapsed += Time.deltaTime;
 
+
             float t = elapsed / spikeMoveTime;
             float curve = spikeMovementCurve.Evaluate(t);
+
 
             spikeGO.transform.localPosition = Vector3.Lerp(
                 startPos,
@@ -161,19 +237,27 @@ public class EnemyMovement : MonoBehaviour
                 curve
             );
 
+
             yield return null;
         }
+
 
         spikeGO.transform.localPosition = spikeEndPosition;
     }
 
-    void CheckForPlayerAbove()
+
+    private void CheckForPlayerAbove()
     {
+        if (spikeCheck == null)
+            return;
+
+
         Collider2D[] hits = Physics2D.OverlapBoxAll(
             spikeCheck.position,
             spikeCheckSize,
             0f
         );
+
 
         foreach (Collider2D hit in hits)
         {
@@ -185,10 +269,11 @@ public class EnemyMovement : MonoBehaviour
         }
     }
 
-    // I stole this from PlayerController script
-    void CheckForWall()
+
+    private void CheckForWall()
     {
         Vector2 direction = currentDirection * moveAxis;
+
 
         RaycastHit2D hit = Physics2D.Raycast(
             transform.position,
@@ -197,7 +282,9 @@ public class EnemyMovement : MonoBehaviour
             LayerMask.GetMask("Ground")
         );
 
+
         isTouchingWall = hit.collider != null;
+
 
         Debug.DrawRay(
             transform.position,
@@ -206,7 +293,8 @@ public class EnemyMovement : MonoBehaviour
         );
     }
 
-    void CheckForFloor()
+
+    private void CheckForFloor()
     {
         RaycastHit2D hit = Physics2D.Raycast(
             groundCheck.position,
@@ -215,7 +303,9 @@ public class EnemyMovement : MonoBehaviour
             groundLayer
         );
 
+
         isGroundAhead = hit.collider != null;
+
 
         Debug.DrawRay(
             groundCheck.position,
@@ -224,7 +314,8 @@ public class EnemyMovement : MonoBehaviour
         );
     }
 
-    bool CheckForLava()
+
+    private bool CheckForLava()
     {
         RaycastHit2D[] hits = Physics2D.RaycastAll(
             groundCheck.position,
@@ -232,23 +323,29 @@ public class EnemyMovement : MonoBehaviour
             wallCheckDistance
         );
 
+
         foreach (RaycastHit2D hit in hits)
         {
             if (hit.collider.CompareTag("Lava"))
                 return true;
         }
 
+
         return false;
     }
 
-    void ChangeDirection()
+
+    private void ChangeDirection()
     {
         currentDirection *= -1;
 
+
         spriteRenderer.flipX = currentDirection == 1;
+
 
         GroundCheckPosUpdate();
     }
+
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -259,14 +356,18 @@ public class EnemyMovement : MonoBehaviour
             return;
         }
 
+
         // Player touches enemy body
-        PlayerController player = collision.gameObject.GetComponentInParent<PlayerController>();
+        PlayerController player =
+            collision.gameObject.GetComponentInParent<PlayerController>();
+
 
         if (player != null)
         {
             player.Die();
         }
     }
+
 
     public void Stomp(PlayerController player)
     {
@@ -275,12 +376,12 @@ public class EnemyMovement : MonoBehaviour
             player.Die();
             return;
         }
-        else
-        {
-            player.Bounce();
-            Die();
-        }
+
+
+        player.Bounce();
+        Die();
     }
+
 
     public void ActivateSpike()
     {
@@ -290,22 +391,45 @@ public class EnemyMovement : MonoBehaviour
         }
     }
 
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (hasProximitySpike && !spikeActivated && collision.CompareTag("Player"))
+        if (hasProximitySpike &&
+            !spikeActivated &&
+            collision.CompareTag("Player"))
         {
             StartCoroutine(RaiseSpike());
         }
     }
 
+
     public void Die()
     {
-        CameraShake.Instance.StartCoroutine(
-            CameraShake.Instance.Shake(0.25f, 0.8f)
-        );
+        // Prevent death effects and sound from playing more than once
+        if (isDead)
+            return;
+
 
         isDead = true;
 
+
+        // Play enemy death sound
+        if (deathAudio != null)
+        {
+            deathAudio.Play();
+        }
+
+
+        // Camera shake
+        if (CameraShake.Instance != null)
+        {
+            CameraShake.Instance.StartCoroutine(
+                CameraShake.Instance.Shake(0.25f, 0.8f)
+            );
+        }
+
+
+        // Spawn death effect
         if (deathEffect != null)
         {
             Instantiate(
@@ -313,49 +437,74 @@ public class EnemyMovement : MonoBehaviour
                 transform.position,
                 Quaternion.identity
             );
-            spikeGO.gameObject.SetActive(false);
         }
 
-        rb.velocity = Vector2.zero;
-        rb.simulated = false;
 
-        spriteRenderer.enabled = false;
+        // Disable spike object
+        if (spikeGO != null)
+        {
+            spikeGO.SetActive(false);
+        }
 
+
+        // Stop enemy movement
+        if (rb != null)
+        {
+            rb.velocity = Vector2.zero;
+            rb.simulated = false;
+        }
+
+
+        // Hide enemy sprite
+        if (spriteRenderer != null)
+        {
+            spriteRenderer.enabled = false;
+        }
+
+
+        // Disable enemy colliders
         foreach (Collider2D col in enemyColliders)
         {
             col.enabled = false;
         }
     }
 
+
     private void Respawn()
     {
         isDead = false;
 
-        transform.position = spawnPosition;
 
+        transform.position = spawnPosition;
         currentDirection = startingDirection;
+
 
         spriteRenderer.flipX = currentDirection == 1;
         spriteRenderer.enabled = true;
 
+
         rb.simulated = true;
         rb.velocity = Vector2.zero;
+
 
         foreach (Collider2D col in enemyColliders)
         {
             col.enabled = true;
         }
 
+
         GroundCheckPosUpdate();
 
-        // Reset spike
+
+        // Reset spike trap
         if (hasProximitySpike && spikeGO != null)
         {
             StopAllCoroutines();
 
+
             spikeActivated = false;
             spikeGO.transform.localPosition = spikeStartPosition;
-            spikeGO.gameObject.SetActive(true);
+            spikeGO.SetActive(true);
         }
     }
 }
