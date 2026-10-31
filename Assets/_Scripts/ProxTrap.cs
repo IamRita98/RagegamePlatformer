@@ -31,6 +31,8 @@ public class ProxTrap : MonoBehaviour
 
     private bool activated = false;
 
+    public bool resetOnDeath = true;
+
     bool moving;
 
     bool inTrigger;
@@ -51,7 +53,7 @@ public class ProxTrap : MonoBehaviour
 
     private void OnEnable()
     {
-        pDeathBroadcaster.onPlayerRespawn.AddListener(ResetTrap);
+        if(resetOnDeath)pDeathBroadcaster.onPlayerRespawn.AddListener(ResetTrap);
     }
 
     private void OnDisable()
