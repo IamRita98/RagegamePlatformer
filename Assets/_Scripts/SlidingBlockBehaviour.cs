@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SlidingBlockBehaviour : MonoBehaviour
 {
+    public bool resetOnPDeath = true;
     Rigidbody2D rb;
     [SerializeField] float bulletForce;
     GameObject player;

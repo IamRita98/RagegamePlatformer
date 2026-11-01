@@ -113,12 +113,12 @@ TextureImporter:
       name: Ship Clean
       rect:
         serializedVersion: 2
-        x: 12
-        y: 156
-        width: 96
-        height: 48
+        x: 13
+        y: 157
+        width: 94
+        height: 46
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -134,12 +134,12 @@ TextureImporter:
       name: Ship Damaged
       rect:
         serializedVersion: 2
-        x: 120
-        y: 156
-        width: 96
-        height: 48
+        x: 121
+        y: 157
+        width: 94
+        height: 47
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -147,6 +147,27 @@ TextureImporter:
       bones: []
       spriteID: 729716b8ecd346844adc6438186b35ad
       internalID: 820716304
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rage game props_0
+      rect:
+        serializedVersion: 2
+        x: 13
+        y: 25
+        width: 34
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ea0d71051620c024e9a7d2ba01db3cdc
+      internalID: -1070138687
       vertices: []
       indices: 
       edges: []
@@ -164,6 +185,7 @@ TextureImporter:
     nameFileIdTable:
       Ship Clean: 931486296
       Ship Damaged: 820716304
+      rage game props_0: -1070138687
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
