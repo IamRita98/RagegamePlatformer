@@ -7,18 +7,30 @@ public class SlidingBlockBehaviour : MonoBehaviour
     Rigidbody2D rb;
     [SerializeField] float bulletForce;
     GameObject player;
+    Vector2 startingPos;
 
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
         rb = GetComponent<Rigidbody2D>();
+        startingPos = transform.position;
     }
 
-/*    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnEnable()
     {
-
+        StateMachine.Instance.onPlayerRespawn.AddListener(ResetPos);
     }
-*/
+
+    private void OnDisable()
+    {
+        StateMachine.Instance.onPlayerRespawn.RemoveListener(ResetPos);
+    }
+
+    void ResetPos()
+    {
+        transform.position = startingPos;
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (!collision.gameObject.CompareTag("Bullet")) return;
