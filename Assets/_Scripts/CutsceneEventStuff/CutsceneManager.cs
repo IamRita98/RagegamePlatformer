@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class CutsceneManager : MonoBehaviour
 {
+    public bool isTriggerable;
+
     public List<CutsceneEvent> events;
     int eventPos = 0;
     CutsceneEvent currentEvent;
     CutsceneEvent lastEvent;
     float startEventTime;
+
 
     private void Awake()
     {
@@ -41,5 +44,13 @@ public class CutsceneManager : MonoBehaviour
         currentEvent = events[0];
         currentEvent.Enter();
         startEventTime = Time.time;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player") && isTriggerable)
+        {
+            StartCutscene();
+        }
     }
 }
