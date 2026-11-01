@@ -92,5 +92,7 @@ public class MainMenuButtons : MonoBehaviour
             time += Time.deltaTime;
             yield return null;
         }
+
+        canvasGroup.alpha = 0;
     }
 }
