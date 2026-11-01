@@ -367,9 +367,9 @@ public class PlayerController : MonoBehaviour
 
 
         if (sm.currentState != sm.landState &&
-            Input.GetAxis("Shoot") > 0 &&
-            !gunOnCD)
-        {
+            ((Input.GetAxis("Shoot") > 0 || Input.GetKeyDown(KeyCode.LeftShift)) &&
+            !gunOnCD))
+            {
             GameObject bulletGO = Instantiate(
                 bullet,
                 gunPos.transform.position,
