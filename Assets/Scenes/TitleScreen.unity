@@ -225,9 +225,9 @@ MonoBehaviour:
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
+    m_HighlightedSprite: {fileID: 2002887776, guid: 6cd3c3c0875a3b9478bcbda396ef53db, type: 3}
     m_PressedSprite: {fileID: 2002887776, guid: 6cd3c3c0875a3b9478bcbda396ef53db, type: 3}
-    m_SelectedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 2002887776, guid: 6cd3c3c0875a3b9478bcbda396ef53db, type: 3}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -693,9 +693,9 @@ MonoBehaviour:
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
+    m_HighlightedSprite: {fileID: 671622955, guid: 6cd3c3c0875a3b9478bcbda396ef53db, type: 3}
     m_PressedSprite: {fileID: 671622955, guid: 6cd3c3c0875a3b9478bcbda396ef53db, type: 3}
-    m_SelectedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 671622955, guid: 6cd3c3c0875a3b9478bcbda396ef53db, type: 3}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -7140,9 +7140,9 @@ MonoBehaviour:
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
+    m_HighlightedSprite: {fileID: 2032225314, guid: 6cd3c3c0875a3b9478bcbda396ef53db, type: 3}
     m_PressedSprite: {fileID: 2032225314, guid: 6cd3c3c0875a3b9478bcbda396ef53db, type: 3}
-    m_SelectedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: -706399037, guid: 6cd3c3c0875a3b9478bcbda396ef53db, type: 3}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -23364,9 +23364,9 @@ MonoBehaviour:
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
+    m_HighlightedSprite: {fileID: -706399037, guid: 6cd3c3c0875a3b9478bcbda396ef53db, type: 3}
     m_PressedSprite: {fileID: -706399037, guid: 6cd3c3c0875a3b9478bcbda396ef53db, type: 3}
-    m_SelectedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: -706399037, guid: 6cd3c3c0875a3b9478bcbda396ef53db, type: 3}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
