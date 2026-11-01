@@ -5,6 +5,7 @@ using UnityEngine;
 public class CutsceneManager : MonoBehaviour
 {
     public bool isTriggerable;
+    public bool activateOnAwake;
 
     public List<CutsceneEvent> events;
     int eventPos = 0;
@@ -15,7 +16,7 @@ public class CutsceneManager : MonoBehaviour
 
     private void Awake()
     {
-        //StartCutscene();
+        if(activateOnAwake)StartCutscene();
     }
     private void Update()
     {
