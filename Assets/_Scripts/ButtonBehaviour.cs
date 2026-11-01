@@ -10,6 +10,11 @@ public class ButtonBehaviour : MonoBehaviour
     [SerializeField] bool canBeShot;
     [SerializeField] bool pressurePlate;
 
+    [Header("Animation")]
+    public Sprite idleSprite;
+    public Sprite pressedSprite;
+    bool pressedAnim;
+    SpriteRenderer sr;
 
     [Header("Button Audio")]
     [SerializeField] private AudioSource buttonAudio;
@@ -23,6 +28,7 @@ public class ButtonBehaviour : MonoBehaviour
 
     private void Awake()
     {
+        sr = GetComponentInChildren<SpriteRenderer>();
         if (buttonAudio == null)
         {
             buttonAudio = GetComponent<AudioSource>();
@@ -55,8 +61,18 @@ public class ButtonBehaviour : MonoBehaviour
              collision.CompareTag("Block")))
             return;
 
+        if (pressurePlate)
+        {
+            sr.sprite = pressedSprite;
+        }
+        else
+        {
+            StartCoroutine(ButtonPressAnim());
+        }
 
         objectsOnButton++;
+
+
 
 
         // Play button press sound
@@ -97,6 +113,10 @@ public class ButtonBehaviour : MonoBehaviour
 
         objectsOnButton--;
 
+        if (pressurePlate)
+        {
+            sr.sprite = idleSprite;
+        }
 
         if (objectsOnButton > 0)
             return;
@@ -111,5 +131,19 @@ public class ButtonBehaviour : MonoBehaviour
                 .GetComponent<IButtonable>()
                 ?.OnButtonReleased();
         }
+    }
+
+
+    private IEnumerator ButtonPressAnim()
+    {
+        if (pressedAnim)
+        {
+            yield break;
+        }
+        pressedAnim = true;
+        sr.sprite = pressedSprite;
+        yield return new WaitForSeconds(0.5f);
+        sr.sprite = idleSprite;
+        pressedAnim = false;
     }
 }

@@ -6,7 +6,7 @@ using UnityEngine;
 public class JumpPad : MonoBehaviour
 {
     public float jumpPadForce;
-
+    Animator anim;
 
     [SerializeField]
     private enum DirectionToLaunch
@@ -32,6 +32,10 @@ public class JumpPad : MonoBehaviour
 
     private void Awake()
     {
+        anim = GetComponentInChildren<Animator>();
+        anim.speed = 0;
+        anim.Play("BouncePad", 0, 1);
+
         if (jumpPadAudio == null)
         {
             jumpPadAudio = GetComponent<AudioSource>();
@@ -109,7 +113,8 @@ public class JumpPad : MonoBehaviour
                 playerRB.AddForce(new Vector2(1, -1).normalized * jumpPadForce, ForceMode2D.Impulse);
                 break;
         }
-
+        anim.speed = 1;
+        anim.Play("BouncePad", 0, 0);
 
         PlayerController.Instance.Launched();
     }
