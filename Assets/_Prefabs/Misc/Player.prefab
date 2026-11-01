@@ -51,7 +51,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pc: {fileID: 5307985890243477789}
-  respawnDelay: 2
+  respawnDelay: 0.5
   respawnPos: {x: 0, y: 0}
   behaviors: {fileID: 1720193888519920256}
   upSr: {fileID: 794943488005338020}
@@ -1133,7 +1133,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 198e14cc698623e48a74a7e4a57e2e8d, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 5348c23e618b4284b8d1a552cd780429, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.909
   m_Pitch: 1
