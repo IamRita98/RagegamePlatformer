@@ -13,8 +13,14 @@ public class ButtonObjectDestroyer : MonoBehaviour, IButtonable
 
     private void Start()
     {
+        StateMachine.Instance.onPlayerRespawn.AddListener(Reset);
         sRends = gameObject.GetComponentsInChildren<SpriteRenderer>().ToList();
         colls = gameObject.GetComponentsInChildren<Collider2D>().ToList();
+    }
+
+    private void OnDisable()
+    {
+        StateMachine.Instance.onPlayerRespawn.RemoveListener(Reset);
     }
 
     public void OnButtonInteraction()
@@ -31,6 +37,13 @@ public class ButtonObjectDestroyer : MonoBehaviour, IButtonable
             foreach (Collider2D coll in colls) coll.enabled = true;
             isActive = true;
         }
+    }
+
+    void Reset()
+    {
+        foreach (SpriteRenderer sRend in sRends) sRend.enabled = true;
+        foreach (Collider2D coll in colls) coll.enabled = true;
+        isActive = true;
     }
 
     public void OnButtonReleased()
