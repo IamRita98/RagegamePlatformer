@@ -72,10 +72,7 @@ public class ButtonBehaviour : MonoBehaviour
 
         objectsOnButton++;
 
-        if (pressurePlate)
-        {
-            sr.sprite = idleSprite;
-        }
+
 
 
         // Play button press sound
@@ -116,6 +113,10 @@ public class ButtonBehaviour : MonoBehaviour
 
         objectsOnButton--;
 
+        if (pressurePlate)
+        {
+            sr.sprite = idleSprite;
+        }
 
         if (objectsOnButton > 0)
             return;
