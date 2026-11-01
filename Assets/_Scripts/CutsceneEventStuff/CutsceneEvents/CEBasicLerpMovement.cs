@@ -35,11 +35,11 @@ public class CEBasicLerpMovement : CutsceneEvent
             elapsedTime += Time.deltaTime;
             float t = elapsedTime / movementDuration;
             t = easing.Evaluate(t);
-            Vector3 pos = moveGO.transform.position;
+            Vector3 pos = moveGO.transform.localPosition;
             pos = Vector3.Lerp(initialPos, endPos, t);
-            moveGO.transform.position = pos;
+            moveGO.transform.localPosition = pos;
             yield return null;
         }
-        moveGO.transform.position = endPos;
+        moveGO.transform.localPosition = endPos;
     }
 }
