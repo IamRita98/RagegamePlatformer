@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/RoomScenes/Room2.unity
     guid: ed213d6e3cf635f4589bbd9c976069c0
+  - enabled: 1
+    path: Assets/Scenes/EndCutscene.unity
+    guid: b8330ca5657866d49a959983ad9a84ad
   m_configObjects: {}
