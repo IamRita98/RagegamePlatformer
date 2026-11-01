@@ -12,6 +12,7 @@ TagManager:
   - Ice
   - FlyingEnemy
   - Block
+  - Music
   layers:
   - Default
   - TransparentFX
