@@ -61,8 +61,17 @@ public class ButtonBehaviour : MonoBehaviour
              collision.CompareTag("Block")))
             return;
 
+        if (pressurePlate)
+        {
+            sr.sprite = pressedSprite;
+        }
+        else
+        {
+            StartCoroutine(ButtonPressAnim());
+        }
 
         objectsOnButton++;
+
 
 
         // Play button press sound
