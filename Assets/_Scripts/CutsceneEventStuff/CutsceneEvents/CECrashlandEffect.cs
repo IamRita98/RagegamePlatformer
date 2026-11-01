@@ -5,6 +5,9 @@ using UnityEngine;
 public class CECrashlandEffect : CutsceneEvent
 {
     [Header("Event Specific attributes")]
+    public AudioClip sfx;
+    public AudioSource audioSource;
+
     public float shakeMag;
     public float shakeDur;
     public GameObject effectsPos;
@@ -24,8 +27,15 @@ public class CECrashlandEffect : CutsceneEvent
 
     public List<GameObject> debris;
 
+
+
     public override void Enter()
     {
+        if (audioSource != null)
+        {
+            audioSource.clip = sfx;
+            audioSource.Play();
+        }
         BoxCollider2D ePosBC = effectsPos.GetComponent<BoxCollider2D>();
         Bounds spawnBounds = ePosBC.bounds;
 
