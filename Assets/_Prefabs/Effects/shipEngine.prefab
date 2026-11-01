@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5162862670342686527}
   - component: {fileID: 2276493191079915105}
   - component: {fileID: 385317244564036373}
+  - component: {fileID: 1710362548489392457}
   m_Layer: 8
   m_Name: shipEngine
   m_TagString: Untagged
@@ -148,3 +149,16 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &1710362548489392457
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6476675393759315440}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b26d1a5c8e9abb4d82983d5ca2210f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  duration: 5

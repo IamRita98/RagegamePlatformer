@@ -7635,7 +7635,7 @@ Transform:
   m_GameObject: {fileID: 504119973}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -35.166527, y: 0, z: 0}
+  m_LocalPosition: {x: -47.249813, y: -0.999996, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7978,7 +7978,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!156049354 &568137533
 Grid:
   m_ObjectHideFlags: 0
@@ -37772,7 +37772,7 @@ MonoBehaviour:
   duration: 4
   debrisGO: {fileID: 6476675393759315440, guid: 701bf292714ba7243a3314a187d18663, type: 3}
   spawnPos: {fileID: 1915336928}
-  vel: {x: 16.1, y: -31.1}
+  vel: {x: 15, y: 25}
 --- !u!1 &1911845972
 GameObject:
   m_ObjectHideFlags: 0

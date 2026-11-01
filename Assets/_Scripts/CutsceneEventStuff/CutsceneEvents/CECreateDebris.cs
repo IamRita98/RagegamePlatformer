@@ -15,4 +15,5 @@ public class CECreateDebris : CutsceneEvent
         rb.AddForce(vel, ForceMode2D.Impulse);
         rb.angularVelocity = Random.Range(20, 40);
     }
+
 }
