@@ -9,6 +9,7 @@ public class WallClingState : State
     public AnimationClip wallCling;
     public AnimationClip wallClingShoot;
 
+    public AudioSource aSource;
 
     public override void Enter()
     {
@@ -23,6 +24,7 @@ public class WallClingState : State
         pc.rb.velocity = Vector2.zero;
 
         wholeAnim.Play(wallCling.name);
+        aSource.Play();
     }
     public override void Do()
     {
