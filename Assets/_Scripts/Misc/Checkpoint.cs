@@ -25,6 +25,7 @@ public class Checkpoint : MonoBehaviour
             PlayerPrefs.SetString("SavedScene", SceneManager.GetActiveScene().name);
             PlayerPrefs.SetInt("HasCheckpoint", 1);
             PlayerPrefs.SetInt("SavedCameraIndex", camMover.currentCamCheckpoint);
+            PlayerPrefs.SetInt("CurrentLifeCount", UILivesManager.lives);
 
             PlayerPrefs.Save();
         }

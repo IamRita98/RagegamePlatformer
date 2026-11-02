@@ -217,6 +217,8 @@ public class StateMachine : MonoBehaviour
                 int savedCameraIndex = PlayerPrefs.GetInt("SavedCameraIndex", 0);
                 camMover.LoadCameraPosition(savedCameraIndex);
             }
+
+            UILivesManager.lives = PlayerPrefs.GetInt("CurrentLifeCount");
         }
     }
 }

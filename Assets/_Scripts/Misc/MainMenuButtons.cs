@@ -34,6 +34,7 @@ public class MainMenuButtons : MonoBehaviour
         PlayerPrefs.DeleteKey("HasCheckpoint");
         PlayerPrefs.DeleteKey("ContinueGame");
         PlayerPrefs.DeleteKey("SavedCameraIndex");
+        PlayerPrefs.DeleteKey("CurrentLifeCount");
 
         PlayerPrefs.Save();
 
@@ -74,6 +75,11 @@ public class MainMenuButtons : MonoBehaviour
     public void ControlsMenuOff()
     {
         controlsMenu.SetActive(false);
+    }
+
+    public void QuitToTitle()
+    {
+        SceneManager.LoadScene("MainMenu");
     }
 
     public void QuitGame()
