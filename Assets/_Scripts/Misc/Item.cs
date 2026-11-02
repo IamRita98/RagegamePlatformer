@@ -24,6 +24,7 @@ public class Item : MonoBehaviour
     Rigidbody2D rb;
     public float fadeTime;
     bool pickedUp;
+    public AudioSource audioSource;
 
     Color startColor;
     public Color fadeColor;
@@ -67,6 +68,7 @@ public class Item : MonoBehaviour
     {
         if (collision.CompareTag("Player") && !pickedUp)
         {
+            audioSource.Play();
             rb.gravityScale = 10;
             Vector3 vel = new Vector3(pickupVel * 0.1f, pickupVel, 0);
             rb.AddForce(vel, ForceMode2D.Impulse);
