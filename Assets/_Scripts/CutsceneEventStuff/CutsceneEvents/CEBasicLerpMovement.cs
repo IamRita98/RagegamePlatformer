@@ -10,10 +10,17 @@ public class CEBasicLerpMovement : CutsceneEvent
     public GameObject moveGO;
     public AnimationCurve easing;
 
+    public AudioClip sfx;
+    public AudioSource audioSource;
     public float movementDuration;
 
     public override void Enter()
     {
+        if(audioSource!= null)
+        {
+            audioSource.clip = sfx;
+            audioSource.Play();
+        }
         StartCoroutine(Move());
     }
     public override void Do()
