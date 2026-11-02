@@ -78,7 +78,7 @@ public class ButtonBehaviour : MonoBehaviour
         // Play button press sound
         if (buttonAudio != null)
         {
-            buttonAudio.Play();
+            if(buttonAudio.enabled)buttonAudio.Play();
         }
 
 

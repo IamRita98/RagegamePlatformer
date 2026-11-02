@@ -4,23 +4,27 @@ using UnityEngine;
 
 public class AudioEnabler : MonoBehaviour
 {
-    public AudioSource button1;
-    public AudioSource button2;
-    public static bool audioOn = false;
+    public List<AudioSource> audioSources;
+    public bool audioOn = false;
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (!collision.gameObject.CompareTag("Player")) return;
         if (!audioOn)
         {
-            button1.enabled = true;
-            button2.enabled = true;
+            foreach (AudioSource audioSource in audioSources)
+            {
+                audioSource.enabled = true;
+            }
+
             audioOn = true;
         }
         else
         {
-            button1.enabled = false;
-            button2.enabled = false;
+            foreach (AudioSource audioSource in audioSources)
+            {
+                audioSource.enabled = false;
+            }
             audioOn = false;
         }
     }

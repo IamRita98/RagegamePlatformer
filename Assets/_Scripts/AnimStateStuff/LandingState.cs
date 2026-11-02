@@ -10,8 +10,12 @@ public class LandingState : State
 
     private float timePassed;
 
+    [Header("Audio")]
+    public AudioSource audioSource;
+
     public override void Enter()
     {
+        audioSource.Play();
         sm.StopCoroutine("ExitShooting");
 
         downSr.enabled = false;

@@ -55,6 +55,7 @@ MonoBehaviour:
   sparksEffectGO: {fileID: 1527009151361833134, guid: 921566aafc710ab4c9f94120721fcd85, type: 3}
   maxSparks: 2
   minSparks: 5
+  timer: 0
   direction: {x: 0, y: 0}
   canHitPlayer: 0
 --- !u!58 &6124969048432487809

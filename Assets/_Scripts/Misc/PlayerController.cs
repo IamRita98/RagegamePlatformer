@@ -53,6 +53,7 @@ public class PlayerController : MonoBehaviour
 
 
     [Header("Gun")]
+    public AudioSource gunAudioSource;
     [SerializeField] float fireRate;
     [SerializeField] private GameObject gunPos;
     private Vector3 startGunPos;
@@ -377,17 +378,8 @@ public class PlayerController : MonoBehaviour
             ((Input.GetAxis("Shoot") > 0 || Input.GetKeyDown(KeyCode.LeftShift)) &&
             !gunOnCD) && !isPaused)
             {
-            GameObject bulletGO = Instantiate(
-                bullet,
-                gunPos.transform.position,
-                Quaternion.identity
-            );
-
-
-            BulletBehaviour bBehaviour =
-                bulletGO.GetComponent<BulletBehaviour>();
-
-
+            GameObject bulletGO = Instantiate(bullet, gunPos.transform.position, Quaternion.identity);      
+            BulletBehaviour bBehaviour = bulletGO.GetComponent<BulletBehaviour>();
             Vector2 direction = Vector2.zero;
 
 
@@ -401,9 +393,11 @@ public class PlayerController : MonoBehaviour
 
             bBehaviour.direction = direction;
 
+            gunAudioSource.Play();
 
             gunOnCD = true;
             gunTimer = 0;
+
         }
 
 

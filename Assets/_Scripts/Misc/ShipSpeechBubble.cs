@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class ShipSpeechBubble : MonoBehaviour
 {
+    public AudioSource audioSource;
+    public AudioClip openSound;
+    public AudioClip closeSound;
     public GameObject speechBubble;
     public AnimationCurve easing;
     public float transitionSpeed;
@@ -16,6 +19,8 @@ public class ShipSpeechBubble : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             targetT = 1;
+            audioSource.clip = openSound;
+            audioSource.Play();
         }
     }
 
@@ -24,6 +29,8 @@ public class ShipSpeechBubble : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             targetT = 0;
+            audioSource.clip = closeSound;
+            audioSource.Play();
         }
     }
 
