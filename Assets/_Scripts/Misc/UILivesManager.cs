@@ -8,7 +8,7 @@ public class UILivesManager : MonoBehaviour
 {
     public TMP_Text lifeCount;
     public GameObject livesGO;
-    static int lives = 3;
+    public static int lives = 3;
 
     [SerializeField]float bounceScaling;
     [SerializeField] float bounceDur;

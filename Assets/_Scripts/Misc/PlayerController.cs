@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.SubsystemsImplementation;
 
 
@@ -109,6 +110,11 @@ public class PlayerController : MonoBehaviour
     public StateMachine sm;
     public bool IsDead => sm.currentState == sm.deathState;
 
+    [Header("Pausing")]
+    [SerializeField] private GameObject pauseMenu;
+    [SerializeField] private GameObject controlsMenu;
+    private bool isPaused = false;
+
 
     private void Awake()
     {
@@ -215,7 +221,7 @@ public class PlayerController : MonoBehaviour
         bool shouldPlay =
             isGrounded &&
             Mathf.Abs(horizontalMovement) > 0.01f &&
-            !IsDead;
+            !IsDead && !isPaused;
 
 
         if (shouldPlay)
@@ -300,10 +306,11 @@ public class PlayerController : MonoBehaviour
 
 
         directionInput = Input.GetAxisRaw("Horizontal");
-        horizontalMovement = directionInput * moveSpeed;
+        if (!isPaused)
+            horizontalMovement = directionInput * moveSpeed;
 
 
-        if (directionInput > 0)
+        if (directionInput > 0 && !isPaused)
         {
             if (sm.currentState == sm.wallClingState)
             {
@@ -315,7 +322,7 @@ public class PlayerController : MonoBehaviour
                 FlipSrX();
             }
         }
-        else if (directionInput < 0)
+        else if (directionInput < 0 && !isPaused)
         {
             if (sm.currentState == sm.wallClingState)
             {
@@ -335,7 +342,7 @@ public class PlayerController : MonoBehaviour
         #region JUMP
 
 
-        if (Input.GetAxis("Jump") > 0 && !jumpPressed)
+        if (Input.GetAxis("Jump") > 0 && !jumpPressed && !isPaused)
         {
             jumpPressed = true;
 
@@ -368,7 +375,7 @@ public class PlayerController : MonoBehaviour
 
         if (sm.currentState != sm.landState &&
             ((Input.GetAxis("Shoot") > 0 || Input.GetKeyDown(KeyCode.LeftShift)) &&
-            !gunOnCD))
+            !gunOnCD) && !isPaused)
             {
             GameObject bulletGO = Instantiate(
                 bullet,
@@ -401,8 +408,49 @@ public class PlayerController : MonoBehaviour
 
 
         #endregion
+
+        #region PAUSE
+
+        if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P)) && Time.timeScale == 1)
+        {
+            pauseMenu.SetActive(true);
+            Time.timeScale = 0;
+            isPaused = true;
+            return;
+        }
+        else if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P)) && Time.timeScale == 0)
+        {
+            pauseMenu.SetActive(false);
+            Time.timeScale = 1;
+            isPaused = false;
+            return;
+        }
+
+        #endregion
     }
 
+    public void ContinueFromPause()
+    {
+        pauseMenu.SetActive(false);
+        Time.timeScale = 1;
+        isPaused = false;
+    }
+
+    public void ControlsMenuOn()
+    {
+        controlsMenu.SetActive(true);
+    }
+
+    public void ControlsMenuOff()
+    {
+        controlsMenu.SetActive(false);
+    }
+
+    public void QuitToTitle()
+    {
+        SceneManager.LoadScene("TitleScreen");
+        Time.timeScale = 1;
+    }
 
     void Jump()
     {
