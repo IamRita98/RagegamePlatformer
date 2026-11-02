@@ -21,6 +21,7 @@ public class CERepairShip : CutsceneEvent
     float elapsed;
 
     [Header("Repair")]
+    public AudioClip finishedRepair;
     public GameObject repairEffect;
     public Sprite fixedSprite;
     public ParticleSystem crashedSmoke;
@@ -30,8 +31,8 @@ public class CERepairShip : CutsceneEvent
 
     public override void Enter()
     {
-        //    shipAS.clip = repairingSound;
-        //    shipAS.Play();
+        shipAS.clip = repairingSound;
+        shipAS.Play();
     }
     public override void Do()
     {
@@ -61,6 +62,8 @@ public class CERepairShip : CutsceneEvent
 
     public IEnumerator RepairShip()
     {
+        shipAS.clip = finishedRepair;
+        shipAS.Play();
         repaired = true;
         crashedSmoke.Stop();
         srMat = spriteRenderer.material;
