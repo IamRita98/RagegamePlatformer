@@ -7,6 +7,7 @@ public class CECrashlandEffect : CutsceneEvent
     [Header("Event Specific attributes")]
     public AudioClip sfx;
     public AudioSource audioSource;
+    public AudioSource musicSource;
 
     public float shakeMag;
     public float shakeDur;
@@ -31,6 +32,7 @@ public class CECrashlandEffect : CutsceneEvent
 
     public override void Enter()
     {
+        musicSource.Stop();
         if (audioSource != null)
         {
             audioSource.clip = sfx;
