@@ -23,8 +23,8 @@ public class DevTools : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(nextCheckpointKeybind)) NextCheckpoint();
-        if (Input.GetKeyDown(previousCheckpointKeybind)) PreviousCheckpoint();
+        /*if(Input.GetKeyDown(nextCheckpointKeybind)) NextCheckpoint();
+        if (Input.GetKeyDown(previousCheckpointKeybind)) PreviousCheckpoint();*/
         //ToggleInvincibility
     }
 
